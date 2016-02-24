@@ -126,7 +126,7 @@ oauth {
             key = '981288372048-05ihor35pspdvsa04hcg679oj1bdo6p7.apps.googleusercontent.com'
             secret = 'YHTrz-vk7FsuuZBmAA-51LZJ'
             scope = 'email profile'
-            callback = 'https://un-app.herokuapp.com/UNApp/oauth/google/callback'
+            callback = 'https://un-app.herokuapp.com/oauth/google/callback'
             successUri = '/login/success'
             failureUri = '/login/failure'
         }
