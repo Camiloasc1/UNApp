@@ -115,3 +115,20 @@ log4j.main = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 }
+
+
+import org.scribe.api.GoogleApi20
+
+oauth {
+    providers {
+        google {
+            api = GoogleApi20
+            key = '981288372048-05ihor35pspdvsa04hcg679oj1bdo6p7.apps.googleusercontent.com'
+            secret = 'YHTrz-vk7FsuuZBmAA-51LZJ'
+            scope = 'email profile'
+            callback = 'https://un-app.herokuapp.com/UNApp/oauth/google/callback'
+            successUri = '/login/success'
+            failureUri = '/login/failure'
+        }
+    }
+}
