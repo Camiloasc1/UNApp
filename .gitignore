@@ -49,3 +49,4 @@ classes/*
 .env
 .idea
 .asscache
+.slcache
