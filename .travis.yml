@@ -1,0 +1,3 @@
+language: groovy
+notifications:
+  slack: ingesoftii:0Qp3Gq1MttmnDlRiSdJC0MJN
