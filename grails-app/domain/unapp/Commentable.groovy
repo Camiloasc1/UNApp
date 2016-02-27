@@ -2,7 +2,7 @@ package unapp
 
 class Commentable
 {
-    static hasMany = [Comments: Comment]
+    static hasMany = [comments: Comment]
     static constraints = {
     }
     static mapping = {
