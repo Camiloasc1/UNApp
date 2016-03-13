@@ -5,7 +5,7 @@ class TeacherEvaluation
     User author
     int overall
     int knowledge
-    int explanationQuality
+    int explanation
     int punctuality
     int gradeMethod
     def Teacher teacher
