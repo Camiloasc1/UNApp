@@ -1,3 +1,4 @@
 language: groovy
+script: ./grailsw clean && ./grailsw refresh-dependencies && ./grailsw test-app
 notifications:
   slack: ingesoftii:0Qp3Gq1MttmnDlRiSdJC0MJN
