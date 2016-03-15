@@ -20,14 +20,25 @@
 </head>
 
 <body>
-    <oauth:connect provider="google">Connect to Google</oauth:connect>
-    <oauth:connected provider="google">
-        <br>
-        <g:link controller="Login" action="revoke" id="google" title="Google">
-            Revoke access
-        </g:link>
-    </oauth:connected>
-
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <p>Para acceder a la plataforma ingrese con su cuenta institucional (@unal.edu.co)</p>
+        </div>
+        <div class="col-sm-6">
+            <oauth:disconnected provider="google">
+                <oauth:connect provider="google">
+                    <button type="button" class="btn btn-primary">Login With Google</button>
+                </oauth:connect>
+            </oauth:disconnected>
+            <oauth:connected provider="google">
+                <g:link controller="Login" action="revoke" id="google" title="Google">
+                    <button type="button" class="btn btn-primary">Log Out</button>
+                </g:link>
+            </oauth:connected>
+        </div>
+    </div>
+</div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
