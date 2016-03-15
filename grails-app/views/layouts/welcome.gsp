@@ -17,10 +17,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>UN-App Welcome</title>
+    <title>UN-App</title>
+
+    <link rel="icon" href="${request.contextPath}/welcome-index/img/final.png">
 
     <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
     <link href="${request.contextPath}/welcome-index/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${request.contextPath}/welcome-index/css/unapp.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="${request.contextPath}/welcome-index/css/freelancer.css" rel="stylesheet">
@@ -42,8 +45,8 @@
 <body id="page-top" class="index">
 
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
+<nav class="navbar navbar-default navbar-fixed-top main_bar">
+    <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -51,26 +54,43 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#page-top">UN-App</a>
+            <!--<a class="navbar-brand" href="#page-top">UN-App</a>-->
+            <a href="#page-top">
+                <img class="img-responsive main_unapp"  src="${request.contextPath}/welcome-index/img/completow.png" alt="logo_UNApp">
+            </a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="hidden">
-                    <a href="#page-top"></a>
-                </li>
-                <li class="page-scroll">
-                    <a href="#portfolio">Desarroladores</a>
-                </li>
-                <li class="page-scroll">
-                    <a href="#about">Acerca</a>
-                </li>
-                <li class="page-scroll">
-                    <a href="#contact">Contacto</a>
-                </li>
-            </ul>
+
+                <ul class="nav navbar-nav navbar-left">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#">Profesores</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#">Materias</a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Nosotros
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#portfolio">Desarrolladores</a></li>
+                            <li><a href="#about">Acerca</a></li>
+                            <li><a href="#contact">Contactenos</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="page-scroll">
+                        <a href="${createLink(controller:'login', action:'index')}">Ingresar</a>
+                    </li>
+                </ul>
         </div>
         <!-- /.navbar-collapse -->
     </div>
@@ -80,30 +100,25 @@
 <!-- Header -->
 <header>
     <div class="container_image">
-        <img class="img-responsive" src="${request.contextPath}/welcome-index/img/welcome.jpg" alt="">
-        <div id="custom-search-input">
-            <div class="input-group img-centered col-md-6">
-                <input type="text" class="form-control input-lg" placeholder="Buscar profesor o materia..." />
-                <span class="input-group-btn">
-                    <button class="btn btn-info btn-lg" type="button">
-                        <i class="glyphicon glyphicon-search"></i>
-                    </button>
-                </span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="intro-text">
-                    <span class="name">UN-App</span>
-                    <hr class="star-light">
-                    <div class="col-lg-8 col-lg-offset-2 text-center">
+        <img class="img-responsive main_image" src="${request.contextPath}/welcome-index/img/welcome.jpg" alt="">
+        <div class="row window_search">
+                <div class="col-sm-3"></div>
+                <div id="custom-search-input" class="col-xs-12 col-sm-6">
+                    <img class="img-responsive main_unapp" src="${request.contextPath}/welcome-index/img/completow.png" alt="">
+                    <div class="input-group img-centered">
+                        <input type="text" class="form-control input-lg" placeholder="Buscar un profesor o materia..." />
+                        <span class="input-group-btn">
+                            <button class="btn btn-info btn-lg" type="button">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="text-center"><br>
                         <a href="${createLink(controller:'login', action:'index')}" class="btn btn-lg btn-outline">
-                            Login
+                            Ingresar
                         </a>
                     </div>
-                    <div class="container">
-                    </div>
-                </div>
+                <div class="col-sm-3"></div>
             </div>
         </div>
     </div>
@@ -176,7 +191,7 @@
                             <i class="fa fa-search-plus fa-3x"></i>
                         </div>
                     </div>
-                    <img src="${request.contextPath}/welcome-index/img/desarroladores/Diego.png"class="img-responsive" alt="">
+                    <img src="${request.contextPath}/welcome-index/img/desarroladores/Diego.png" class="img-responsive" alt="">
                 </a>
             </div>
         </div>
@@ -258,9 +273,9 @@
     </div>
 </section>
 
-<!-- Footer -->
+<!-- Footer-->
 <footer class="text-center">
-    <div class="footer-above">
+    <!--<div class="footer-above">
         <div class="container">
             <div class="row">
                 <div class="footer-col col-md-4">
@@ -293,12 +308,12 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
     <div class="footer-below">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    Copyright &copy; Your Website 2014
+                    Copyright &copy; UN-App 2016
                 </div>
             </div>
         </div>
