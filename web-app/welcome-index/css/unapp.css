@@ -1,0 +1,23 @@
+.main_unapp{
+    height: 60px;
+
+}
+
+.main_bar{
+    padding: 10px;
+
+}
+
+.window_search{
+    position: absolute;
+    top: 40%;
+}
+.window_search > #custom-search-input{
+    background-color: rgba(178,178,178,0.45);
+    border-radius: 20px;
+    padding: 22px;
+}
+
+
+
+
