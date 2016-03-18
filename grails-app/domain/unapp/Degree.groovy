@@ -8,4 +8,7 @@ class Degree {
     static hasMany = [courses:Course]
     static constraints = {
     }
+    String toString(){
+        return name+" "+location.toString()
+    }
 }

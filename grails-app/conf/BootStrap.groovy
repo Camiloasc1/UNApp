@@ -52,7 +52,9 @@ class BootStrap {
         }
 
 
-        Degree.findByCode(2879).each { sp ->
+        Degree.findAll("from Degree as d where d.type='PRE'").each { sp ->
+
+            println sp.toString()
 
             def url = sp.location.url + '/academia/catalogo-programas/semaforo.do?plan=' + sp.code + '&tipo=' + sp.type + '&tipoVista=semaforo&nodo=1&parametro=on'
 
@@ -63,7 +65,7 @@ class BootStrap {
             //Filling codes
             html."**".findAll { it.@class.toString().contains("caja-ass") }.each { it2 ->
 
-                def code = it2.DIV[1].A.H5.text()
+                String code = it2.DIV[1].A.H5.text()
                 def credits
 
                 try {
@@ -74,15 +76,10 @@ class BootStrap {
 
                 def name = it2.DIV[2].DIV[1].H4.text()
 
-                //println code+" "+credits+" "+name
-
-                new Course([code: code, name: name, credits: credits]).save()
-
-                /*def i = it2.breadthFirst()
-
-                while(i.hasNext()){
-                    println i.next().name()
-                }*/
+                if( Course.findByCode(code) == null ) {
+                    println code+" "+name
+                    new Course([code: code, name: name, credits: credits]).save()
+                }
             }
 
         }

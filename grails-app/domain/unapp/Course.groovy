@@ -17,6 +17,10 @@ class Course extends Commentable
         contents nullable: true
     }
 
+    /*static mapping = {
+        id column: 'code', type: 'String' insert:false update:false
+    }*/
+
     String toString(){
         return code+" "+name+" "+credits
     }
