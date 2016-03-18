@@ -76,7 +76,7 @@
             </button>
             <!--<a class="navbar-brand" href="#page-top">UN-App</a>-->
             <a href="#page-top">
-                <img class="img-responsive main_unapp"  src="${request.contextPath}/welcome-index/img/completow.png" alt="logo_UNApp">
+                <img class="img-responsive main_unapp"  src="${request.contextPath}/welcome-index/img/title_logo.png" alt="logo_UNApp">
             </a>
         </div>
 
@@ -120,10 +120,10 @@
     <div class="container_image">
         <img class="img-responsive main_image" src="${request.contextPath}/welcome-index/img/welcome.jpg" alt="">
         <div class="row window_search">
-                <div class="col-sm-3"></div>
-                <div id="custom-search-input" class="col-xs-12 col-sm-6">
-                    <img class="img-responsive main_unapp" src="${request.contextPath}/welcome-index/img/completow.png" alt="">
-                    <div class="input-group img-centered">
+            <div class="col-sm-3"></div>
+                <div id="custom-search-input" class="col-xs-12 col-sm-6" >
+                    <img class="img-responsive main_unapp" src="${request.contextPath}/welcome-index/img/logo.png" alt="">
+                     <div class="input-group img-centered">
                         <input type="text" class="form-control input-lg" placeholder="Buscar un profesor o materia..." />
                         <span class="input-group-btn">
                             <button class="btn btn-info btn-lg" type="button">
@@ -147,7 +147,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h2>Desarroladores</h2>
+                <h2>Desarrolladores</h2>
                 <hr class="star-primary">
             </div>
         </div>
@@ -199,7 +199,7 @@
                             <i class="fa fa-search-plus fa-3x"></i>
                         </div>
                     </div>
-                    <img src="${request.contextPath}/welcome-index/img/desarroladores/game.png" class="img-responsive" alt="">
+                    <img src="${request.contextPath}/welcome-index/img/desarroladores/logo_big.png" class="img-responsive" alt="">
                 </a>
             </div>
             <div class="col-sm-4 portfolio-item">
@@ -508,7 +508,7 @@
                     <div class="modal-body">
                         <h2>UN-APP</h2>
                         <hr class="star-primary">
-                        <img src="${request.contextPath}/welcome-index/img/desarroladores/game.png" class="img-responsive img-centered" alt="">
+                        <img src="${request.contextPath}/welcome-index/img/desarroladores/logo_big.png" class="img-responsive img-centered" alt="">
                         <p>Info sobre la aplicacion</p>
                         <ul class="list-inline item-details">
                             <li>Facebook:

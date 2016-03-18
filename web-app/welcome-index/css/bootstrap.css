@@ -3581,6 +3581,8 @@ tbody.collapse.in {
 .dropdown-toggle:focus {
   outline: 0;
 }
+
+
 .dropdown-menu {
   position: absolute;
   top: 100%;
@@ -3613,6 +3615,7 @@ tbody.collapse.in {
   overflow: hidden;
   background-color: #e5e5e5;
 }
+
 .dropdown-menu > li > a {
   display: block;
   padding: 3px 20px;
@@ -4504,6 +4507,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     box-shadow: none;
   }
 }
+
 .navbar-nav > li > .dropdown-menu {
   margin-top: 0;
   border-top-right-radius: 0;
@@ -7079,7 +7083,7 @@ Search Box
   padding: 3px;
   border: solid 1px #E4E4E4;
   border-radius: 6px;
-  background-color: #fff;
+  background-color: #cbc9d0;
 }
 
 #custom-search-input input{
@@ -7104,5 +7108,5 @@ Search Box
 }
 
 #custom-search-input .glyphicon-search{
-  font-size: 23px;
+  font-size: 2px;
 }
