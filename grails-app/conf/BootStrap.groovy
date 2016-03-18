@@ -1,7 +1,9 @@
 import unapp.DBFillerService
 import unapp.Degree
 import unapp.Location
+import unapp.Course
 import java.text.Normalizer
+import groovyx.net.http.HTTPBuilder
 
 class BootStrap {
 
@@ -43,56 +45,47 @@ class BootStrap {
                     }
 
                 } catch (Exception e) {
+                    e.printStackTrace()
                     println "Sia sede $loc.name no disponible"
                 }
             }
         }
 
-        /*Degree.findAllByType("PRE").each { sp ->
-            try {
-                source = new HTTPBuilder(sp.location.url + '/academia/catalogo-programas/semaforo.do?plan=' + sp.code +
-                        '&tipo=' + sp.type + '&tipoVista=semaforo&nodo=1&parametro=on')
-                html = source.get([:])
-                type = [["fundamentalCredits", "B"], ["disciplinaryCredits", "C"], ["freeChoiceCredits", "L"]]
-                def pr
-                html."**".findAll { it.@id.text().find(/arco_[0-9]+/) }.TABLE.TBODY.each {
-                    def value = -1
-                    def component = it.TR[0].TD[0].text().toUpperCase()
-                    //Se obtiene la cantidad de creditos por componente
-                    if (component.contains("FUND")) {
-                        value = type[0]
-                        sp[value[0]] = component.find(/[0-9]+/).toInteger()
-                    } else if (component.contains("DISC") || component.contains("GRAD")) {
-                        value = type[1]
-                        if (sp[value[0]] == null) sp[value[0]] = 0
-                        sp[value[0]] += component.find(/[0-9]+/).toInteger()
-                    }else if (component.contains("LIBRE")) {
-                        value = type[2]
-                        sp[value[0]] = component.find(/[0-9]+/).toInteger()
-                    }
-                    if (value != -1) {
-                        it.TR[1].TD[0].TABLE.each {
-                            it.TBODY.TR[0].TD[1].DIV.each {
-                                pr = getCourseInfo(it, value[1], sp)
-                                if (pr != null) sp.addToCourses(pr)
-                            }
-                            it.TBODY.TR[0].TD[1].TABLE.each {
-                                it.TBODY.TR[0].TD[1].DIV.each {
-                                    pr = getCourseInfo(it, value[1], sp)
-                                    if (pr != null) sp.addToCourses(pr)
-                                }
-                            }
-                        }
-                    }
-                }
-                println sp.name + " " +sp.disciplinaryCredits + " " + sp.freeChoiceCredits + " " + sp.fundamentalCredits +
-                        ((sp.courses != null) ? "courses " + sp.courses.size() : "no courses")
-                sp.save( )
-            } catch (Exception e) {
-                println "Programa academico $sp.name de la sede $sp.location.name no disponible"
-            }
-        }*/
 
+        Degree.findByCode(2879).each { sp ->
+
+            def url = sp.location.url + '/academia/catalogo-programas/semaforo.do?plan=' + sp.code + '&tipo=' + sp.type + '&tipoVista=semaforo&nodo=1&parametro=on'
+
+            def http = new HTTPBuilder(url)
+
+            html = http.get([:])
+
+            //Filling codes
+            html."**".findAll { it.@class.toString().contains("caja-ass") }.each { it2 ->
+
+                def code = it2.DIV[1].A.H5.text()
+                def credits
+
+                try {
+                    credits = Integer.parseInt(it2.DIV[1].A.DIV[1].text())
+                } catch (Exception e) {
+                    credits = -1
+                }
+
+                def name = it2.DIV[2].DIV[1].H4.text()
+
+                //println code+" "+credits+" "+name
+
+                new Course([code: code, name: name, credits: credits]).save()
+
+                /*def i = it2.breadthFirst()
+
+                while(i.hasNext()){
+                    println i.next().name()
+                }*/
+            }
+
+        }
     }
     def destroy = {
     }
