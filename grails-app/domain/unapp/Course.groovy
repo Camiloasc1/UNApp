@@ -4,6 +4,7 @@ class Course extends Commentable
 {
     String code
     String name
+    String typology
     int credits
     String description
     String contents

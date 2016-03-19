@@ -4,6 +4,9 @@ import unapp.Location
 import unapp.Course
 import java.text.Normalizer
 import groovyx.net.http.HTTPBuilder
+import static groovyx.net.http.Method.POST
+import grails.converters.JSON
+
 
 class BootStrap {
 
@@ -25,8 +28,6 @@ class BootStrap {
             type.each {
                 try {
 
-                    //source = new URL('http://www.google.com.co/').getContent()
-                    //source = source.findAll(pattern)
                     source = new URL(loc.url + '/academia/scripts/catalogo-programas/items_catalogo_' + it + '.js')
                             .getText('ISO-8859-1')
                     source = source.findAll(pattern)
@@ -35,7 +36,6 @@ class BootStrap {
 
                     for (def i = 0; i < source.size(); i++) {
                         source[i] = Normalizer.normalize(source[i], Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", '').toUpperCase().replaceAll("'", "")
-                        //source[i] = Utility.stripAccents()
                         if (source[i].contains('FACULTAD')) {
                             faculty = source[i]
                         } else if (i + 1 < source.size() && source[i + 1].contains('semaforo')) {
@@ -45,7 +45,7 @@ class BootStrap {
                     }
 
                 } catch (Exception e) {
-                    e.printStackTrace()
+                    //e.printStackTrace()
                     println "Sia sede $loc.name no disponible"
                 }
             }
@@ -56,34 +56,47 @@ class BootStrap {
 
             println sp.toString()
 
-            def url = sp.location.url + '/academia/catalogo-programas/semaforo.do?plan=' + sp.code + '&tipo=' + sp.type + '&tipoVista=semaforo&nodo=1&parametro=on'
+            def url = (sp.location == 'Medellin') ? Location.findByName(sp.location).url + ":9401/" :
+                    Location.findByName(sp.location).url
+            def http = new HTTPBuilder(url + '/buscador/JSON-RPC')
+            def codeStudyPlan = sp.code
 
-            def http = new HTTPBuilder(url)
+            def list = []
+            http.request(POST, groovyx.net.http.ContentType.JSON) { req ->
 
-            html = http.get([:])
+                body = [
+                        "jsonrpc": "2.0",
+                        "method" : "buscador.obtenerAsignaturas",
+                        "params" : ["", "PRE", "", "" , codeStudyPlan, "", 1, 999]
+                ]
 
-            //Filling codes
-            html."**".findAll { it.@class.toString().contains("caja-ass") }.each { it2 ->
+                // success response handler
+                response.success = { resp, json ->
 
-                String code = it2.DIV[1].A.H5.text()
-                def credits
+                    json.result.asignaturas.list.each { v ->
+                        list.add(["name": v.nombre, "typology": v.tipologia,
+                                  "code": v.codigo, "credits": v.creditos])
 
-                try {
-                    credits = Integer.parseInt(it2.DIV[1].A.DIV[1].text())
-                } catch (Exception e) {
-                    credits = -1
+                        if (!Course.findByCode(v.codigo)) {
+                            def course = new Course(list.last())
+                            if (!course.save()) {
+                                println "error guardando curso"
+                            }
+                        }
+                    }
                 }
 
-                def name = it2.DIV[2].DIV[1].H4.text()
-
-                if( Course.findByCode(code) == null ) {
-                    println code+" "+name
-                    new Course([code: code, name: name, credits: credits]).save()
+                // failure response handler
+                response.failure = { resp ->
+                    println "Unexpected error: ${resp.statusLine.statusCode}"
+                    println "${resp.statusLine.reasonPhrase}"
                 }
             }
-
         }
     }
+
+
     def destroy = {
+
     }
 }
