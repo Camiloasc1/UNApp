@@ -1,7 +1,5 @@
 import unapp.DBFillerService
-import unapp.Degree
-import unapp.Location
-import unapp.Course
+import unapp.*
 import java.text.Normalizer
 import groovyx.net.http.HTTPBuilder
 import static groovyx.net.http.Method.POST
@@ -51,8 +49,8 @@ class BootStrap {
             }
         }
 
-
-        Degree.findAll("from Degree as d where d.type='PRE'").each { sp ->
+        //Modify this query if you want to include morw Degrees
+        Degree.findAll("from Degree as d where d.type='PRE' and d.code = 2879").each { sp ->
 
             println sp.toString()
 
@@ -79,6 +77,7 @@ class BootStrap {
 
                         if (!Course.findByCode(v.codigo)) {
                             def course = new Course(list.last())
+                            course.location = sp.location.name
                             if (!course.save()) {
                                 println "error guardando curso"
                             }
@@ -93,7 +92,50 @@ class BootStrap {
                 }
             }
         }
+
+        Course.list().each{ course ->
+            println course.toString()
+
+            def loc = Location.findByName(course.location)
+
+            def url = (loc.name == 'Medellin') ? loc.url + ":9401/" : loc.url
+            def http = new HTTPBuilder(url + '/buscador/JSON-RPC')
+
+            def groups = []
+            http.request(POST, groovyx.net.http.ContentType.JSON) { req ->
+                body = [
+                        "jsonrpc": "2.0",
+                        "method" : "buscador.obtenerGruposAsignaturas",
+                        "params" : [course.code, "0"]
+                ]
+
+                // success response handler
+                response.success = { resp, json ->
+                    json.result.list.each { a ->
+                        def temp = ["teacher"       : (a.nombredocente.trim().size() == 0)? 'Profesor no asignado': a.nombredocente, "code": a.codigo,
+                                    "availableSpots": a.cuposdisponibles, "totalSpots": a.cupostotal, "timeSlots": []]
+                        def name = temp["teacher"]
+                        if(Teacher.findByName(name)==null){
+                            def teacher = new Teacher([name:name])
+                            if(!teacher.save()){
+                                println "Error guardando el profesor " + name
+                            }
+                        }
+                    }
+                }
+
+                // failure response handler
+                response.failure = { resp ->
+                    println "Unexpected error: ${resp.statusLine.statusCode}"
+                    println $ { resp.statusLine.reasonPhrase }
+                }
+            }
+
+        }
     }
+
+
+
 
 
     def destroy = {

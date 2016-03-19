@@ -8,6 +8,7 @@ class Course extends Commentable
     int credits
     String description
     String contents
+    String location
     static belongsTo = Teacher
     static hasMany = [teachers: Teacher, evaluations: CourseEvaluation]
 
@@ -16,6 +17,7 @@ class Course extends Commentable
         evaluations nullable: true
         description nullable: true
         contents nullable: true
+        location nullable: true
     }
 
     /*static mapping = {
@@ -23,7 +25,7 @@ class Course extends Commentable
     }*/
 
     String toString(){
-        return code+" "+name+" "+credits
+        return code+" "+name+" "+credits+" "+location
     }
 
 }
