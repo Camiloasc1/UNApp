@@ -1,4 +1,3 @@
-import unapp.DBFillerService
 import unapp.*
 import java.text.Normalizer
 import groovyx.net.http.HTTPBuilder
@@ -7,6 +6,10 @@ import grails.converters.JSON
 
 
 class BootStrap {
+
+    def normalize(String s){
+        return Normalizer.normalize(s, Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", '').toUpperCase().replaceAll("'", "")
+    }
 
     def init = { servletContext ->
         new Location( [name:"Bogota", url:"http://sia.bogota.unal.edu.co" ] ).save()
@@ -49,7 +52,7 @@ class BootStrap {
             }
         }
 
-        //Modify this query if you want to include morw Degrees
+        //Modify this query if you want to include more Degrees
         Degree.findAll("from Degree as d where d.type='PRE' and d.code = 2879").each { sp ->
 
             println sp.toString()
@@ -72,7 +75,7 @@ class BootStrap {
                 response.success = { resp, json ->
 
                     json.result.asignaturas.list.each { v ->
-                        list.add(["name": v.nombre, "typology": v.tipologia,
+                        list.add(["name": normalize(v.nombre), "typology": v.tipologia,
                                   "code": v.codigo, "credits": v.creditos])
 
                         if (!Course.findByCode(v.codigo)) {
@@ -92,6 +95,10 @@ class BootStrap {
                 }
             }
         }
+
+        def co = new Course( [name:"SIN PREREQUISITOS" , code:-1 , credits: 0, typology: "P"])
+        co.location = Location.findByName("Bogota")
+        co.save()
 
         Course.list().each{ course ->
             println course.toString()
@@ -132,11 +139,87 @@ class BootStrap {
             }
 
         }
+
+
+        Degree.findAll("from Degree as d where d.type='PRE' and d.code = 2879").each { sp ->
+            def url = sp.location.url + '/academia/catalogo-programas/semaforo.do?plan=' + sp.code + '&tipo=' + sp.type + '&tipoVista=semaforo&nodo=1&parametro=on'
+            def http = new HTTPBuilder(url)
+            html = http.get([:])
+
+            //Filling codes
+            html."**".findAll { it.@class.toString().contains("caja-ass") }.each { it2 ->
+
+                String code = it2.DIV[1].A.H5.text()
+                def credits
+
+                try {
+                    credits = Integer.parseInt(it2.DIV[1].A.DIV[1].text())
+                } catch (Exception e) {
+                    credits = -1
+                }
+
+                String name = it2.DIV[2].DIV[1].H4.text()
+                name = normalize(name)
+
+                if( Course.findByName(name) == null ) {
+                    def cc = new Course( [code: code, name: name, credits: credits] )
+                    cc.location = sp.location
+                    if(!cc.save(flush:true)){
+                        log.error "${cc.errors.allErrors}"
+                        println name+" "+cc.toString()
+                    }
+                }
+
+            }
+
+        }
+
+
+        Degree.findAll("from Degree as d where d.type='PRE' and d.code = 2879").each { sp ->
+
+            println sp.toString()
+
+            def url = sp.location.url + '/academia/catalogo-programas/semaforo.do?plan=' + sp.code + '&tipo=' + sp.type + '&tipoVista=semaforo&nodo=1&parametro=on'
+
+            def http = new HTTPBuilder(url)
+
+            html = http.get([:])
+
+            //Filling codes
+            html."**".findAll { it.@class.toString().contains("caja-ass") }.each { it2 ->
+
+                String name = it2.DIV[2].DIV[1].H4.text()
+                name = normalize(name)
+
+                def iterator = it2.DIV[2].DIV[1].childNodes()
+
+                def i = 0
+                while(iterator.hasNext()){
+                    def prerequisite = iterator.next()
+                    if(i>=3){
+                        def aux = prerequisite.text()
+                        aux = normalize(aux)
+                        aux = aux.find(/[a-zA-Z][a-zA-Z ]+/)
+                        def prev = Course.findByName(aux)
+                        if(prev==null){
+                            println normalize(prerequisite.text())
+                            println prev+" wasn't found"
+                        }
+                        def edge = new Edge( [prev: prev , next: Course.findByName(name) , degree: sp   ] )
+                        if(!edge.save()){
+                            log.error "${edge.errors.allErrors}"
+                        }
+                    }
+                    i++
+                }
+
+
+            }
+
+        }
+
+
     }
-
-
-
-
 
     def destroy = {
 
