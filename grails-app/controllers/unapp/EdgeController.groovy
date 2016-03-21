@@ -9,12 +9,10 @@ class EdgeController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    static scaffold = true
-
-    /*def index(Integer max) {
+    def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Edge.list(params), model: [edgeInstanceCount: Edge.count()]
-    }*/
+    }
 
     def show(Edge edgeInstance) {
         respond edgeInstance

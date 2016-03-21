@@ -164,6 +164,9 @@ class BootStrap {
                 }
 
                 String name = it2.DIV[2].DIV[1].H4.text()
+
+                if(name == "") name = code
+
                 name = normalize(name)
 
                 if( Course.findByName(name) == null ) {
@@ -193,8 +196,12 @@ class BootStrap {
             //Filling codes
             html."**".findAll { it.@class.toString().contains("caja-ass") }.each { it2 ->
 
+                String code = it2.DIV[1].A.H5.text()
+
                 String name = it2.DIV[2].DIV[1].H4.text()
                 name = normalize(name)
+
+                if(name == "") name = code
 
                 def iterator = it2.DIV[2].DIV[1].childNodes()
 
@@ -204,14 +211,16 @@ class BootStrap {
                     if(i>=3){
                         def aux = prerequisite.text()
                         aux = normalize(aux)
-                        aux = aux.find(/[a-zA-Z][a-zA-Z ]+/)
+                        aux = aux.find(/[a-zA-Z][a-zA-Z ]+/).trim()
                         def prev = Course.findByName(aux)
-                        if(prev==null){
+                        if(prev==null || aux==null){
                             println normalize(prerequisite.text())
                             println prev+" wasn't found"
                         }else{
+                            name = name.trim()
                             def edge = new Edge( [prev: prev , next: Course.findByName(name) , degree: sp   ] )
                             if(!edge.save()){
+                                println name+" "+aux
                                 log.error "${edge.errors.allErrors}"
                             }
                         }

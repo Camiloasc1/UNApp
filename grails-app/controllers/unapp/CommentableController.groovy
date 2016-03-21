@@ -9,12 +9,10 @@ class CommentableController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    /*def index(Integer max) {
+    def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Commentable.list(params), model: [commentableInstanceCount: Commentable.count()]
-    }*/
-
-    static scaffold = true
+    }
 
     def show(Commentable commentableInstance) {
         respond commentableInstance

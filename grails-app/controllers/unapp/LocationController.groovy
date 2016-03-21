@@ -9,12 +9,10 @@ class LocationController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    /*def index(Integer max) {
+    def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Location.list(params), model: [locationInstanceCount: Location.count()]
-    }*/
-
-    static scaffold = true
+    }
 
     def show(Location locationInstance) {
         respond locationInstance

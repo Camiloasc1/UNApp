@@ -12,10 +12,10 @@ class CourseController {
 
     static scaffold = true
 
-    /*def index(Integer max) {
+    def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Course.list(params), model: [courseInstanceCount: Course.count()]
-    }*/
+    }
 
     def show(Course courseInstance) {
         respond courseInstance

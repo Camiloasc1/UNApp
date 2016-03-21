@@ -9,12 +9,12 @@ class TeacherController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    /*def index(Integer max) {
+    static scaffold = true
+
+    def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Teacher.list(params), model: [teacherInstanceCount: Teacher.count()]
-    }*/
-
-    static scaffold = true
+    }
 
     def show(Teacher teacherInstance) {
         respond teacherInstance
