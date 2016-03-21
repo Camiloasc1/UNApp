@@ -12,6 +12,11 @@ class BootStrap {
     }
 
     def init = { servletContext ->
+
+        def user = new User(name:"Pepito suarez",googleID:"1234",email:"amrondonp@gmail.com")
+        user.save()
+
+
         new Location( [name:"Bogota", url:"http://sia.bogota.unal.edu.co" ] ).save()
         new Location( [ name:"Amazonas", url:"http://siaama.unal.edu.co" ] ).save()
         new Location( [ name:"Caribe", url:"http://siacar.unal.edu.co" ] ).save()
@@ -123,7 +128,7 @@ class BootStrap {
                                     "availableSpots": a.cuposdisponibles, "totalSpots": a.cupostotal, "timeSlots": []]
                         def name = temp["teacher"]
                         if(Teacher.findByName(name)==null){
-                            def teacher = new Teacher([name:name])
+                            def teacher = new Teacher([name:name]).addToCourses( course )
                             if(!teacher.save()){
                                 println "Error guardando el profesor " + name
                             }
@@ -204,10 +209,11 @@ class BootStrap {
                         if(prev==null){
                             println normalize(prerequisite.text())
                             println prev+" wasn't found"
-                        }
-                        def edge = new Edge( [prev: prev , next: Course.findByName(name) , degree: sp   ] )
-                        if(!edge.save()){
-                            log.error "${edge.errors.allErrors}"
+                        }else{
+                            def edge = new Edge( [prev: prev , next: Course.findByName(name) , degree: sp   ] )
+                            if(!edge.save()){
+                                log.error "${edge.errors.allErrors}"
+                            }
                         }
                     }
                     i++

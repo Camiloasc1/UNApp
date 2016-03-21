@@ -19,4 +19,9 @@ class Teacher extends Commentable
     {
         return "http://www.docentes.unal.edu.co/${username}/"
     }
+
+    String toString(){
+        return name
+    }
+
 }
