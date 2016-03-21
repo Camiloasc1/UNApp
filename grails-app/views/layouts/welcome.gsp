@@ -88,10 +88,10 @@
                         <a href="#page-top"></a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#">Profesores</a>
+                        <a href="teacher/index">Profesores</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#">Materias</a>
+                        <a href="course/index">Materias</a>
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Nosotros

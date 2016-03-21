@@ -19,6 +19,10 @@ class Course extends Commentable
         contents nullable: true
         location nullable: true
         typology nullable: true
+
+        description display:false
+        contents display:false
+        name display:true
     }
 
     /*static mapping = {
