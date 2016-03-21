@@ -13,8 +13,8 @@ class BootStrap {
 
     def init = { servletContext ->
 
-        def user = new User(name:"Pepito suarez",googleID:"1234",email:"amrondonp@gmail.com")
-        user.save()
+        //def user = new User(name:"Pepito suarez",googleID:"1234",email:"amrondonp@gmail.com")
+        //user.save()
 
 
         new Location( [name:"Bogota", url:"http://sia.bogota.unal.edu.co" ] ).save()
