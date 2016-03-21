@@ -1,0 +1,22 @@
+{
+  "name": "UNApp",
+  "description": "",
+  "scripts": {
+  },
+  "env": {
+    "JAVA_OPTS": {
+      "required": true
+    },
+    "PATH": {
+      "required": true
+    }
+  },
+  "addons": [
+    "heroku-postgresql"
+  ],
+  "buildpacks": [
+    {
+      "url": "https://codon-buildpacks.s3.amazonaws.com/buildpacks/heroku/grails.tgz"
+    }
+  ]
+}
