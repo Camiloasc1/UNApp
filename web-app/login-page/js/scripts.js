@@ -5,9 +5,9 @@ jQuery(document).ready(function() {
         Fullscreen background
     */
     $.backstretch([
-					"/UNApp/login-page/img/1.jpg"
-	              ,"/UNApp/login-page/img/2.jpg"
-	              ,"/UNApp/login-page/img/3.jpg"
+					"/login-page/img/1.jpg"
+	              ,"/login-page/img/2.jpg"
+	              ,"/login-page/img/3.jpg"
 
 	             ], {duration: 4000, fade: 750});
     
