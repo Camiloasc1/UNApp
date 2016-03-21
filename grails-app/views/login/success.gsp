@@ -13,5 +13,11 @@
 
 <body>
 Login Success
+<table>
+    <tr><th>Key</th><th>Value</th></tr>
+    <g:each var="it" in="${data}">
+        <tr><td>${it.key}</td><td>${it.value}</td></tr>
+    </g:each>
+</table>
 </body>
 </html>

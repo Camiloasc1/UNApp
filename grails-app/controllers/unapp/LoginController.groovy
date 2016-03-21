@@ -1,12 +1,21 @@
 package unapp
 
+import grails.converters.JSON
+import org.scribe.model.Token
+
 class LoginController
 {
     def oauthService
 
     def index() {}
 
-    def success() {}
+    def success()
+    {
+        Token googleAccessToken = (Token) session[oauthService.findSessionKeyForAccessToken('google')]
+        def googleResource = oauthService.getGoogleResource(googleAccessToken, "https://www.googleapis.com/oauth2/v2/userinfo")
+        def googleResponse = JSON.parse(googleResource?.getBody())
+        [data: googleResponse]
+    }
 
     def failure() {}
 
