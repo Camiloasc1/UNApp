@@ -88,10 +88,11 @@ grails.hibernate.osiv.readonly = false
 environments {
     development {
         grails.logging.jul.usebridge = true
+        grails.serverURL = "http://localhost:8080/UNApp"
     }
     production {
         grails.logging.jul.usebridge = false
-        // TODO: grails.serverURL = "http://www.changeme.com"
+        grails.serverURL = "https://un-app.herokuapp.com"
     }
 }
 
@@ -126,7 +127,7 @@ oauth {
             key = '981288372048-05ihor35pspdvsa04hcg679oj1bdo6p7.apps.googleusercontent.com'
             secret = 'YHTrz-vk7FsuuZBmAA-51LZJ'
             scope = 'email profile'
-            callback = 'https://un-app.herokuapp.com/oauth/google/callback'
+            callback = '${grails.serverURL}/oauth/google/callback'
             successUri = '/login/success'
             failureUri = '/login/failure'
         }
