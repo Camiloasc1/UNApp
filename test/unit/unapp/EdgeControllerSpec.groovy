@@ -11,7 +11,9 @@ class EdgeControllerSpec extends Specification {
     def populateValidParams(params) {
         assert params != null
         // TODO: Populate valid properties like...
-        //params["name"] = 'someValidName'
+        params["prev"] = new Course([code: "342332", name: "Matematicas discretas II", credits: 4])
+        params["next"] =new Course([code: "342331", name: "Matematicas discretas I", credits: 4])
+        params["degree"] = new Degree( code:"1", name: "name" , type : "type", location : new Location( name: "d", url : "a") , courses : [] )
     }
 
     void "Test the index action returns the correct model"() {

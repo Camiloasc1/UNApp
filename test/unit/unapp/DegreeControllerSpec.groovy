@@ -11,7 +11,10 @@ class DegreeControllerSpec extends Specification {
     def populateValidParams(params) {
         assert params != null
         // TODO: Populate valid properties like...
-        //params["name"] = 'someValidName'
+        params["name"] = 'someValidName'
+        params["type"] = 'someValidType'
+        params["location"] = new Location(name :"Bogota" , url : "sia.unal.edu.co")
+        params["courses"] = []
     }
 
     void "Test the index action returns the correct model"() {

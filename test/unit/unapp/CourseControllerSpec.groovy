@@ -10,8 +10,7 @@ class CourseControllerSpec extends Specification {
 
     def populateValidParams(params) {
         assert params != null
-        // TODO: Populate valid properties like...
-        //params["name"] = 'someValidName'
+        return [code: "342332", name: "Matematicas discretas II", credits: 4]
     }
 
     void "Test the index action returns the correct model"() {
@@ -47,7 +46,10 @@ class CourseControllerSpec extends Specification {
 
         when: "The save action is executed with a valid instance"
         response.reset()
-        populateValidParams(params)
+        def params = populateValidParams(params)
+
+        println params
+
         course = new Course(params)
 
         controller.save(course)
@@ -113,7 +115,7 @@ class CourseControllerSpec extends Specification {
 
         when: "A valid domain instance is passed to the update action"
         response.reset()
-        populateValidParams(params)
+        def params = populateValidParams(params)
         course = new Course(params).save(flush: true)
         controller.update(course)
 
@@ -134,7 +136,7 @@ class CourseControllerSpec extends Specification {
 
         when: "A domain instance is created"
         response.reset()
-        populateValidParams(params)
+        def params = populateValidParams(params)
         def course = new Course(params).save(flush: true)
 
         then: "It exists"

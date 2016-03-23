@@ -6,6 +6,7 @@ class Degree {
     String type
     static belongsTo = [location:Location]
     static hasMany = [courses:Course]
+
     static constraints = {
     }
     String toString(){
