@@ -15,7 +15,7 @@ class BootStrap {
 
         //def user = new User(name:"Pepito suarez",googleID:"1234",email:"amrondonp@gmail.com")
         //user.save()
-
+        if(Location.list().size()>0) return
 
         new Location( [name:"Bogota", url:"http://sia.bogota.unal.edu.co" ] ).save()
         new Location( [ name:"Amazonas", url:"http://siaama.unal.edu.co" ] ).save()
