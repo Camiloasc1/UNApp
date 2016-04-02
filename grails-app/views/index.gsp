@@ -7,11 +7,10 @@
 <body>
 <!-- Header -->
 <header>
-    <div class="container_image">
-        <img class="img-responsive main_image" src="${assetPath(src: 'welcome_background.jpg')}" alt="">
+    <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-6 col-sm-offset-3" >
-                <img class="img-responsive" src="${assetPath(src: 'search_logo.png')}" alt="">
+                <img class="img-responsive search-logo" src="${assetPath(src: 'search_logo.png')}" alt="">
                 <div class="input-group">
                     <input type="text" class="form-control input-lg" placeholder="Buscar un Profesor o Materia..." />
                     <span class="input-group-btn">

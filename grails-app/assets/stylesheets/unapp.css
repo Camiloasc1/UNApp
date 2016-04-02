@@ -3,11 +3,18 @@
 }
 
 .search-logo{
-    height: 60px;
+    width: 70%;
+    margin: 0 auto;
 }
 
 .navbar-bar{
     padding: 10px;
+}
+
+header{
+    background: url(welcome_background.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
 
 @media screen and (min-width: 1000px) {
