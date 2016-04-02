@@ -80,7 +80,7 @@
                     </oauth:disconnected>
                     <oauth:connected provider="google">
                         <g:link controller="Login" action="revoke" id="google" title="Google">
-                            <i class="fa fa-google"></i> Cerrar Sesion
+                            <h4><i class="fa fa-google"></i> Cerrar Sesion</h4>
                         </g:link>
                     </oauth:connected>
                 </li>
