@@ -39,7 +39,6 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
             </button>
             <!--<a class="navbar-brand" href="#page-top">UN-App</a>-->
             <a class="navbar-brand" href="#page-top">
