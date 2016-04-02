@@ -21,9 +21,10 @@ class LoginController
             redirect action: 'index'
         }
 
-        Map data = [name: googleResponse.name, id: googleResponse.id, hd: googleResponse.hd, email: googleResponse.email]
+        //Map data = [name: googleResponse.name, id: googleResponse.id, hd: googleResponse.hd, email: googleResponse.email]
 
-        [data: googleResponse]
+        //[data: googleResponse]
+        redirect action: 'index'
     }
 
     def failure()
