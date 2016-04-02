@@ -30,7 +30,7 @@
 
 <body id="page-top">
 
-<nav class="navbar navbar-default navbar-bar navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -42,8 +42,8 @@
                 <span class="icon-bar"></span>
             </button>
             <!--<a class="navbar-brand" href="#page-top">UN-App</a>-->
-            <a href="#page-top">
-                <img class="img-responsive navbar-logo" src="${assetPath(src: 'unapp_logo.png')}" alt="UNApp logo">
+            <a class="navbar-brand" href="#page-top">
+                <img class="navbar-logo" src="${assetPath(src: 'unapp_logo.png')}" alt="UNApp logo">
             </a>
         </div>
 
@@ -89,7 +89,9 @@
     </div>
 </nav>
 
-<g:layoutBody/>
+<div class="main-content">
+    <g:layoutBody/>
+</div>
 
 <div id="footer"></div>
 
