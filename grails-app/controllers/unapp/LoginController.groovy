@@ -18,7 +18,7 @@ class LoginController
         {
             session[oauthService.findSessionKeyForAccessToken('google')] = null
             flash.message = "Only unal.edu.co users can login."
-            redirect action: 'failure'
+            redirect action: 'index'
         }
 
         Map data = [name: googleResponse.name, id: googleResponse.id, hd: googleResponse.hd, email: googleResponse.email]
@@ -26,14 +26,18 @@ class LoginController
         [data: googleResponse]
     }
 
-    def failure() {}
+    def failure()
+    {
+        flash.message = "Login failure."
+        redirect action: 'index'
+    }
 
     def revoke()
     {
         if (session[oauthService.findSessionKeyForAccessToken('google')])
         {
             session[oauthService.findSessionKeyForAccessToken('google')] = null
-            flash.message = "Token revoked successfully."
+            flash.message = "Logged out."
         }
         redirect action: 'index'
     }
