@@ -1,0 +1,49 @@
+.navbar-logo{
+    height: 75px;
+}
+
+.search-logo{
+    width: 70%;
+    margin: 0 auto;
+}
+
+.navbar-bar{
+    padding: 10px;
+}
+
+header{
+    background: url(welcome_background.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+@media screen and (min-width: 1000px) {
+    .window_search {
+        position: absolute;
+        top: 40%;
+    }
+}
+
+@media screen and (min-width: 750px) and (max-width: 1000px){
+    .window_search {
+        position: absolute;
+        top: 30%;
+    }
+}
+
+@media screen and (min-width: 650px) and (max-width: 750px){
+    .window_search {
+        position: absolute;
+        top: 20%;
+    }
+}
+
+
+@media screen and (min-width: 800px) {
+    .window_search > #custom-search-input {
+        background-color: rgba(178, 178, 178, 0.45);
+        border-radius: 20px;
+        padding: 22px;
+    }
+}
+
