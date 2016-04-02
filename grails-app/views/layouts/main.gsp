@@ -54,14 +54,14 @@
                     <a href="#page-top"></a>
                 </li>
                 <li class="page-scroll">
-                    <a href="${createLink(controller: 'teacher', action: 'index')}"><h3>Profesores</h3></a>
+                    <a href="${createLink(controller: 'teacher', action: 'index')}"><h4>Profesores</h4></a>
                 </li>
                 <li class="page-scroll">
-                    <a href="${createLink(controller: 'course', action: 'index')}"><h3>Materias</h3></a>
+                    <a href="${createLink(controller: 'course', action: 'index')}"><h4>Materias</h4></a>
                 </li>
                 <li class="dropdown">
-                    <a href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown"><h3>Nosotros
-                        <span class="caret"></span></h3>
+                    <a href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown"><h4>Nosotros
+                        <span class="caret"></span></h4>
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="${createLink(view: 'index')}#portfolio">Desarrolladores</a></li>
@@ -75,16 +75,12 @@
                 <li>
                     <oauth:disconnected provider="google">
                         <oauth:connect provider="google">
-                            <button type="button" class="btn btn-raised btn-primary">
-                                <i class="fa fa-google"></i> Ingresar con Google
-                            </button>
+                            <h4><i class="fa fa-google"></i> Ingresar con Google</h4>
                         </oauth:connect>
                     </oauth:disconnected>
                     <oauth:connected provider="google">
                         <g:link controller="Login" action="revoke" id="google" title="Google">
-                            <button type="button" class="btn btn-raised btn-primary">
-                                <i class="fa fa-google"></i> Cerrar Sesion
-                            </button>
+                            <i class="fa fa-google"></i> Cerrar Sesion
                         </g:link>
                     </oauth:connected>
                 </li>
