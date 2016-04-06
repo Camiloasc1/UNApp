@@ -74,7 +74,7 @@
                                 </oauth:connect>
                                 </oauth:disconnected>
                                 <oauth:connected provider="google">
-                                    <g:link controller="Login" action="revoke" id="google" title="Google">
+                                    <g:link controller="Login" action="revoke">
                                         <button type="button" class="btn btn-primary">Cerrar sesion</button>
                                     </g:link>
                                 </oauth:connected>

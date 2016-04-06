@@ -12,6 +12,6 @@
 </head>
 
 <body>
-Login Failure
+Only unal.edu.co users can login.
 </body>
 </html>

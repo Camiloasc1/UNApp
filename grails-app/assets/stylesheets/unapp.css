@@ -1,0 +1,107 @@
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+.navbar-logo {
+    height: 30px;
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .navbar-logo {
+        height: 35px;
+    }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .navbar-logo {
+        height: 40px;
+    }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .navbar-logo {
+        height: 50px;
+    }
+}
+
+.search-logo {
+    padding-top: 25px;
+}
+
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+.main-content {
+    margin-top: 50px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    background: url('welcome_background.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .main-content {
+        margin-top: 70px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+        background: url('welcome_background.jpg') no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        background-size: cover;
+        -o-background-size: cover;
+    }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .main-content {
+        margin-top: 70px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+        background: url('welcome_background.jpg') no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        background-size: cover;
+        -o-background-size: cover;
+    }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .main-content {
+        margin-top: 80px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+        background: url('welcome_background.jpg') no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        background-size: cover;
+        -o-background-size: cover;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    .window_search {
+        position: absolute;
+        top: 40%;
+    }
+}
+
+@media screen and (min-width: 750px) and (max-width: 1000px) {
+    .window_search {
+        position: absolute;
+        top: 30%;
+    }
+}
+
+@media screen and (min-width: 650px) and (max-width: 750px) {
+    .window_search {
+        position: absolute;
+        top: 20%;
+    }
+}
+
+@media screen and (min-width: 800px) {
+    .window_search > #custom-search-input {
+        background-color: rgba(178, 178, 178, 0.45);
+        border-radius: 20px;
+        padding: 22px;
+    }
+}
+
