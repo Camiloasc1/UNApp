@@ -49,7 +49,7 @@ grails.project.dependency.resolution = {
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
         // runtime 'mysql:mysql-connector-java:5.1.29'
-        runtime 'org.postgresql:postgresql:9.3-1101-jdbc41'
+        // runtime 'org.postgresql:postgresql:9.3-1101-jdbc41'
         test "org.grails:grails-datastore-test-support:1.0.2-grails-2.4"
     }
 
@@ -64,15 +64,17 @@ grails.project.dependency.resolution = {
         compile ":asset-pipeline:2.5.7"
 
         // plugins needed at runtime but not for compilation
-        runtime ":hibernate4:4.3.10" // or ":hibernate:3.6.10.18"
+        // runtime ":hibernate4:4.3.10" // or ":hibernate:3.6.10.18"
         runtime ":database-migration:1.4.0"
-        runtime ":jquery:1.11.1"
+        // runtime ":jquery:1.11.1"
 
         // Uncomment these to enable additional asset-pipeline capabilities
         //compile ":sass-asset-pipeline:1.9.0"
         //compile ":less-asset-pipeline:1.10.0"
         //compile ":coffee-asset-pipeline:1.8.0"
         //compile ":handlebars-asset-pipeline:1.3.0.3"
+
+        compile "org.grails.plugins:mongodb:5.0.3.RELEASE"
 
         compile "org.grails.plugins:oauth:2.6.1"
 
