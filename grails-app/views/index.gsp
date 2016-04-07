@@ -7,27 +7,11 @@
 <body>
 <!-- Header -->
 <header>
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4">
-                <img class="img-responsive search-logo" src="${assetPath(src: 'search_logo.png')}" alt="">
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
-                <div class="form-group label-floating">
-                    <label class="control-label" for="searchInput">Buscar un Profesor o Materia...</label>
-                    <div class="input-group">
-                        <input class="form-control" id="searchInput" type="text">
-                        <span class="input-group-btn">
-                            <button class="btn btn-info btn-lg" type="button">
-                                <i class="material-icons">search</i>
-                            </button>
-                        </span>
-                    </div>
-                </div>
-
+    <div class="container_image">
+        <img class="img-responsive main_image" src="${request.contextPath}/welcome-index/img/welcome.jpg" alt="">
+        <div class="row window_search" >
+            <div id="custom-search-input" class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
+                <img class="img-responsive main_unapp search-logo" src="${assetPath(src: 'search_logo.png')}" alt="">
                 <div class="input-group">
                     <input type="text" class="form-control input-lg" placeholder="Buscar un Profesor o Materia..."/>
                     <span class="input-group-btn">
