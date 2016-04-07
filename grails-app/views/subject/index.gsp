@@ -53,10 +53,11 @@
     </div>
     <div class="container">
         <div class="jumbotron row">
-            <form role="form" id="comentario">
+            <form action="comment" role="form" id="comentario">
                 <div class="col-lg-9 col-md-8">
                     <div class="form-group">
-                        <textarea class="form-control" rows="5" id="comment"></textarea>
+                        <input type="hidden" name="id" value=${c.id}>
+                        <textarea class="form-control" name="body" rows="5" id="body" ></textarea>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-4">

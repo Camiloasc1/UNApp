@@ -5,9 +5,9 @@ class User
     String googleID // sub field is an unique identifier
     String name
     String email
-    int positiveVotes
-    int negativeVotes
-    boolean isAdmin
+    int positiveVotes = 0
+    int negativeVotes = 0
+    boolean isAdmin = false
 
     String toString(){
         return name
