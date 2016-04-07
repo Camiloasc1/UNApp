@@ -6,9 +6,10 @@ class Comment
     String body
     int positiveVotes
     int negativeVotes
-    def Commentable commentable
+    def Teacher teacher
+    def Course course
 
-    static belongsTo = [Commentable]
+    //static belongsTo = [Commentable]
     static constraints = {
     }
 }
