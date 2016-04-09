@@ -15,7 +15,7 @@ class CommentControllerSpec extends Specification {
         params["positiveVotes"] = 0
         params["negativeVotes"] = 0
         params["author"] = new User(potitiveVotes: 0 ,negativeVotes: 0, isAdmin: false,  name:"Pepito suarez",googleID:"1234",email:"amrondonp@gmail.com")
-        params["commentable"] = new Commentable()
+        //params["commentable"] = new Commentable()//TODO FIX for mongoDB
     }
 
     void "Test the index action returns the correct model"() {
