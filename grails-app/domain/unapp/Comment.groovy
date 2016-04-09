@@ -11,5 +11,7 @@ class Comment
 
     //static belongsTo = [Commentable]
     static constraints = {
+        teacher nullable:  true
+        course nullable: true
     }
 }

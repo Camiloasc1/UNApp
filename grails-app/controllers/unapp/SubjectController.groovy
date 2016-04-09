@@ -11,14 +11,22 @@ class SubjectController {
 
     def comment(){
 
-        //Mock user
-        def user = User.list().get(0)
+        def user = session["user"]
+
+        if(user == null){
+            render "ingresa para comentar"
+            return
+        }
 
         def course = Course.get( params.id )
-        Comment comment = new Comment( body:params.body , commentable: course , author: user )
+
+        def teacher = null //TODO
+
+        Comment comment = new Comment( body:params.body , course: course ,teacher: teacher ,author: user )
         comment.save()
 
-        render "Commentario guardado"//redirect action: "index" , params: params
+        render view: "index", model: [ c: course ]
+        //render "Commentario guardado"//redirect action: "index" , params: params
     }
 
 }

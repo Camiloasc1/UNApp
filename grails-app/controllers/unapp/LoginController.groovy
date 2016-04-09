@@ -20,7 +20,14 @@ class LoginController
             //redirect action: 'index'
             redirect(uri: '/')
         }
-        //redirect action: 'index'
+        def user = User.findByGoogleID(googleResponse.id)
+        if(user == null){
+            user = new User( name: googleResponse.name  , email : googleResponse.email , googleID: googleResponse.id )
+            user.save()
+        }
+
+        session ["user"] = user
+
         redirect(uri: '/')
     }
 
@@ -38,7 +45,9 @@ class LoginController
             session[oauthService.findSessionKeyForAccessToken('google')] = null
             flash.message = "Logged out."
         }
-        //redirect action: 'index'
+
+        session["user"] = null
+
         redirect(uri: '/')
     }
 
