@@ -13,16 +13,21 @@
     margin-top: 150px;
 }
 
+
 .star-rating {
     list-style-type: none;
     font-size: 175%;
     color: gold;
-    margin: 0 0 0 25px;
     width:100%
 }
 
+ul{
+    padding: 0;
+    list-style-type: none;
+}
+
 .star-rating li {
-    float: left;
+    display: inline-block;
     margin: 1.5%;
 }
 
@@ -108,3 +113,33 @@
     }
 }
 
+/*  comment sections css*/
+
+.thumbnail {
+    padding:0px;
+}
+.panel {
+    position:relative;
+}
+.panel>.panel-heading:after,.panel>.panel-heading:before{
+    position:absolute;
+    top:11px;left:-16px;
+    right:100%;
+    width:0;
+    height:0;
+    display:block;
+    content:" ";
+    border-color:transparent;
+    border-style:solid solid outset;
+    pointer-events:none;
+}
+.panel>.panel-heading:after{
+    border-width:7px;
+    border-right-color:#f7f7f7;
+    margin-top:1px;
+    margin-left:2px;
+}
+.panel>.panel-heading:before{
+    border-right-color:#ddd;
+    border-width:8px;
+}

@@ -15,21 +15,17 @@
     <div class="container subjectInfo">
        <div class="jumbotron row">
            <div class="col-lg-5 col-md-4">
-               <img src="${request.contextPath}/images/Font-Book.png" class="img-rounded" height="250" width="250">
-               <h1 style="text-align: center" >${c.name}</h1>
+               <img src="${request.contextPath}/images/Font-Book.png" class="img-rounded center-block" height="250" width="250">
+               <h1 style="text-align: center">${c.name}</h1>
                <h2 style="text-align: center" >${c.location}</h2>
-               <div class="row">
-                   <!--<div class="col-xs-1"></div>-->
-                   <div class="center-block">
-                       <ul class="star-rating">
+               <div class="row text-center">
+                        <ul class="star-rating">
                            <li class="star" id="1">&#9734;</li>
                            <li class="star" id="2">&#9734;</li>
                            <li class="star" id="3">&#9734;</li>
                            <li class="star" id="4">&#9734;</li>
                            <li class="star" id="5">&#9734;</li>
-                       </ul>
-                   </div>
-                   <!--<div class="col-xs-1"></div>-->
+                        </ul>
                </div>
                <div class="col-xs-12 display-rating" style="text-align: center">Tu voto fue de: </div>
 
@@ -70,21 +66,53 @@
             </form>
         </div>
     </div>
-    <!--<div class="row">
-        <div class="col-lg-4">
-            <div class="container">
+    <div class="container">
+            <div class="container col-lg-4">
                 <div class="jumbotron">
                     <form role="form" id="filtro">
                         <h2>Busca tus comentarios:</h2>
                     </form>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-8">
-            <div class="container">
-                <div class="jumbotron"></div>
-            </div>
-        </div>
-    </div>-->
+          <div class="container col-lg-8">
+                <div class="jumbotron">
+                    <h3>Comentarios</h3>
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <div class="thumbnail">
+                                <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                            </div><!-- /thumbnail -->
+                        </div><!-- /col-sm-1 -->
+
+                        <div class="col-sm-11">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <strong>username</strong> <span class="text-muted">comento hace 5 dias</span>
+                                </div>
+                                <div class="panel-body">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vehicula arcu sapien, eget faucibus augue tempor quis. Vestibulum ante ipsum.
+                                </div><!-- /panel-body -->
+                            </div><!-- /panel panel-default -->
+                        </div><!-- /sm-11 -->
+
+                        <div class="col-sm-1">
+                            <div class="thumbnail">
+                                <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                            </div><!-- /thumbnail -->
+                        </div><!-- /col-sm-1 -->
+
+                        <div class="col-sm-11">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <strong>username2</strong> <span class="text-muted">comento hace 8 dias</span>
+                                </div>
+                                <div class="panel-body">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut tincidunt tortor. Vestibulum ante ipsum primis in faucibus orci luctus.
+                                </div><!-- /panel-body -->
+                            </div><!-- /panel panel-default -->
+                        </div><!-- /sm-11 -->
+                </div>
+          </div>
+    </div>
 </body>
 </html>
