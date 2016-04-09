@@ -8,6 +8,7 @@ class Comment
     int negativeVotes
     def Teacher teacher
     def Course course
+    Date date
 
     //static belongsTo = [Commentable]
     static constraints = {

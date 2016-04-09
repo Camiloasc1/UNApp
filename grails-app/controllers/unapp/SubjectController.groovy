@@ -6,7 +6,9 @@ class SubjectController {
 
     def index() {
         def course = Course.get( params.id )
-        render view: "index", model: [ c: course ]
+        def comentarios = Comment.findAllByCourse(course)
+        comentarios.sort{a,b-> b.date<=>a.date}
+        render view: "index", model: [ c: course, comments: comentarios ]
     }
 
     def comment(){
@@ -22,10 +24,15 @@ class SubjectController {
 
         def teacher = null //TODO
 
-        Comment comment = new Comment( body:params.body , course: course ,teacher: teacher ,author: user )
+        Comment comment = new Comment( body:params.body , course: course ,teacher: teacher ,author: user, date: new Date() )
         comment.save()
 
-        render view: "index", model: [ c: course ]
+        def comentarios = Comment.findAllByCourse(course)
+        comentarios.sort{a,b-> b.date<=>a.date}
+
+
+        [comments: comentarios]
+        //render view: "index", model: [ c: course ]
         //render "Commentario guardado"//redirect action: "index" , params: params
     }
 

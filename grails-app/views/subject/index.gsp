@@ -49,21 +49,21 @@
     </div>
     <div class="container">
         <div class="jumbotron row">
-            <form action="comment" role="form" id="comentario">
+            <g:formRemote url="[controller:'Subject',action:'comment']" update="comentarios-nuevos" name="comentar">
                 <div class="col-lg-9 col-md-8">
                     <div class="form-group">
-                        <input type="hidden" name="id" value=${c.id}>
-                        <textarea class="form-control" name="body" rows="5" id="body" ></textarea>
+                        <g:hiddenField name="id" value="${c.id}"></g:hiddenField>
+                        <g:textArea name="body" value="" rows="5" class="form-control"></g:textArea>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-4">
-                    <button type="submit" form="comentario" class="btn btn-default btn-raised btn-block">Comentar</button>
-                    <button type="button" class="btn btn-default btn-raised btn-block" onclick="document.getElementById('imagenComentario').click()">
+                    <button type="submit" form="comentar" class="btn btn-default btn-raised btn-block">Comentar</button>
+                    <!--<button type="button" class="btn btn-default btn-raised btn-block" onclick="document.getElementById('imagenComentario').click()">
                         <i class="material-icons">photo</i>  Sube una imagen
                     </button>
-                    <input type="file" id="imagenComentario" name="imagenComentario" style="display: none" />
+                    <input type="file" id="imagenComentario" name="imagenComentario" style="display: none" /> -->
                 </div>
-            </form>
+            </g:formRemote>
         </div>
     </div>
     <div class="container">
@@ -75,42 +75,31 @@
                 </div>
             </div>
           <div class="container col-lg-8">
-                <div class="jumbotron">
-                    <h3>Comentarios</h3>
+              <h3>Comentarios</h3>
+                <div class="jumbotron" id="container-comentarios">
                     <div class="row">
-                        <div class="col-sm-1">
-                            <div class="thumbnail">
-                                <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
-                            </div><!-- /thumbnail -->
-                        </div><!-- /col-sm-1 -->
+                        <div id="comentarios-nuevos">
+                            <g:each in="${comments}" var="comentario">
+                                <div class="comentario">
+                                    <div class="col-sm-1">
+                                        <div class="thumbnail">
+                                            <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                                        </div><!-- /thumbnail -->
+                                    </div><!-- /col-sm-1 -->
 
-                        <div class="col-sm-11">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <strong>username</strong> <span class="text-muted">comento hace 5 dias</span>
+                                    <div class="col-sm-11">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <strong>${comentario.author.name}</strong> <span class="text-muted">${comentario.date}</span>
+                                            </div>
+                                            <div class="panel-body">
+                                                ${comentario.body}
+                                            </div><!-- /panel-body -->
+                                        </div><!-- /panel panel-default -->
+                                    </div><!-- /sm-11 -->
                                 </div>
-                                <div class="panel-body">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vehicula arcu sapien, eget faucibus augue tempor quis. Vestibulum ante ipsum.
-                                </div><!-- /panel-body -->
-                            </div><!-- /panel panel-default -->
-                        </div><!-- /sm-11 -->
-
-                        <div class="col-sm-1">
-                            <div class="thumbnail">
-                                <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
-                            </div><!-- /thumbnail -->
-                        </div><!-- /col-sm-1 -->
-
-                        <div class="col-sm-11">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <strong>username2</strong> <span class="text-muted">comento hace 8 dias</span>
-                                </div>
-                                <div class="panel-body">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut tincidunt tortor. Vestibulum ante ipsum primis in faucibus orci luctus.
-                                </div><!-- /panel-body -->
-                            </div><!-- /panel panel-default -->
-                        </div><!-- /sm-11 -->
+                            </g:each>
+                        </div>
                 </div>
           </div>
     </div>
