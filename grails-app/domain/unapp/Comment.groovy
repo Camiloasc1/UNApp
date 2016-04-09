@@ -10,6 +10,10 @@ class Comment
     def Course course
     Date date
 
+    static mapping = {
+        body type: 'text'
+    }
+
     //static belongsTo = [Commentable]
     static constraints = {
         teacher nullable:  true
