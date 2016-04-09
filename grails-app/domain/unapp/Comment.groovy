@@ -1,14 +1,16 @@
 package unapp
 
-class Comment
-{
+class Comment {
     User author
     String body
     int positiveVotes
     int negativeVotes
-    def Commentable commentable
 
-    static belongsTo = [Commentable]
+    static belongsTo = [teacher: Teacher, course: Course]
     static constraints = {
+        author nullable: false
+        body nullable: false
+        positiveVotes nullable: false, min: 0
+        negativeVotes nullable: false, min: 0
     }
 }
