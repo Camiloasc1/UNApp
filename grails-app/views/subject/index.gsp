@@ -53,6 +53,7 @@
                 <div class="col-lg-9 col-md-8">
                     <div class="form-group">
                         <g:hiddenField name="id" value="${c.id}"></g:hiddenField>
+                        <g:hiddenField name="offset" value="${offset}"></g:hiddenField>
                         <g:textArea name="body" value="" rows="5" class="form-control"></g:textArea>
                     </div>
                 </div>
@@ -114,7 +115,19 @@
                 var offset = document.getElementById("offset").value;
                 document.getElementById("offset").value = offset + 5;
                 console.log(offset);
-                jQuery.ajax({type:'POST',data: {id:${c.id},offset:offset} , url:'/UNApp/subject/cargarComentarios',success:function(data,textStatus){jQuery('#comentarios-antiguos').append(data);},error:function(XMLHttpRequest,textStatus,errorThrown){}} ) ;
+
+                $.post({
+
+                    url: "cargarComentarios",
+                    data: { id: ${c.id} , offset : offset} ,
+
+                    success: function(data,status){
+                        //alert("Data: " + data + "\nStatus: " + status + offset);
+                        $("#comentarios-nuevos").append(data)
+                    }
+
+                });
+
             }
         </script>
 </body>

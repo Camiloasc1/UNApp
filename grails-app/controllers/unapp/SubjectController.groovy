@@ -39,7 +39,10 @@ class SubjectController {
                     '    </div><!-- /sm-11 -->\n' +
                     '</div>'
         }
-        render str
+        if(str.size()==0)
+            render "<div align = \"center\"> No existen mas comentarios </div>"
+        else
+            render str
     }
 
     def comment(){
@@ -47,7 +50,7 @@ class SubjectController {
         def user = session["user"]
 
         if(user == null){
-            render "ingresa para comentar"
+            render "<div align = \"center\"> Ingresar para comentar </div>"
             return
         }
 
@@ -61,7 +64,7 @@ class SubjectController {
         def comentarios = Comment.findAllByCourse(course,[sort:"date",order:"desc", max:5])
 
 
-        [comments: comentarios]
+        [comments: comentarios , offset: 5 ,  c: course]
         //render view: "index", model: [ c: course ]
         //render "Commentario guardado"//redirect action: "index" , params: params
     }
