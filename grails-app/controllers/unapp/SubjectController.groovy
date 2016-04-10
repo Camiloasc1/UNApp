@@ -13,9 +13,19 @@ class SubjectController {
 
 
     def cargarComentarios(String offset, String id){
-        def off = offset.size()*5;
+        def off = offset.toInteger()
         def course = Course.get( id.toInteger() )
         def comentarios = Comment.findAllByCourse(course,[sort:"date",order:"desc", max:5 , offset: off])
+
+        def str = concatComentarios(comentarios)
+
+        if(str.size()==0)
+            render "<div align = \"center\"> No existen mas comentarios </div>"
+        else
+            render str
+    }
+
+    def concatComentarios(comentarios){
 
         def str =""
 
@@ -39,10 +49,11 @@ class SubjectController {
                     '    </div><!-- /sm-11 -->\n' +
                     '</div>'
         }
-        if(str.size()==0)
-            render "<div align = \"center\"> No existen mas comentarios </div>"
-        else
-            render str
+
+
+
+        str
+
     }
 
     def comment(){
@@ -61,12 +72,9 @@ class SubjectController {
         Comment comment = new Comment( body:params.body , course: course ,teacher: teacher ,author: user, date: new Date() )
         comment.save()
 
-        def comentarios = Comment.findAllByCourse(course,[sort:"date",order:"desc", max:5])
+        def str = concatComentarios([comment])
 
-
-        [comments: comentarios , offset: 5 ,  c: course]
-        //render view: "index", model: [ c: course ]
-        //render "Commentario guardado"//redirect action: "index" , params: params
+        render str
     }
 
 }

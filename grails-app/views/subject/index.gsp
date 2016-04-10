@@ -49,22 +49,22 @@
     </div>
     <div class="container">
         <div class="jumbotron row">
-            <g:formRemote url="[controller:'Subject',action:'comment']" update="comentarios-nuevos" name="comentar">
+            <form id = "comentar-form">
                 <div class="col-lg-9 col-md-8">
                     <div class="form-group">
-                        <g:hiddenField name="id" value="${c.id}"></g:hiddenField>
-                        <g:hiddenField name="offset" value="${offset}"></g:hiddenField>
-                        <g:textArea name="body" value="" rows="5" class="form-control"></g:textArea>
+                        <input type="hidden"  id="id" name="id" value="${c.id}"></input>
+                        <input type="hidden" id="offset" name="offset" value="${offset}"></input>
+                        <textarea name="body"  id="body"  rows="5" class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-4">
-                    <button type="submit" form="comentar" class="btn btn-default btn-raised btn-block">Comentar</button>
+                    <button type="button" onclick="subirComentario()" class="btn btn-default btn-raised btn-block">Comentar</button>
                     <!--<button type="button" class="btn btn-default btn-raised btn-block" onclick="document.getElementById('imagenComentario').click()">
                         <i class="material-icons">photo</i>  Sube una imagen
                     </button>
                     <input type="file" id="imagenComentario" name="imagenComentario" style="display: none" /> -->
                 </div>
-            </g:formRemote>
+            </form>
         </div>
     </div>
     <div class="container">
@@ -77,7 +77,6 @@
             </div>
           <div class="container col-lg-8">
                 <h3>Comentarios</h3>
-                <input type="hidden" name="offset" id="offset" value="${offset}"/>
                 <div class="jumbotron" id="container-comentarios">
                     <div class="row">
                         <div id="comentarios-nuevos">
@@ -111,10 +110,26 @@
           </div>
     </div>
         <script>
+            function subirComentario(){
+                var offset = document.getElementsByClassName("comentario").length;
+                var body = document.getElementById("body").value;
+
+                $.post({
+
+                    url: "comment",
+                    data: { id: ${c.id} , offset : offset, body: body} ,
+
+                    success: function(data,status){
+                        //alert("Data: " + data + "\nStatus: " + status + offset);
+                        $("#comentarios-nuevos").prepend(data)
+                    }
+
+                });
+
+            }
+
             function cargarComentariosPrev(){
-                var offset = document.getElementById("offset").value;
-                document.getElementById("offset").value = offset + 5;
-                console.log(offset);
+                var offset = document.getElementsByClassName("comentario").length;
 
                 $.post({
 
