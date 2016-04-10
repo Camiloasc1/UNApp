@@ -75,7 +75,8 @@
                 </div>
             </div>
           <div class="container col-lg-8">
-              <h3>Comentarios</h3>
+                <h3>Comentarios</h3>
+                <input type="hidden" name="offset" id="offset" value="${offset}"/>
                 <div class="jumbotron" id="container-comentarios">
                     <div class="row">
                         <div id="comentarios-nuevos">
@@ -99,9 +100,20 @@
                                     </div><!-- /sm-11 -->
                                 </div>
                             </g:each>
+                            <div id="comentarios-antiguos"></div>
                         </div>
+                        <input type="button" name="ver-mas" onclick="cargarComentariosPrev()"/>
+                    </div>
                 </div>
           </div>
     </div>
+        <script>
+            function cargarComentariosPrev(){
+                var offset = document.getElementById("offset").value;
+                document.getElementById("offset").value = offset + 5;
+                console.log(offset);
+                jQuery.ajax({type:'POST',data: {id:${c.id},offset:offset} , url:'/UNApp/subject/cargarComentarios',success:function(data,textStatus){jQuery('#comentarios-antiguos').html(data);},error:function(XMLHttpRequest,textStatus,errorThrown){}});
+            }
+        </script>
 </body>
 </html>
