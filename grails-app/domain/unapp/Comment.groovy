@@ -10,6 +10,8 @@ class Comment
     def Course course
     Date date
 
+    static hasMany=[likes:Votes]
+
     static mapping = {
         body type: 'text'
     }
@@ -18,5 +20,6 @@ class Comment
     static constraints = {
         teacher nullable:  true
         course nullable: true
+        likes nullable: true
     }
 }

@@ -42,9 +42,9 @@ class SubjectController {
                     '            <div class="panel-heading">\n' +
                     '                <strong>'+it.author.name+'</strong> <span class="text-muted">'+it.date+'</span>\n' +
                     '                <div id="'+ it.id +'" style="float: right">\n' +
-                    '                   <i class="material-icons">thumb_up</i>\n' +
+                    '                   <i class="material-icons" onclick="upVotes(event)">thumb_up</i>\n' +
                     '                   <div style="width: auto" id="positive-vote">'+it.positiveVotes+'</div>\n' +
-                    '                   <i class="material-icons">thumb_down</i>\n' +
+                    '                   <i class="material-icons" onclick="downVotes(event)">thumb_down</i>\n' +
                     '                   <div style="width: auto" id="negative-vote">'+it.negativeVotes+'</div>\n' +
                     '               </div>\n' +
                     '            </div>\n' +
@@ -66,19 +66,66 @@ class SubjectController {
         def id = id2.toInteger()
 
         def comment = Comment.findById(id)
-        comment.setPositiveVotes(comment.positiveVotes + 1)
+        def user = session["user"]
+
+        if(user==null){
+            render comment.positiveVotes
+            return
+        }
+
+        def like = Votes.findByAuthorAndComment(user,comment)
+
+
+        if(like!=null){
+            if(like.value==0){
+                like.value = 1
+                comment.negativeVotes--;
+                comment.positiveVotes++;
+            }
+        }else{
+            like = new Votes(value: 1, author: user, comment: comment)
+            comment.positiveVotes++;
+        }
+
+        def aux = like.errors
+        like.save(flush: true, failOnError : true)
+
+
         comment.save(flush: true, failOnError : true)
-        render comment.positiveVotes
+
+
+        render comment.positiveVotes+" "+comment.negativeVotes
     }
 
     def downVote(String id2){
         def id = id2.toInteger()
 
         def comment = Comment.findById(id)
-        comment.setNegativeVotes(comment.negativeVotes + 1)
-        comment.save(flush: true, failOnError : true)
+        def user = session["user"]
 
-        render comment.negativeVotes
+        if(user==null){
+            render comment.negativeVotes
+            return
+        }
+
+        def like = Votes.findByAuthorAndComment(user,comment)
+
+
+        if(like!=null){
+            if(like.value==1){
+                like.value = 0
+                comment.negativeVotes++;
+                comment.positiveVotes--;
+            }
+        }else{
+            like = new Votes(value: 0,author: user, comment: comment)
+            comment.negativeVotes++;
+        }
+
+        comment.save(flush: true, failOnError : true)
+        like.save(flush: true, failOnError : true)
+
+        render comment.positiveVotes+" "+comment.negativeVotes
     }
 
     def comment(){

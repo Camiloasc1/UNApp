@@ -115,7 +115,7 @@
                 </div>
           </div>
     </div>
-        <script>
+        <script type="text/javascript">
             function upVotes(e){
                 var obj = e.target;
                 //alert(typeof obj.parentNode.id);
@@ -126,7 +126,9 @@
 
                     success: function(data,status){
                         var aux = $(e.target);
-                        aux.next().html(data);
+                        var aux2 = data.split(" ");
+                        aux.next().html(aux2[0]);
+                        aux.next().next().next().html(aux2[1])
                     }
 
                 });
@@ -141,7 +143,9 @@
 
                     success: function(data,status){
                         var aux = $(e.target);
-                        aux.next().html(data);
+                        var aux2 = data.split(" ");
+                        aux.prev().html(aux2[0]);
+                        aux.next().html(aux2[1]);
                     }
 
                 });
