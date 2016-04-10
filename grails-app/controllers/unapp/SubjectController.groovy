@@ -41,6 +41,12 @@ class SubjectController {
                     '        <div class="panel panel-default">\n' +
                     '            <div class="panel-heading">\n' +
                     '                <strong>'+it.author.name+'</strong> <span class="text-muted">'+it.date+'</span>\n' +
+                    '                <div id="'+ it.id +'" style="float: right">\n' +
+                    '                   <i class="material-icons">thumb_up</i>\n' +
+                    '                   <div style="width: auto" id="positive-vote">'+it.positiveVotes+'</div>\n' +
+                    '                   <i class="material-icons">thumb_down</i>\n' +
+                    '                   <div style="width: auto" id="negative-vote">'+it.negativeVotes+'</div>\n' +
+                    '               </div>\n' +
                     '            </div>\n' +
                     '            <div class="panel-body">\n' +
                     '                '+ it.body +'\n' +
@@ -54,6 +60,25 @@ class SubjectController {
 
         str
 
+    }
+
+    def upVote(String id2){
+        def id = id2.toInteger()
+
+        def comment = Comment.findById(id)
+        comment.setPositiveVotes(comment.positiveVotes + 1)
+        comment.save(flush: true, failOnError : true)
+        render comment.positiveVotes
+    }
+
+    def downVote(String id2){
+        def id = id2.toInteger()
+
+        def comment = Comment.findById(id)
+        comment.setNegativeVotes(comment.negativeVotes + 1)
+        comment.save(flush: true, failOnError : true)
+
+        render comment.negativeVotes
     }
 
     def comment(){

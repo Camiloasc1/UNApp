@@ -52,8 +52,8 @@
             <form id = "comentar-form">
                 <div class="col-lg-9 col-md-8">
                     <div class="form-group">
-                        <input type="hidden"  id="id" name="id" value="${c.id}"></input>
-                        <input type="hidden" id="offset" name="offset" value="${offset}"></input>
+                        <input type="hidden"  id="id" name="id" value="${c.id}"/>
+                        <input type="hidden" id="offset" name="offset" value="${offset}"/>
                         <textarea name="body"  id="body"  rows="5" class="form-control"></textarea>
                     </div>
                 </div>
@@ -92,6 +92,12 @@
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
                                                 <strong>${comentario.author.name}</strong> <span class="text-muted">${comentario.date}</span>
+                                                <div id="${comentario.id}" style="float: right">
+                                                    <i class="material-icons" onclick="upVotes(event)">thumb_up</i>
+                                                    <div style="width: auto" class="positive-vote">${comentario.positiveVotes}</div>
+                                                    <i class="material-icons" onclick="downVotes(event)">thumb_down</i>
+                                                    <div style="width: auto" class="negative-vote">${comentario.negativeVotes}</div>
+                                                </div>
                                             </div>
                                             <div class="panel-body">
                                                 ${comentario.body}
@@ -110,6 +116,36 @@
           </div>
     </div>
         <script>
+            function upVotes(e){
+                var obj = e.target;
+                //alert(typeof obj.parentNode.id);
+                $.post({
+
+                    url: "upVote",
+                    data: {id2:obj.parentNode.id} ,
+
+                    success: function(data,status){
+                        var aux = $(e.target);
+                        aux.next().html(data);
+                    }
+
+                });
+            }
+            function downVotes(e){
+                var obj = e.target;
+                //alert(typeof obj.parentNode.id);
+                $.post({
+
+                    url: "downVote",
+                    data: {id2:obj.parentNode.id} ,
+
+                    success: function(data,status){
+                        var aux = $(e.target);
+                        aux.next().html(data);
+                    }
+
+                });
+            }
             function subirComentario(){
                 var offset = document.getElementsByClassName("comentario").length;
                 var body = document.getElementById("body").value;
