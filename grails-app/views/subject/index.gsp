@@ -102,7 +102,9 @@
                             </g:each>
                             <div id="comentarios-antiguos"></div>
                         </div>
-                        <input type="button" name="ver-mas" onclick="cargarComentariosPrev()"/>
+                    </div>
+                    <div class = "row" align = "center" >
+                        <button class = "btn btn-deafult btn-raised center-block" type="button" name="ver-mas" onclick="cargarComentariosPrev()">ver mas </button>
                     </div>
                 </div>
           </div>
@@ -112,7 +114,7 @@
                 var offset = document.getElementById("offset").value;
                 document.getElementById("offset").value = offset + 5;
                 console.log(offset);
-                jQuery.ajax({type:'POST',data: {id:${c.id},offset:offset} , url:'/UNApp/subject/cargarComentarios',success:function(data,textStatus){jQuery('#comentarios-antiguos').html(data);},error:function(XMLHttpRequest,textStatus,errorThrown){}});
+                jQuery.ajax({type:'POST',data: {id:${c.id},offset:offset} , url:'/UNApp/subject/cargarComentarios',success:function(data,textStatus){jQuery('#comentarios-antiguos').append(data);},error:function(XMLHttpRequest,textStatus,errorThrown){}} ) ;
             }
         </script>
 </body>

@@ -7,15 +7,16 @@ class SubjectController {
     def index() {
         def course = Course.get( params.id )
         def comentarios = Comment.findAllByCourse(course,[sort:"date",order:"desc", max:5])
-        render view: "index", model: [ c: course, comments: comentarios, offset:5 ]
+        render view: "index", model: [ c: course, comments: comentarios , offset: 5]
     }
 
 
 
     def cargarComentarios(String offset, String id){
-        def off = offset.toInteger()
+        def off = offset.size()*5;
         def course = Course.get( id.toInteger() )
-        def comentarios = Comment.findAllByCourse(course,[sort:"date",order:"desc", max:5, offset: off])
+        def comentarios = Comment.findAllByCourse(course,[sort:"date",order:"desc", max:5 , offset: off])
+
         def str =""
 
         comentarios.each {
