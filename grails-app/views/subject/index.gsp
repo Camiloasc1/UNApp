@@ -49,22 +49,28 @@
     </div>
     <div class="container">
         <div class="jumbotron row">
-            <form id = "comentar-form">
-                <div class="col-lg-9 col-md-8">
-                    <div class="form-group">
-                        <input type="hidden"  id="id" name="id" value="${c.id}"/>
-                        <input type="hidden" id="offset" name="offset" value="${offset}"/>
-                        <textarea name="body"  id="body"  rows="5" class="form-control"></textarea>
+
+            <g:if test="${session["user"] != null}">
+                <form id = "comentar-form">
+                    <div class="col-lg-9 col-md-8">
+                        <div class="form-group">
+                            <input type="hidden"  id="id" name="id" value="${c.id}"/>
+                            <input type="hidden" id="offset" name="offset" value="${offset}"/>
+                            <textarea name="body"  id="body"  rows="5" class="form-control"></textarea>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <button type="button" onclick="subirComentario()" class="btn btn-default btn-raised btn-block">Comentar</button>
-                    <!--<button type="button" class="btn btn-default btn-raised btn-block" onclick="document.getElementById('imagenComentario').click()">
-                        <i class="material-icons">photo</i>  Sube una imagen
-                    </button>
-                    <input type="file" id="imagenComentario" name="imagenComentario" style="display: none" /> -->
-                </div>
-            </form>
+                    <div class="col-lg-3 col-md-4">
+                        <button type="button" onclick="subirComentario()" class="btn btn-default btn-raised btn-block">Comentar</button>
+                        <!--<button type="button" class="btn btn-default btn-raised btn-block" onclick="document.getElementById('imagenComentario').click()">
+                            <i class="material-icons">photo</i>  Sube una imagen
+                        </button>
+                        <input type="file" id="imagenComentario" name="imagenComentario" style="display: none" /> -->
+                    </div>
+                </form>
+            </g:if>
+            <g:else>
+                <div align = "center">Debes ingresar para comentar</div>
+            </g:else>
         </div>
     </div>
     <div class="container">

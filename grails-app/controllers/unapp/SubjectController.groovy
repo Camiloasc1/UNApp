@@ -69,7 +69,7 @@ class SubjectController {
         def user = session["user"]
 
         if(user==null){
-            render comment.positiveVotes
+            render comment.positiveVotes+" "+comment.negativeVotes
             return
         }
 
@@ -104,7 +104,7 @@ class SubjectController {
         def user = session["user"]
 
         if(user==null){
-            render comment.negativeVotes
+            render comment.positiveVotes+" "+comment.negativeVotes
             return
         }
 
