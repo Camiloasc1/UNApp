@@ -11,6 +11,7 @@ class BootStrap {
     }
 
     def init = { servletContext ->
+        def count;
         // Fill the data base if is empty
         if (Location.list().size() == 0) {
             println("Loading Locations...")
@@ -22,9 +23,9 @@ class BootStrap {
             new Location(name: "Palmira", url: "http://sia.palmira.unal.edu.co").save()
             new Location(name: "Orinoquia", url: "http://siaori.unal.edu.co").save()
             new Location(name: "Tumaco", url: "http://siatum.unal.edu.co").save()
-            def count = Location.list().size();
-            println("${count} Locations Loaded.")
         }
+        count = Location.list().size();
+        println("${count} Locations Loaded.")
 
         def types = ['PRE', 'POS']
         def strings, html
@@ -60,13 +61,11 @@ class BootStrap {
                     }
                 }
             }
-            def count = Degree.list().size();
-            println("${count} Degrees Loaded.")
         }
+        count = Degree.list().size();
+        println("${count} Degrees Loaded.")
 
         if (Course.list().size() == 0) {
-            println("Loading Courses...")
-
             new Course(
                     name: "SIN PREREQUISITOS",
                     code: 0,
@@ -74,10 +73,12 @@ class BootStrap {
                     typology: "P",
                     location: Location.findByName("Bogota")
             ).save(flush: true)
-
+        }
+        if (Course.list().size() == 1) {
+            println("Loading Courses...")
             //Degree.list().each { degree ->
             Degree.findByCode(2879).each { degree ->
-                def http = new HTTPBuilder(degree.location.url + degree.location.name == 'Medellin' ? ":9401" : "" + "/buscador/JSON-RPC")
+                def http = new HTTPBuilder(degree.location.url + (degree.location.name == "Medellin" ? ":9401" : "") + "/buscador/JSON-RPC")
                 http.request(POST, groovyx.net.http.ContentType.JSON) {
                     body = [
                             "jsonrpc": "2.0",
@@ -108,14 +109,14 @@ class BootStrap {
                     }
                 }
             }
-            def count = Course.list().size();
-            println("${count} Courses Loaded.")
         }
+        count = Course.list().size();
+        println("${count} Courses Loaded.")
 
         if (Teacher.list().size() == 0) {
             println("Loading Teachers...")
             Course.list().each { course ->
-                def http = new HTTPBuilder(degree.location.url + degree.location.name == 'Medellin' ? ":9401" : "" + "/buscador/JSON-RPC")
+                def http = new HTTPBuilder(course.location.url + (course.location.name == "Medellin" ? ":9401" : "") + "/buscador/JSON-RPC")
                 http.request(POST, groovyx.net.http.ContentType.JSON) {
                     body = [
                             "jsonrpc": "2.0",
@@ -148,9 +149,9 @@ class BootStrap {
                     }
                 }
             }
-            def count = Teacher.list().size();
-            println("${count} Teachers Loaded.")
         }
+        count = Teacher.list().size();
+        println("${count} Teachers Loaded.")
 
         /*
         //Degree.list().each { degree ->
