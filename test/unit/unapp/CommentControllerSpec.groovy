@@ -57,7 +57,6 @@ class CommentControllerSpec extends Specification {
         comment = new Comment(params)
 
         controller.save(comment)
-        def ayux = ""
 
         then: "A redirect is issued to the show action"
         response.redirectedUrl == '/comment/show/1'

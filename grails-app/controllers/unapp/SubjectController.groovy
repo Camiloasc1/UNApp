@@ -87,12 +87,11 @@ class SubjectController {
             comment.positiveVotes++;
         }
 
-        def aux = like.errors
-        like.save(flush: true, failOnError : true)
-
 
         comment.save(flush: true, failOnError : true)
 
+        def aux = like.errors
+        like.save(flush: true, failOnError : true)
 
         render comment.positiveVotes+" "+comment.negativeVotes
     }

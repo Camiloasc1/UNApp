@@ -6,20 +6,18 @@ class Comment
     String body
     int positiveVotes
     int negativeVotes
-    def Teacher teacher
-    def Course course
     Date date
 
+    static belongsTo = [teacher: Teacher, course: Course]
     static hasMany=[likes:Votes]
 
-    static mapping = {
-        body type: 'text'
-    }
-
-    //static belongsTo = [Commentable]
     static constraints = {
         teacher nullable:  true
         course nullable: true
         likes nullable: true
+        author nullable: false
+        body nullable: false
+        positiveVotes nullable: false, min: 0
+        negativeVotes nullable: false, min: 0
     }
 }
