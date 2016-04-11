@@ -93,10 +93,10 @@
                                             <div class="panel-heading">
                                                 <strong>${comentario.author.name}</strong> <span class="text-muted">${comentario.date}</span>
                                                 <div id="${comentario.id}" style="float: right">
-                                                    <i class="material-icons" onclick="upVotes(event)">thumb_up</i>
-                                                    <div style="width: auto" class="positive-vote">${comentario.positiveVotes}</div>
-                                                    <i class="material-icons" onclick="downVotes(event)">thumb_down</i>
-                                                    <div style="width: auto" class="negative-vote">${comentario.negativeVotes}</div>
+                                                    <i class="material-icons" onclick="upVotes(event)" style=" float: left; margin-right: 10px; ">thumb_up</i>
+                                                    <div style="width: auto;float: left;margin-right: 10;" class="positive-vote">${comentario.positiveVotes}</div>
+                                                    <i class="material-icons" onclick="downVotes(event)" style=" float: left; margin-right: 10px; margin-left: 10px; ">thumb_down</i>
+                                                    <div style="width: auto;float: left;" class="negative-vote">${comentario.negativeVotes}</div>
                                                 </div>
                                             </div>
                                             <div class="panel-body">

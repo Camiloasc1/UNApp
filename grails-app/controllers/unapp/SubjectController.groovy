@@ -42,10 +42,10 @@ class SubjectController {
                     '            <div class="panel-heading">\n' +
                     '                <strong>'+it.author.name+'</strong> <span class="text-muted">'+it.date+'</span>\n' +
                     '                <div id="'+ it.id +'" style="float: right">\n' +
-                    '                   <i class="material-icons" onclick="upVotes(event)">thumb_up</i>\n' +
-                    '                   <div style="width: auto" id="positive-vote">'+it.positiveVotes+'</div>\n' +
-                    '                   <i class="material-icons" onclick="downVotes(event)">thumb_down</i>\n' +
-                    '                   <div style="width: auto" id="negative-vote">'+it.negativeVotes+'</div>\n' +
+                    '                   <i class="material-icons" onclick="upVotes(event)" style=" float: left; margin-right: 10px; ">thumb_up</i>\n' +
+                    '                   <div style="width: auto;float: left;margin-right: 10;" class="positive-vote">'+ it.positiveVotes +'</div>\n' +
+                    '                   <i class="material-icons" onclick="downVotes(event)" style=" float: left; margin-right: 10px; margin-left: 10px; ">thumb_down</i>\n' +
+                    '                   <div style="width: auto;float: left;" class="negative-vote">'+ it.negativeVotes +'</div>\n' +
                     '               </div>\n' +
                     '            </div>\n' +
                     '            <div class="panel-body">\n' +
