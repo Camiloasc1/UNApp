@@ -1,6 +1,7 @@
 package unapp
 
 
+
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
@@ -11,7 +12,7 @@ class EdgeController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Edge.list(params), model: [edgeInstanceCount: Edge.count()]
+        respond Edge.list(params), model:[edgeInstanceCount: Edge.count()]
     }
 
     def show(Edge edgeInstance) {
@@ -30,11 +31,11 @@ class EdgeController {
         }
 
         if (edgeInstance.hasErrors()) {
-            respond edgeInstance.errors, view: 'create'
+            respond edgeInstance.errors, view:'create'
             return
         }
 
-        edgeInstance.save flush: true
+        edgeInstance.save flush:true
 
         request.withFormat {
             form multipartForm {
@@ -57,18 +58,18 @@ class EdgeController {
         }
 
         if (edgeInstance.hasErrors()) {
-            respond edgeInstance.errors, view: 'edit'
+            respond edgeInstance.errors, view:'edit'
             return
         }
 
-        edgeInstance.save flush: true
+        edgeInstance.save flush:true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'Edge.label', default: 'Edge'), edgeInstance.id])
                 redirect edgeInstance
             }
-            '*' { respond edgeInstance, [status: OK] }
+            '*'{ respond edgeInstance, [status: OK] }
         }
     }
 
@@ -80,14 +81,14 @@ class EdgeController {
             return
         }
 
-        edgeInstance.delete flush: true
+        edgeInstance.delete flush:true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'Edge.label', default: 'Edge'), edgeInstance.id])
-                redirect action: "index", method: "GET"
+                redirect action:"index", method:"GET"
             }
-            '*' { render status: NO_CONTENT }
+            '*'{ render status: NO_CONTENT }
         }
     }
 
@@ -97,7 +98,7 @@ class EdgeController {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'edge.label', default: 'Edge'), params.id])
                 redirect action: "index", method: "GET"
             }
-            '*' { render status: NOT_FOUND }
+            '*'{ render status: NOT_FOUND }
         }
     }
 }

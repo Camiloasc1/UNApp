@@ -1,4 +1,4 @@
-`
+
 <%@ page import="unapp.Course" %>
 <!DOCTYPE html>
 <html>
@@ -44,7 +44,7 @@
 					
 						<td>${fieldValue(bean: courseInstance, field: "typology")}</td>
 					
-						<td onclick="window.location= '${request.contextPath}/subject/index?id=${courseInstance.id}' "	>${fieldValue(bean: courseInstance, field: "name")}</td>
+						<td onclick="window.location= '${request.contextPath}/subject/index?id=${courseInstance.id}' " >${fieldValue(bean: courseInstance, field: "name")}</td>
 					
 						<td>${fieldValue(bean: courseInstance, field: "code")}</td>
 					

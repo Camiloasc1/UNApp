@@ -87,6 +87,15 @@
             </ul>
         </div>
     </div>
+
+    <g:if test="${session["user"]?.isAdmin == true}">
+
+        <g:link controller="admin" action="index" style = "height: 50px; width: 50px; background-color: red;">
+            Administrador
+        </g:link>
+
+    </g:if>
+
 </nav>
 
 <div class="main-content">

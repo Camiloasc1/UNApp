@@ -1,6 +1,7 @@
 package unapp
 
 
+
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
@@ -11,7 +12,7 @@ class LocationController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Location.list(params), model: [locationInstanceCount: Location.count()]
+        respond Location.list(params), model:[locationInstanceCount: Location.count()]
     }
 
     def show(Location locationInstance) {
@@ -30,11 +31,11 @@ class LocationController {
         }
 
         if (locationInstance.hasErrors()) {
-            respond locationInstance.errors, view: 'create'
+            respond locationInstance.errors, view:'create'
             return
         }
 
-        locationInstance.save flush: true
+        locationInstance.save flush:true
 
         request.withFormat {
             form multipartForm {
@@ -57,18 +58,18 @@ class LocationController {
         }
 
         if (locationInstance.hasErrors()) {
-            respond locationInstance.errors, view: 'edit'
+            respond locationInstance.errors, view:'edit'
             return
         }
 
-        locationInstance.save flush: true
+        locationInstance.save flush:true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'Location.label', default: 'Location'), locationInstance.id])
                 redirect locationInstance
             }
-            '*' { respond locationInstance, [status: OK] }
+            '*'{ respond locationInstance, [status: OK] }
         }
     }
 
@@ -80,14 +81,14 @@ class LocationController {
             return
         }
 
-        locationInstance.delete flush: true
+        locationInstance.delete flush:true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'Location.label', default: 'Location'), locationInstance.id])
-                redirect action: "index", method: "GET"
+                redirect action:"index", method:"GET"
             }
-            '*' { render status: NO_CONTENT }
+            '*'{ render status: NO_CONTENT }
         }
     }
 
@@ -97,7 +98,7 @@ class LocationController {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'location.label', default: 'Location'), params.id])
                 redirect action: "index", method: "GET"
             }
-            '*' { render status: NOT_FOUND }
+            '*'{ render status: NOT_FOUND }
         }
     }
 }
