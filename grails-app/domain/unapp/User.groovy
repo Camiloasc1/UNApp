@@ -1,20 +1,25 @@
 package unapp
 
-class User
-{
+class User {
     String googleID // sub field is an unique identifier
     String name
     String email
     int positiveVotes = 0
     int negativeVotes = 0
     boolean isAdmin = false
-    static hasMany=[likes:Votes]
+    static hasMany = [likes: Votes]
 
     static constraints = {
+        googleID nullable: false
+        name nullable: false
+        email nullable: false
+        positiveVotes nullable: false, min: 0
+        negativeVotes nullable: false, min: 0
+        isAdmin nullable: false
         likes nullable: true
     }
 
-    String toString(){
+    String toString() {
         return name
     }
 }
