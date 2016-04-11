@@ -1,6 +1,6 @@
 package unapp
 
-class Votes {
+class Vote {
 
     int value //0,1 dependiendo si es negativo o positivo
 

@@ -91,7 +91,7 @@ class BootStrap {
                         json.result.asignaturas.list.each { c ->
                             if (!Course.findByCode(c.id_asignatura.toInteger())) {
                                 new Course(
-                                        internalcode: c.codigo.toInteger(),
+                                        internalCode: c.codigo.toInteger(),
                                         code: c.id_asignatura.toInteger(),
                                         name: c.nombre,
                                         typology: c.tipologia,
@@ -121,7 +121,7 @@ class BootStrap {
                     body = [
                             "jsonrpc": "2.0",
                             "method" : "buscador.obtenerGruposAsignaturas",
-                            "params" : [course.internalcode.toString(), "0"]
+                            "params" : [course.internalCode.toString(), "0"]
                     ]
 
                     // success response handler

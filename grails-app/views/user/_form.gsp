@@ -2,7 +2,7 @@
 
 
 
-<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'likes', 'error')} ">
+<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'votes', 'error')} ">
 	<label for="likes">
 		<g:message code="user.likes.label" default="Likes" />
 		
@@ -13,7 +13,7 @@
     <li><g:link controller="votes" action="show" id="${l.id}">${l?.encodeAsHTML()}</g:link></li>
 </g:each>
 <li class="add">
-<g:link controller="votes" action="create" params="['user.id': userInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'votes.label', default: 'Votes')])}</g:link>
+<g:link controller="votes" action="create" params="['user.id': userInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'votes.label', default: 'Vote')])}</g:link>
 </li>
 </ul>
 

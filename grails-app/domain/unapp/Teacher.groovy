@@ -7,7 +7,7 @@ class Teacher {
     static hasMany = [comments: Comment, courses: Course, evaluations: TeacherEvaluation]
 
     static constraints = {
-        comments nullable: false
+        name nullable: false
         username nullable: false
 
         location nullable: false
@@ -15,8 +15,9 @@ class Teacher {
         comments nullable: true
         courses nullable: true
         evaluations nullable: true
-
     }
+
+    //static embedded = ['comments']
 
     String getEmail() {
         return "${username}@unal.edu.co"
@@ -26,8 +27,12 @@ class Teacher {
         return "http://www.docentes.unal.edu.co/${username}/"
     }
 
-    String toString() {
-        return name
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "name='" + name + '\'' +
+                ", username='" + username + '\'' +
+                ", location=" + location +
+                '}';
     }
-
 }

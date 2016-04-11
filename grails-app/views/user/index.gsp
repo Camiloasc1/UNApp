@@ -32,9 +32,9 @@
 					
 						<g:sortableColumn property="name" title="${message(code: 'user.name.label', default: 'Name')}" />
 					
-						<g:sortableColumn property="negativeVotes" title="${message(code: 'user.negativeVotes.label', default: 'Negative Votes')}" />
+						<g:sortableColumn property="negativeVotes" title="${message(code: 'user.negativeVotes.label', default: 'Negative Vote')}" />
 					
-						<g:sortableColumn property="positiveVotes" title="${message(code: 'user.positiveVotes.label', default: 'Positive Votes')}" />
+						<g:sortableColumn property="positiveVotes" title="${message(code: 'user.positiveVotes.label', default: 'Positive Vote')}" />
 					
 					</tr>
 				</thead>

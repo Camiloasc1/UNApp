@@ -34,7 +34,7 @@
 					
 						<g:sortableColumn property="date" title="${message(code: 'comment.date.label', default: 'Date')}" />
 					
-						<g:sortableColumn property="negativeVotes" title="${message(code: 'comment.negativeVotes.label', default: 'Negative Votes')}" />
+						<g:sortableColumn property="negativeVotes" title="${message(code: 'comment.negativeVotes.label', default: 'Negative Vote')}" />
 					
 					</tr>
 				</thead>

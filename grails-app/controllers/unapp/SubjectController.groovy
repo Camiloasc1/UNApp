@@ -73,7 +73,7 @@ class SubjectController {
             return
         }
 
-        def like = Votes.findByAuthorAndComment(user,comment)
+        def like = Vote.findByAuthorAndComment(user,comment)
 
 
         if(like!=null){
@@ -83,7 +83,7 @@ class SubjectController {
                 comment.positiveVotes++;
             }
         }else{
-            like = new Votes(value: 1, author: user, comment: comment)
+            like = new Vote(value: 1, author: user, comment: comment)
             comment.positiveVotes++;
         }
 
@@ -107,7 +107,7 @@ class SubjectController {
             return
         }
 
-        def like = Votes.findByAuthorAndComment(user,comment)
+        def like = Vote.findByAuthorAndComment(user,comment)
 
 
         if(like!=null){
@@ -117,7 +117,7 @@ class SubjectController {
                 comment.positiveVotes--;
             }
         }else{
-            like = new Votes(value: 0,author: user, comment: comment)
+            like = new Vote(value: 0,author: user, comment: comment)
             comment.negativeVotes++;
         }
 

@@ -1,4 +1,4 @@
-<%@ page import="unapp.Votes" %>
+<%@ page import="unapp.Vote" %>
 
 
 

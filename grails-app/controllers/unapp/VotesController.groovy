@@ -12,19 +12,19 @@ class VotesController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Votes.list(params), model:[votesInstanceCount: Votes.count()]
+        respond Vote.list(params), model:[votesInstanceCount: Vote.count()]
     }
 
-    def show(Votes votesInstance) {
+    def show(Vote votesInstance) {
         respond votesInstance
     }
 
     def create() {
-        respond new Votes(params)
+        respond new Vote(params)
     }
 
     @Transactional
-    def save(Votes votesInstance) {
+    def save(Vote votesInstance) {
         if (votesInstance == null) {
             notFound()
             return
@@ -39,19 +39,19 @@ class VotesController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'votes.label', default: 'Votes'), votesInstance.id])
+                flash.message = message(code: 'default.created.message', args: [message(code: 'votes.label', default: 'Vote'), votesInstance.id])
                 redirect votesInstance
             }
             '*' { respond votesInstance, [status: CREATED] }
         }
     }
 
-    def edit(Votes votesInstance) {
+    def edit(Vote votesInstance) {
         respond votesInstance
     }
 
     @Transactional
-    def update(Votes votesInstance) {
+    def update(Vote votesInstance) {
         if (votesInstance == null) {
             notFound()
             return
@@ -66,7 +66,7 @@ class VotesController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Votes.label', default: 'Votes'), votesInstance.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'Vote.label', default: 'Vote'), votesInstance.id])
                 redirect votesInstance
             }
             '*'{ respond votesInstance, [status: OK] }
@@ -74,7 +74,7 @@ class VotesController {
     }
 
     @Transactional
-    def delete(Votes votesInstance) {
+    def delete(Vote votesInstance) {
 
         if (votesInstance == null) {
             notFound()
@@ -85,7 +85,7 @@ class VotesController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Votes.label', default: 'Votes'), votesInstance.id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Vote.label', default: 'Vote'), votesInstance.id])
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }
@@ -95,7 +95,7 @@ class VotesController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'votes.label', default: 'Votes'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'votes.label', default: 'Vote'), params.id])
                 redirect action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }

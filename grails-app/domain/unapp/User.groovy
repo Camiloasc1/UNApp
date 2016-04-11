@@ -7,7 +7,7 @@ class User {
     int positiveVotes = 0
     int negativeVotes = 0
     boolean isAdmin = false
-    static hasMany = [likes: Votes]
+    static hasMany = [votes: Vote]
 
     static constraints = {
         googleID nullable: false
@@ -16,11 +16,20 @@ class User {
         positiveVotes nullable: false, min: 0
         negativeVotes nullable: false, min: 0
         isAdmin nullable: false
-        likes nullable: true
+
+        votes nullable: true
     }
 
-    String toString() {
-        return name
+    //static embedded = ['votes']
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", googleID='" + googleID + '\'' +
+                ", isAdmin=" + isAdmin +
+                '}';
     }
 }
 
