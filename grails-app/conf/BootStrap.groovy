@@ -1,66 +1,21 @@
+import groovyx.net.http.ContentType
 import unapp.*
-import java.text.Normalizer
 import groovyx.net.http.HTTPBuilder
 import static groovyx.net.http.Method.POST
 import grails.converters.JSON
 
 class BootStrap {
-
-    def normalize(String s) {
-        return Normalizer.normalize(s, Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", '').toUpperCase().replaceAll("'", "")
-    }
-
     def init = { servletContext ->
         def count;
         // Fill the data base if is empty
         if (Location.list().size() == 0) {
-            println("Loading Locations...")
-            new Location(name: "Bogota", url: "http://sia.bogota.unal.edu.co").save()
-            new Location(name: "Amazonas", url: "http://siaama.unal.edu.co").save()
-            new Location(name: "Caribe", url: "http://siacar.unal.edu.co").save()
-            new Location(name: "Manizales", url: "http://sia2.manizales.unal.edu.co").save()
-            new Location(name: "Medellin", url: "http://sia.medellin.unal.edu.co").save()
-            new Location(name: "Palmira", url: "http://sia.palmira.unal.edu.co").save()
-            new Location(name: "Orinoquia", url: "http://siaori.unal.edu.co").save()
-            new Location(name: "Tumaco", url: "http://siatum.unal.edu.co").save()
+            loadLocations()
         }
         count = Location.list().size();
         println("${count} Locations Loaded.")
 
-        def types = ['PRE', 'POS']
-        def strings, html
-
         if (Degree.list().size() == 0) {
-            println("Loading Degrees...")
-            Location.list().each { loc ->
-                types.each { ty ->
-                    try {
-                        strings = new URL(loc.url + '/academia/scripts/catalogo-programas/items_catalogo_' + ty + '.js')
-                                .getText('ISO-8859-1')
-                        strings = strings.findAll(/'(.+)'/, { it[1] })
-
-                        String currentFac = ''
-
-                        for (def i = 0; i < strings.size(); i++) {
-                            if (strings[i].startsWith('FACULTAD') || strings[i].startsWith('SEDE')) {
-                                currentFac = strings[i]
-                            } else if (strings[i].startsWith('semaforo')) {
-                                new Degree(
-                                        code: strings[i].find(/[0-9]+/)?.toInteger() ?: 0,
-                                        name: strings[i - 1],
-                                        faculty: currentFac,
-                                        type: ty,
-                                        location: loc
-                                ).save()
-                            }
-                        }
-
-                    } catch (Exception e) {
-                        //e.printStackTrace()
-                        println "Sede $loc.name no disponible"
-                    }
-                }
-            }
+            loadDegrees()
         }
         count = Degree.list().size();
         println("${count} Degrees Loaded.")
@@ -75,80 +30,13 @@ class BootStrap {
             ).save(flush: true)
         }
         if (Course.list().size() == 1) {
-            println("Loading Courses...")
-            //Degree.list().each { degree ->
-            Degree.findByCode(2879).each { degree ->
-                def http = new HTTPBuilder(degree.location.url + (degree.location.name == "Medellin" ? ":9401" : "") + "/buscador/JSON-RPC")
-                http.request(POST, groovyx.net.http.ContentType.JSON) {
-                    body = [
-                            "jsonrpc": "2.0",
-                            "method" : "buscador.obtenerAsignaturas",
-                            "params" : ["", "PRE", "", degree.type, degree.code.toString(), "", 1, 999]
-                    ]
-
-                    // success response handler
-                    response.success = { resp, json ->
-                        json.result.asignaturas.list.each { c ->
-                            if (!Course.findByCode(c.id_asignatura.toInteger())) {
-                                new Course(
-                                        internalCode: c.codigo.toInteger(),
-                                        code: c.id_asignatura.toInteger(),
-                                        name: c.nombre,
-                                        typology: c.tipologia,
-                                        credits: c.creditos.toInteger(),
-                                        location: degree.location
-                                ).save()
-                            }
-                        }
-                    }
-
-                    // failure response handler
-                    response.failure = { resp ->
-                        println "Unexpected error: ${resp.statusLine.statusCode}"
-                        println "${resp.statusLine.reasonPhrase}"
-                    }
-                }
-            }
+            loadCourses()
         }
         count = Course.list().size();
         println("${count} Courses Loaded.")
 
         if (Teacher.list().size() == 0) {
-            println("Loading Teachers...")
-            Course.list().each { course ->
-                def http = new HTTPBuilder(course.location.url + (course.location.name == "Medellin" ? ":9401" : "") + "/buscador/JSON-RPC")
-                http.request(POST, groovyx.net.http.ContentType.JSON) {
-                    body = [
-                            "jsonrpc": "2.0",
-                            "method" : "buscador.obtenerGruposAsignaturas",
-                            "params" : [course.internalCode.toString(), "0"]
-                    ]
-
-                    // success response handler
-                    response.success = { resp, json ->
-                        json.result.list.each { group ->
-                            def name = group.nombredocente ?: "Información Pendiente"
-                            def user = group.usuariodocente ?: "InfoPendiente"
-                            name = name.trim()
-                            user = user.trim()
-                            if (!Teacher.findByUsername(user)) {
-                                new Teacher(
-                                        name: name,
-                                        username: user,
-                                        location: course.location
-                                ).save()
-                            }
-                            Teacher.findByUsername(user).addToCourses(course).save()
-                        }
-                    }
-
-                    // failure response handler
-                    response.failure = { resp ->
-                        println "Unexpected error: ${resp.statusLine.statusCode}"
-                        println $ { resp.statusLine.reasonPhrase }
-                    }
-                }
-            }
+            loadTeachers()
         }
         count = Teacher.list().size();
         println("${count} Teachers Loaded.")
@@ -245,5 +133,151 @@ class BootStrap {
     }
 
     def destroy = {
+    }
+
+    def loadLocations() {
+        println("Loading Locations...")
+        new Location(name: "Bogota", url: "http://sia.bogota.unal.edu.co").save()
+        new Location(name: "Amazonas", url: "http://siaama.unal.edu.co").save()
+        new Location(name: "Caribe", url: "http://siacar.unal.edu.co").save()
+        new Location(name: "Manizales", url: "http://sia2.manizales.unal.edu.co").save()
+        new Location(name: "Medellin", url: "http://sia.medellin.unal.edu.co").save()
+        new Location(name: "Palmira", url: "http://sia.palmira.unal.edu.co").save()
+        new Location(name: "Orinoquia", url: "http://siaori.unal.edu.co").save()
+        new Location(name: "Tumaco", url: "http://siatum.unal.edu.co").save()
+    }
+
+    def loadDegrees() {
+        println("Loading Degrees...")
+        def types = ['PRE', 'POS']
+        Location.list().each { loc ->
+            types.each { ty ->
+                try {
+                    def strings = new URL(loc.url + '/academia/scripts/catalogo-programas/items_catalogo_' + ty + '.js')
+                            .getText('ISO-8859-1').findAll(/'(.+)'/, { it[1] })
+
+                    def currentFac = ''
+
+                    for (def i = 0; i < strings.size(); i++) {
+                        if (strings[i].startsWith('FACULTAD') || strings[i].startsWith('SEDE')) {
+                            currentFac = strings[i]
+                        } else if (strings[i].startsWith('semaforo')) {
+                            new Degree(
+                                    code: strings[i].find(/[0-9]+/)?.toInteger() ?: 0,
+                                    name: strings[i - 1],
+                                    faculty: currentFac,
+                                    type: ty,
+                                    location: loc
+                            ).save(flush: true)
+                        }
+                    }
+
+                } catch (Exception e) {
+                    //e.printStackTrace()
+                    println "Sede $loc.name no disponible"
+                }
+            }
+        }
+    }
+
+    def loadCourses() {
+        println("Loading Courses...")
+        //Degree.list().each { degree ->
+        Degree.findByCode(2879).each { degree ->
+            def http = new HTTPBuilder(degree.location.url + (degree.location.name == "Medellin" ? ":9401" : "") + "/buscador/JSON-RPC")
+            http.request(POST, ContentType.JSON) {
+                body = [
+                        "jsonrpc": "2.0",
+                        "method" : "buscador.obtenerAsignaturas",
+                        "params" : ["", "PRE", "", degree.type, degree.code.toString(), "", 1, 999]
+                ]
+
+                // success response handler
+                response.success = { resp, json ->
+                    json.result.asignaturas.list.each { c ->
+                        if (!Course.findByCode(c.id_asignatura.toInteger())) {
+                            def http2 = new HTTPBuilder(course.location.url + '/buscador/service/asignaturaInfo.pub?cod_asignatura=' + course.code)
+                            def html = http2.get([:])
+                            def description
+                            def contents
+                            html."**".findAll { it.@class.toString().contains("module") }.each {
+                                description = it.P[4].toString().replaceAll(/[ \t\n]+/, " ")
+                                contents = it.P[6].toString().replaceAll(/[ \t\n]+/, " ")
+                            }
+                            new Course(
+                                    internalCode: c.codigo.toInteger(),
+                                    code: c.id_asignatura.toInteger(),
+                                    name: c.nombre,
+                                    typology: c.tipologia,
+                                    credits: c.creditos.toInteger(),
+                                    description: description,
+                                    contents: contents,
+                                    location: degree.location
+                            ).save(flush: true)
+                        }
+                    }
+                }
+
+                // failure response handler
+                response.failure = { resp ->
+                    println "Unexpected error: ${resp.statusLine.statusCode}"
+                    println "${resp.statusLine.reasonPhrase}"
+                }
+            }
+        }
+        //loadCourseContents()
+    }
+
+    def loadCourseContents() {
+        print "Loading Contents"
+        Course.list().each { course ->
+            //def http = new HTTPBuilder(course.location.url + '/academia/catalogo-programas/info-asignatura.sdo?asignatura=' + course.code)
+            def http = new HTTPBuilder(course.location.url + '/buscador/service/asignaturaInfo.pub?cod_asignatura=' + course.code)
+            def html = http.get([:])
+            html."**".findAll { it.@class.toString().contains("module") }.each {
+                course.description = it.P[4].text().replaceAll(/[ \t\n]+/, " ")
+                course.contents = it.P[6].toString().replaceAll(/[ \t\n]+/, " ")
+                course.save(flush: true)
+            }
+        }
+        print "Contents Loaded"
+    }
+
+    def loadTeachers() {
+        println("Loading Teachers...")
+        Course.list().each { course ->
+            def http = new HTTPBuilder(course.location.url + (course.location.name == "Medellin" ? ":9401" : "") + "/buscador/JSON-RPC")
+            http.request(POST, ContentType.JSON) {
+                body = [
+                        "jsonrpc": "2.0",
+                        "method" : "buscador.obtenerGruposAsignaturas",
+                        "params" : [course.internalCode.toString(), "0"]
+                ]
+
+                // success response handler
+                response.success = { resp, json ->
+                    json.result.list.each { group ->
+                        def name = group.nombredocente ?: "Información Pendiente"
+                        def user = group.usuariodocente ?: "InfoPendiente"
+                        name = name.trim()
+                        user = user.trim()
+                        if (!Teacher.findByUsername(user)) {
+                            new Teacher(
+                                    name: name,
+                                    username: user,
+                                    location: course.location
+                            ).save(flush: true)
+                        }
+                        Teacher.findByUsername(user).addToCourses(course).save()
+                    }
+                }
+
+                // failure response handler
+                response.failure = { resp ->
+                    println "Unexpected error: ${resp.statusLine.statusCode}"
+                    println $ { resp.statusLine.reasonPhrase }
+                }
+            }
+        }
     }
 }
