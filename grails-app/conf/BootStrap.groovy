@@ -195,23 +195,14 @@ class BootStrap {
                 // success response handler
                 response.success = { resp, json ->
                     json.result.asignaturas.list.each { c ->
-                        if (!Course.findByCode(c.id_asignatura.toInteger())) {
-                            def http2 = new HTTPBuilder(course.location.url + '/buscador/service/asignaturaInfo.pub?cod_asignatura=' + course.code)
-                            def html = http2.get([:])
-                            def description
-                            def contents
-                            html."**".findAll { it.@class.toString().contains("module") }.each {
-                                description = it.P[4].toString().replaceAll(/[ \t\n]+/, " ")
-                                contents = it.P[6].toString().replaceAll(/[ \t\n]+/, " ")
-                            }
+                        def code = c.id_asignatura.toInteger()
+                        if (!Course.findByCode(code)) {
                             new Course(
                                     internalCode: c.codigo.toInteger(),
-                                    code: c.id_asignatura.toInteger(),
+                                    code: code,
                                     name: c.nombre,
                                     typology: c.tipologia,
                                     credits: c.creditos.toInteger(),
-                                    description: description,
-                                    contents: contents,
                                     location: degree.location
                             ).save(flush: true)
                         }
@@ -225,7 +216,7 @@ class BootStrap {
                 }
             }
         }
-        //loadCourseContents()
+        loadCourseContents()
     }
 
     def loadCourseContents() {
@@ -235,7 +226,7 @@ class BootStrap {
             def http = new HTTPBuilder(course.location.url + '/buscador/service/asignaturaInfo.pub?cod_asignatura=' + course.code)
             def html = http.get([:])
             html."**".findAll { it.@class.toString().contains("module") }.each {
-                course.description = it.P[4].text().replaceAll(/[ \t\n]+/, " ")
+                course.description = it.P[4].toString().replaceAll(/[ \t\n]+/, " ")
                 course.contents = it.P[6].toString().replaceAll(/[ \t\n]+/, " ")
                 course.save(flush: true)
             }
