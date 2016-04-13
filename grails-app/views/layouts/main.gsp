@@ -14,6 +14,7 @@
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link href="${request.contextPath}/welcome-index/css/freelancer.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <!-- Bootstrap Material Design -->
@@ -86,6 +87,15 @@
             </ul>
         </div>
     </div>
+
+    <g:if test="${session["user"]?.isAdmin == true}">
+
+        <g:link controller="admin" action="index" style = "height: 50px; width: 50px; background-color: red;">
+            Administrador
+        </g:link>
+
+    </g:if>
+
 </nav>
 
 <div class="main-content">

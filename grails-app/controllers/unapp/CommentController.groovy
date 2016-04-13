@@ -1,6 +1,7 @@
 package unapp
 
 
+
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
@@ -11,7 +12,7 @@ class CommentController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Comment.list(params), model: [commentInstanceCount: Comment.count()]
+        respond Comment.list(params), model:[commentInstanceCount: Comment.count()]
     }
 
     def show(Comment commentInstance) {
@@ -30,11 +31,11 @@ class CommentController {
         }
 
         if (commentInstance.hasErrors()) {
-            respond commentInstance.errors, view: 'create'
+            respond commentInstance.errors, view:'create'
             return
         }
 
-        commentInstance.save flush: true
+        commentInstance.save flush:true
 
         request.withFormat {
             form multipartForm {
@@ -57,18 +58,18 @@ class CommentController {
         }
 
         if (commentInstance.hasErrors()) {
-            respond commentInstance.errors, view: 'edit'
+            respond commentInstance.errors, view:'edit'
             return
         }
 
-        commentInstance.save flush: true
+        commentInstance.save flush:true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'Comment.label', default: 'Comment'), commentInstance.id])
                 redirect commentInstance
             }
-            '*' { respond commentInstance, [status: OK] }
+            '*'{ respond commentInstance, [status: OK] }
         }
     }
 
@@ -80,14 +81,14 @@ class CommentController {
             return
         }
 
-        commentInstance.delete flush: true
+        commentInstance.delete flush:true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'Comment.label', default: 'Comment'), commentInstance.id])
-                redirect action: "index", method: "GET"
+                redirect action:"index", method:"GET"
             }
-            '*' { render status: NO_CONTENT }
+            '*'{ render status: NO_CONTENT }
         }
     }
 
@@ -97,7 +98,7 @@ class CommentController {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'comment.label', default: 'Comment'), params.id])
                 redirect action: "index", method: "GET"
             }
-            '*' { render status: NOT_FOUND }
+            '*'{ render status: NOT_FOUND }
         }
     }
 }

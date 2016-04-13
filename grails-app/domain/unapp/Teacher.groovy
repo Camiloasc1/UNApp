@@ -1,27 +1,38 @@
 package unapp
 
-class Teacher extends Commentable
-{
+class Teacher {
     String name
     String username // the institutional username
-    static hasMany = [courses: Course, evaluations: TeacherEvaluation]
+    static belongsTo = [location: Location]
+    static hasMany = [comments: Comment, courses: Course, evaluations: TeacherEvaluation]
 
     static constraints = {
-        username nullable: true
+        name nullable: false
+        username nullable: false
+
+        location nullable: true
+
+        comments nullable: true
+        courses nullable: true
+        evaluations nullable: true
     }
 
-    String getEmail()
-    {
+    //static embedded = ['comments']
+
+    String getEmail() {
         return "${username}@unal.edu.co"
     }
 
-    String getURL()
-    {
+    String getURL() {
         return "http://www.docentes.unal.edu.co/${username}/"
     }
 
-    String toString(){
-        return name
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "name='" + name + '\'' +
+                ", username='" + username + '\'' +
+                ", location=" + location +
+                '}';
     }
-
 }

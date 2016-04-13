@@ -3,52 +3,53 @@ package unapp
 import org.scribe.model.Token
 import grails.converters.JSON
 
-class LoginController
-{
+class LoginController {
     def oauthService
     def googleAPIService
 
     def index() {}
 
-    def success()
-    {
+    def success() {
         def googleResponse = googleAPIService.getJSON((Token) session[oauthService.findSessionKeyForAccessToken('google')])
-        if (googleResponse.hd != "unal.edu.co")
-        {
+        if (googleResponse.hd != "unal.edu.co") {
             session[oauthService.findSessionKeyForAccessToken('google')] = null
             flash.message = "Only unal.edu.co users can login."
-            //redirect action: 'index'
             redirect(uri: '/')
         }
-        //redirect action: 'index'
-        redirect(uri: '/')
-    }
 
-    def failure()
-    {
-        flash.message = "Login failure."
-        //redirect action: 'index'
-        redirect(uri: '/')
-    }
-
-    def revoke()
-    {
-        if (session[oauthService.findSessionKeyForAccessToken('google')])
-        {
-            session[oauthService.findSessionKeyForAccessToken('google')] = null
-            flash.message = "Logged out."
+        def user = User.findByGoogleID(googleResponse.id)
+        if (user == null) {
+            user = new User(googleID: googleResponse.id, name: googleResponse.name, email: googleResponse.email)
+            user.save(flush: true)
         }
-        //redirect action: 'index'
+        session.user = user
+
+        flash.message = "Login success."
         redirect(uri: '/')
     }
 
-    def me()
-    {
-        if (session[oauthService.findSessionKeyForAccessToken('google')])
-        {
+    def failure() {
+        flash.message = "Login failure."
+        redirect(uri: '/')
+    }
+
+    def revoke() {
+        if (session[oauthService.findSessionKeyForAccessToken('google')]) {
+            session[oauthService.findSessionKeyForAccessToken('google')] = null
+        }
+        session.user = null
+        flash.message = "Logged out."
+
+        redirect(uri: '/')
+    }
+
+    def me() {
+        if (session[oauthService.findSessionKeyForAccessToken('google')]) {
             def googleResponse = googleAPIService.getJSON((Token) session[oauthService.findSessionKeyForAccessToken('google')])
             //Map data = [name: googleResponse.name, id: googleResponse.id, hd: googleResponse.hd, email: googleResponse.email]
             render googleResponse as JSON
         }
     }
+
+
 }

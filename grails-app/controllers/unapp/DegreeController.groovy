@@ -1,6 +1,7 @@
 package unapp
 
 
+
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
@@ -11,7 +12,7 @@ class DegreeController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Degree.list(params), model: [degreeInstanceCount: Degree.count()]
+        respond Degree.list(params), model:[degreeInstanceCount: Degree.count()]
     }
 
     def show(Degree degreeInstance) {
@@ -30,11 +31,11 @@ class DegreeController {
         }
 
         if (degreeInstance.hasErrors()) {
-            respond degreeInstance.errors, view: 'create'
+            respond degreeInstance.errors, view:'create'
             return
         }
 
-        degreeInstance.save flush: true
+        degreeInstance.save flush:true
 
         request.withFormat {
             form multipartForm {
@@ -57,18 +58,18 @@ class DegreeController {
         }
 
         if (degreeInstance.hasErrors()) {
-            respond degreeInstance.errors, view: 'edit'
+            respond degreeInstance.errors, view:'edit'
             return
         }
 
-        degreeInstance.save flush: true
+        degreeInstance.save flush:true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'Degree.label', default: 'Degree'), degreeInstance.id])
                 redirect degreeInstance
             }
-            '*' { respond degreeInstance, [status: OK] }
+            '*'{ respond degreeInstance, [status: OK] }
         }
     }
 
@@ -80,14 +81,14 @@ class DegreeController {
             return
         }
 
-        degreeInstance.delete flush: true
+        degreeInstance.delete flush:true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'Degree.label', default: 'Degree'), degreeInstance.id])
-                redirect action: "index", method: "GET"
+                redirect action:"index", method:"GET"
             }
-            '*' { render status: NO_CONTENT }
+            '*'{ render status: NO_CONTENT }
         }
     }
 
@@ -97,7 +98,7 @@ class DegreeController {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'degree.label', default: 'Degree'), params.id])
                 redirect action: "index", method: "GET"
             }
-            '*' { render status: NOT_FOUND }
+            '*'{ render status: NOT_FOUND }
         }
     }
 }

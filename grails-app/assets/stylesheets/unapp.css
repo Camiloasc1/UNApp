@@ -1,14 +1,53 @@
+.main_unapp{
+    height: 150px;
+
+}
 /* Extra small devices (phones, less than 768px) */
 /* No media query since this is the default in Bootstrap */
 .navbar-logo {
     height: 30px;
 }
 
+/* subject styles */
+.subjectInfo {
+    margin-top: 150px;
+}
+
+
+.star-rating {
+    list-style-type: none;
+    font-size: 175%;
+    color: gold;
+    width:100%
+}
+
+ul{
+    padding: 0;
+    list-style-type: none;
+}
+
+.star-rating li {
+    display: inline-block;
+    margin: 1.5%;
+}
+
+.display-rating {
+    float:left;
+    clear:both;
+    padding:5px;
+    width: 100%;
+}
+
+/* subject styles end */
+
+
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
     .navbar-logo {
         height: 35px;
     }
+
+
 }
 
 /* Medium devices (desktops, 992px and up) */
@@ -29,58 +68,18 @@
     padding-top: 25px;
 }
 
-/* Extra small devices (phones, less than 768px) */
-/* No media query since this is the default in Bootstrap */
-.main-content {
-    margin-top: 50px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-    background: url('welcome_background.jpg') no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    -o-background-size: cover;
-}
 
-/* Small devices (tablets, 768px and up) */
-@media (min-width: 768px) {
-    .main-content {
-        margin-top: 70px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-        background: url('welcome_background.jpg') no-repeat center center fixed;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        background-size: cover;
-        -o-background-size: cover;
-    }
-}
-
-/* Medium devices (desktops, 992px and up) */
-@media (min-width: 992px) {
-    .main-content {
-        margin-top: 70px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-        background: url('welcome_background.jpg') no-repeat center center fixed;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        background-size: cover;
-        -o-background-size: cover;
-    }
-}
-
-/* Large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {
-    .main-content {
-        margin-top: 80px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-        background: url('welcome_background.jpg') no-repeat center center fixed;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        background-size: cover;
-        -o-background-size: cover;
-    }
-}
 
 @media screen and (min-width: 1000px) {
     .window_search {
         position: absolute;
         top: 40%;
     }
+    /* subject styles */
+    .subjectInfo {
+        margin-top: 150px;
+    }
+    /* subject styles end */
 }
 
 @media screen and (min-width: 750px) and (max-width: 1000px) {
@@ -97,11 +96,50 @@
     }
 }
 
+@media screen and (max-width: 850px) {
+
+    /* subject styles */
+    .subjectInfo {
+        margin-top: 80px;
+    }
+    /* subject styles end */
+}
+
 @media screen and (min-width: 800px) {
     .window_search > #custom-search-input {
-        background-color: rgba(178, 178, 178, 0.45);
+        background-color: rgba(44, 47, 75, 0.9);
         border-radius: 20px;
         padding: 22px;
     }
 }
 
+/*  comment sections css*/
+
+.thumbnail {
+    padding:0px;
+}
+.panel {
+    position:relative;
+}
+.panel>.panel-heading:after,.panel>.panel-heading:before{
+    position:absolute;
+    top:11px;left:-16px;
+    right:100%;
+    width:0;
+    height:0;
+    display:block;
+    content:" ";
+    border-color:transparent;
+    border-style:solid solid outset;
+    pointer-events:none;
+}
+.panel>.panel-heading:after{
+    border-width:7px;
+    border-right-color:#f7f7f7;
+    margin-top:1px;
+    margin-left:2px;
+}
+.panel>.panel-heading:before{
+    border-right-color:#ddd;
+    border-width:8px;
+}

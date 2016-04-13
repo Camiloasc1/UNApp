@@ -1,36 +1,43 @@
 package unapp
 
-class Course extends Commentable
-{
-    String code
+class Course {
+    int internalCode
+    int code
     String name
     String typology
     int credits
     String description
     String contents
-    String location
+    Location location
     static belongsTo = Teacher
-    static hasMany = [teachers: Teacher, evaluations: CourseEvaluation]
+    static hasMany = [comments: Comment, teachers: Teacher, evaluations: CourseEvaluation]
 
     static constraints = {
-        teachers nullable: true
-        evaluations nullable: true
+        internalCode nullable: false, min: 0
+        code nullable: false, min: 0
+        name nullable: false, blank: false
+        typology nullable: false, blank: false
+        credits nullable: false, min: 0
         description nullable: true
         contents nullable: true
         location nullable: true
-        typology nullable: true
 
-        description display:false
-        contents display:false
-        name display:true
+        teachers nullable: true
+
+        comments nullable: true
+        evaluations nullable: true
     }
 
-    /*static mapping = {
-        id column: 'code', type: 'String' insert:false update:false
-    }*/
+    //static embedded = ['comments']
 
-    String toString(){
-        return code+" "+name+" "+credits+" "+location
+    @Override
+    public String toString() {
+        return "Course{" +
+                "code=" + code +
+                ", name='" + name + '\'' +
+                ", typology='" + typology + '\'' +
+                ", credits=" + credits +
+                ", location='" + location + '\'' +
+                '}';
     }
-
 }
