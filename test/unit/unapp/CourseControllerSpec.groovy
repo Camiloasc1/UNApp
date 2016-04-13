@@ -116,7 +116,7 @@ class CourseControllerSpec extends Specification {
 
         when: "A valid domain instance is passed to the update action"
         response.reset()
-        def params = populateValidParams(params)
+        populateValidParams(params)
         course = new Course(params).save(flush: true)
         controller.update(course)
 
