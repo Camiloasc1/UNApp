@@ -137,7 +137,7 @@ class CourseControllerSpec extends Specification {
 
         when: "A domain instance is created"
         response.reset()
-        def params = populateValidParams(params)
+        populateValidParams(params)
         def course = new Course(params).save(flush: true)
 
         then: "It exists"
