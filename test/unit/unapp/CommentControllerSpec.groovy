@@ -11,7 +11,7 @@ class CommentControllerSpec extends Specification {
     def populateValidParams(params) {
         assert params != null
         def author = new User(potitiveVotes: 0, negativeVotes: 0, isAdmin: false, name: "Usuario", googleID: "1234", email: "usuario@unal.edu.co");
-        User.save(flush: true)
+        author.save(flush: true)
         params["author"] = author
         params["body"] = "Comment"
         params["positiveVotes"] = 0
