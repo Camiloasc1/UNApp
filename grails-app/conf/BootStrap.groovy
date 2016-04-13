@@ -25,8 +25,7 @@ class BootStrap {
                     name: "SIN PREREQUISITOS",
                     code: 0,
                     credits: 0,
-                    typology: "P",
-                    location: Location.findByName("Bogota")
+                    typology: "P"
             ).save(flush: true)
         }
         if (Course.list().size() == 1) {
@@ -36,6 +35,12 @@ class BootStrap {
         println("${count} Courses Loaded.")
 
         if (Teacher.list().size() == 0) {
+            new Teacher(
+                    name: "[Información Pendiente]",
+                    username: "[Información Pendiente]"
+            ).save(flush: true)
+        }
+        if (Teacher.list().size() == 1) {
             loadTeachers()
         }
         count = Teacher.list().size();
@@ -236,6 +241,7 @@ class BootStrap {
 
     def loadTeachers() {
         println("Loading Teachers...")
+        def nullTeacher = Teacher.findByName("[Información Pendiente]")
         Course.list().each { course ->
             def http = new HTTPBuilder(course.location.url + (course.location.name == "Medellin" ? ":9401" : "") + "/buscador/JSON-RPC")
             http.request(POST, ContentType.JSON) {
@@ -248,18 +254,21 @@ class BootStrap {
                 // success response handler
                 response.success = { resp, json ->
                     json.result.list.each { group ->
-                        def name = group.nombredocente ?: "Información Pendiente"
-                        def user = group.usuariodocente ?: "InfoPendiente"
-                        name = name.trim()
-                        user = user.trim()
-                        if (!Teacher.findByUsername(user)) {
-                            new Teacher(
-                                    name: name,
-                                    username: user,
-                                    location: course.location
-                            ).save(flush: true)
+                        def name = group.nombredocente?.trim()
+                        def user = group.usuariodocente?.trim()
+                        if (name && user) {
+                            def teacher = Teacher.findByNameAndUsername(name, user)
+                            if (!teacher) {
+                                teacher = new Teacher(
+                                        name: name,
+                                        username: user,
+                                        location: course.location
+                                ).save(flush: true)
+                            }
+                            teacher.addToCourses(course).save(flush: true)
+                        } else {
+                            nullTeacher.addToCourses(course).save()
                         }
-                        Teacher.findByUsername(user).addToCourses(course).save()
                     }
                 }
 
