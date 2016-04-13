@@ -25,7 +25,8 @@ class BootStrap {
                     name: "SIN PREREQUISITOS",
                     code: 0,
                     credits: 0,
-                    typology: "P"
+                    typology: "P",
+                    location: Location.findByName("Bogota")
             ).save(flush: true)
         }
         if (Course.list().size() == 1) {
@@ -37,7 +38,8 @@ class BootStrap {
         if (Teacher.list().size() == 0) {
             new Teacher(
                     name: "[Información Pendiente]",
-                    username: "[Información Pendiente]"
+                    username: "[Información Pendiente]",
+                    location: Location.findByName("Bogota")
             ).save(flush: true)
         }
         if (Teacher.list().size() == 1) {
