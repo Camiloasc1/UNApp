@@ -50,10 +50,7 @@ class CourseControllerSpec extends Specification {
 
         when: "The save action is executed with a valid instance"
         response.reset()
-        def params = populateValidParams(params)
-
-        println params
-
+        populateValidParams(params)
         course = new Course(params)
 
         controller.save(course)
