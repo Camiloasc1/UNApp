@@ -10,10 +10,8 @@ class TeacherControllerSpec extends Specification {
 
     def populateValidParams(params) {
         assert params != null
-        // TODO: Populate valid properties like...
-        params["name"] = 'someValidName'
-        params["courses"] = []
-        params["evaluations"] = []
+        params["name"] = "Profesor"
+        params["username"] = "profesor"
     }
 
     void "Test the index action returns the correct model"() {

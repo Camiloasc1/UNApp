@@ -10,7 +10,7 @@ class Teacher {
         name nullable: false
         username nullable: false
 
-        location nullable: false
+        location nullable: true
 
         comments nullable: true
         courses nullable: true

@@ -10,7 +10,11 @@ class CourseControllerSpec extends Specification {
 
     def populateValidParams(params) {
         assert params != null
-        return [code: "342332", name: "Matematicas discretas II", credits: 4]
+        params["internalCode"] = 12345
+        params["code"] = 12345
+        params["name"] = "Materia Muy Facil"
+        params["typology"] = "A"
+        params["credits"] = 3
     }
 
     void "Test the index action returns the correct model"() {

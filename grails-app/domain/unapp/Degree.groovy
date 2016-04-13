@@ -13,7 +13,7 @@ class Degree {
         name nullable: false
         faculty nullable: false
         type nullable: false
-        location nullable: false
+        location nullable: true
         courses nullable: true
     }
 

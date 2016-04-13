@@ -1,17 +1,19 @@
 package unapp
 
 class Location {
-
     String name
     String url
 
-    public String toString(){
-        return name
+    static constraints = {
+        name nullable: false, blank: false, unique: true
+        url nullable: false, blank: false
     }
 
-    static constraints = {
-
-        name blank: false, unique: true
-        url blank: false
+    @Override
+    public String toString() {
+        return "Location{" +
+                "name='" + name + '\'' +
+                ", url='" + url + '\'' +
+                '}';
     }
 }

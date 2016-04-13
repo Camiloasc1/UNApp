@@ -15,12 +15,12 @@ class Course {
     static constraints = {
         internalCode nullable: false, min: 0
         code nullable: false, min: 0
-        name nullable: false
-        typology nullable: false
+        name nullable: false, blank: false
+        typology nullable: false, blank: false
         credits nullable: false, min: 0
         description nullable: true
         contents nullable: true
-        location nullable: false
+        location nullable: true
 
         teachers nullable: true
 

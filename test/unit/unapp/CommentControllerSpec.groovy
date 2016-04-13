@@ -10,14 +10,13 @@ class CommentControllerSpec extends Specification {
 
     def populateValidParams(params) {
         assert params != null
-        // TODO: Populate valid properties like...
-        params["body"] = 'someValidName'
+        def author = new User(potitiveVotes: 0, negativeVotes: 0, isAdmin: false, name: "Usuario", googleID: "1234", email: "usuario@unal.edu.co");
+        User.save(flush: true)
+        params["author"] = author
+        params["body"] = "Comment"
         params["positiveVotes"] = 0
         params["negativeVotes"] = 0
-        def aux = new User(potitiveVotes: 0 ,negativeVotes: 0, isAdmin: false,  name:"Pepito suarez",googleID:"1234",email:"amrondonp@gmail.com");
-        aux.save()
         params["date"] = new Date()
-        params["author"] = aux
     }
 
     void "Test the index action returns the correct model"() {
