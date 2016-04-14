@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
+    <link href="${request.contextPath}/welcome-index/css/freelancer.css" rel="stylesheet">
 </head>
 
 <body>
