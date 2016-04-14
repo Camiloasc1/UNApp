@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title><g:layoutTitle default="UNApp"/></title>
+    <!-- <title><g:layoutTitle default="UNApp"/></title> -->
+    <title>UNApp</title>
 
     <link rel="shortcut icon" href="${assetPath(src: 'favicon.ico')}" type="image/x-icon">
     <link rel="apple-touch-icon" href="${assetPath(src: 'apple-touch-icon.png')}">
@@ -14,7 +15,6 @@
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link href="${request.contextPath}/welcome-index/css/freelancer.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <!-- Bootstrap Material Design -->
@@ -42,7 +42,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!--<a class="navbar-brand" href="#page-top">UN-App</a>-->
-            <a class="navbar-brand" href="#page-top">
+            <a class="navbar-brand" href="${createLink(uri: '/')}">
                 <img class="navbar-logo" src="${assetPath(src: 'unapp_logo.png')}" alt="UNApp logo">
             </a>
         </div>
@@ -64,9 +64,9 @@
                         <span class="caret"></span></h4>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="${createLink(view: 'index')}#portfolio">Desarrolladores</a></li>
-                        <li><a href="${createLink(view: 'index')}#about">Acerca</a></li>
-                        <li><a href="${createLink(view: 'index')}#contact">Contactenos</a></li>
+                        <li><a href="${createLink(uri: '/')}#portfolio">Desarrolladores</a></li>
+                        <li><a href="${createLink(uri: '/')}#about">Acerca</a></li>
+                        <li><a href="${createLink(uri: '/')}#contact">Contactenos</a></li>
                     </ul>
                 </li>
             </ul>
@@ -90,7 +90,7 @@
 
     <g:if test="${session["user"]?.isAdmin == true}">
 
-        <g:link controller="admin" action="index" style = "height: 50px; width: 50px; background-color: red;">
+        <g:link controller="admin" action="index" style="height: 50px; width: 50px; background-color: red;">
             Administrador
         </g:link>
 
