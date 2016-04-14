@@ -5,81 +5,84 @@
 
 <body>
 <div class="container subjectInfo">
-    <div class="jumbotron">
-        <div class="row">
-            <div class="col-md-4 col-lg-5">
-                <img src="${request.contextPath}/images/Font-Book.png" class="img-rounded center-block" height="250"
-                     width="250">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="col-md-4 col-lg-5">
+                        <img src="${request.contextPath}/images/Font-Book.png" class="img-rounded center-block"
+                             height="250"
+                             width="250">
 
-                <h1 class="text-center">${c.name}</h1>
+                        <h1 class="text-center">${c.name}</h1>
+                        <h2 class="text-center">${c.code}</h2>
+                        <h3 class="text-center">${c.location.name}</h3>
 
-                <h2 class="text-center">${c.code}</h2>
+                        <div class="row text-center">
+                            <ul class="star-rating">
+                                <li class="star" id="1">&#9734;</li>
+                                <li class="star" id="2">&#9734;</li>
+                                <li class="star" id="3">&#9734;</li>
+                                <li class="star" id="4">&#9734;</li>
+                                <li class="star" id="5">&#9734;</li>
+                            </ul>
+                        </div>
 
-                <h3 class="text-center">${c.location.name}</h3>
+                        <div class="col-xs-12 display-rating" style="text-align: center">Tu voto fue de:</div>
 
-                <div class="row text-center">
-                    <ul class="star-rating">
-                        <li class="star" id="1">&#9734;</li>
-                        <li class="star" id="2">&#9734;</li>
-                        <li class="star" id="3">&#9734;</li>
-                        <li class="star" id="4">&#9734;</li>
-                        <li class="star" id="5">&#9734;</li>
-                    </ul>
+                    </div>
+
+                    <div class="col-md-8 col-lg-7">
+                        <h2>Descripción:</h2>
+                        <div class="text-justify">${c.description}</div>
+
+                        <h2>Contenidos:</h2>
+                        <div class="text-justify">${c.contents}</div>
+
+                        <h2>Profesores:</h2>
+                        <g:each in="${c.teachers}">
+                            <a href="#">${it.name}</a>
+                            <br/>
+                        </g:each>
+                    </div>
                 </div>
-
-                <div class="col-xs-12 display-rating" style="text-align: center">Tu voto fue de:</div>
-
-            </div>
-
-            <div class="col-md-8 col-lg-7">
-                <h2>Descripción:</h2>
-
-                <div class="text-justify">${c.description}</div>
-
-                <h2>Contenidos:</h2>
-
-                <div class="text-justify">${c.contents}</div>
-
-                <h2>Profesores:</h2>
-                <g:each in="${c.teachers}">
-                    <a href="#">${it.name}</a>
-                    <br/>
-                </g:each>
             </div>
         </div>
     </div>
 
-    <div class="jumbotron">
-        <div class="row">
-            <oauth:disconnected provider="google">
-                <oauth:connect provider="google">
-                    <div class="text-center">
-                        <button class="btn btn-raised btn-primary">
-                            <i class="fa fa-google"></i> Ingresar con Google Para Comentar
-                        </button>
-                    </div>
-                </oauth:connect>
-            </oauth:disconnected>
-            <oauth:connected provider="google">
-                <form id="comentar-form">
-                    <div class="col-lg-9 col-md-8">
-                        <div class="form-group">
-                            <input type="hidden" id="id" name="id" value="${c.id}"/>
-                            <input type="hidden" id="offset" name="offset" value="${offset}"/>
-                            <textarea name="body" id="body" rows="5" class="form-control"></textarea>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="jumbotron">
+                <oauth:disconnected provider="google">
+                    <oauth:connect provider="google">
+                        <div class="text-center">
+                            <button class="btn btn-raised btn-primary">
+                                <i class="fa fa-google"></i> Ingresar con Google Para Comentar
+                            </button>
                         </div>
-                    </div>
+                    </oauth:connect>
+                </oauth:disconnected>
+                <oauth:connected provider="google">
+                    <form id="comentar-form">
+                        <div class="col-lg-9 col-md-8">
+                            <div class="form-group">
+                                <input type="hidden" id="id" name="id" value="${c.id}"/>
+                                <input type="hidden" id="offset" name="offset" value="${offset}"/>
+                                <textarea name="body" id="body" rows="5" class="form-control"></textarea>
+                            </div>
+                        </div>
 
-                    <div class="col-lg-3 col-md-4">
-                        <button type="button" onclick="subirComentario()"
-                                class="btn btn-default btn-raised btn-block">Comentar</button>
-                        <!--<button type="button" class="btn btn-default btn-raised btn-block" onclick="document.getElementById('imagenComentario').click()">
+                        <div class="col-lg-3 col-md-4">
+                            <button type="button" onclick="subirComentario()"
+                                    class="btn btn-default btn-raised btn-block">Comentar</button>
+                            <!--<button type="button" class="btn btn-default btn-raised btn-block" onclick="document.getElementById('imagenComentario').click()">
                             <i class="material-icons">photo</i>  Sube una imagen
                         </button>
                         <input type="file" id="imagenComentario" name="imagenComentario" style="display: none" /> -->
-                    </div>
-                </form>
-            </oauth:connected>
+                        </div>
+                    </form>
+                </oauth:connected>
+            </div>
         </div>
     </div>
 
