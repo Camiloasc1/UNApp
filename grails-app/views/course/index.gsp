@@ -1,5 +1,3 @@
-<%@ page import="unapp.Course" %>
-<%@ page import="unapp.Location" %>
 <!DOCTYPE html>
 <html>
 <head>

@@ -29,7 +29,7 @@
     <g:layoutHead/>
 </head>
 
-<body id="page-top">
+<body>
 
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
@@ -41,7 +41,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <!--<a class="navbar-brand" href="#page-top">UN-App</a>-->
+            <!--<a class="navbar-brand" href="${createLink(uri: '/')}">UN-App</a>-->
             <a class="navbar-brand" href="${createLink(uri: '/')}">
                 <img class="navbar-logo" src="${assetPath(src: 'unapp_logo.png')}" alt="UNApp logo">
             </a>
