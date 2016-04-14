@@ -23,6 +23,17 @@ class CourseController {
                 ]
     }
 
+    def search(){
+        def locations = Location.list()
+        def courses = Course.findAllByNameRlike(params.query.toUpperCase())
+
+        render view: "search" ,
+                model: [
+                        locations: locations,
+                        courses  : courses
+                ]
+    }
+
     def show(Course courseInstance) {
         respond courseInstance
     }
