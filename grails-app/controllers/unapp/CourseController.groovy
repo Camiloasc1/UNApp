@@ -9,8 +9,7 @@ class CourseController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
+    def index() {
         def locations = Location.list()
         def courses = []
         locations.eachWithIndex { l, i ->
@@ -23,14 +22,12 @@ class CourseController {
                 ]
     }
 
-    def search(){
-        def locations = Location.list()
-        def courses = Course.findAllByNameRlike(params.query.toUpperCase())
+    def search() {
+        def courses = Course.findAllByNameIlike("%" + params.query + "%")
 
-        render view: "search" ,
+        respond courses,
                 model: [
-                        locations: locations,
-                        courses  : courses
+                        courses: courses
                 ]
     }
 

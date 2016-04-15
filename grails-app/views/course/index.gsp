@@ -5,7 +5,7 @@
 </head>
 
 <body>
-<div id="list-course" class="content scaffold-list" role="main">
+<div>
     <ul class="nav nav-pills">
         <g:each in="${locations}" status="i" var="location">
             <g:if test="${i == 0}">
