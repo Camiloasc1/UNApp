@@ -10,12 +10,18 @@ class CourseController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index() {
-        def locations = Location.list()
-        def courses = []
+        def result = []
+        List<Location> locations = Location.list()
+        List<Course> courses = []
         locations.eachWithIndex { l, i ->
             courses.add(Course.findAllByLocation(l))
+            def listOfCourses = []
+            courses[i].each { c ->
+                listOfCourses.add([code: c.code, name: c.name, credits: c.credits])
+            }
+            result.add([location: [name: l.name, courses: listOfCourses]])
         }
-        respond Course.list(params),
+        respond result,
                 model: [
                         locations: locations,
                         courses  : courses
@@ -23,9 +29,13 @@ class CourseController {
     }
 
     def search() {
-        def courses = Course.findAllByNameIlike("%" + params.query + "%")
+        def result = []
+        List<Course> courses = Course.findAllByNameIlike("%" + params.query + "%")
+        courses.each { c ->
+            result.add([code: c.code, name: c.name, credits: c.credits])
+        }
 
-        respond courses,
+        respond result,
                 model: [
                         courses: courses
                 ]
