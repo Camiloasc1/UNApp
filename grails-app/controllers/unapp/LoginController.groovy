@@ -46,8 +46,11 @@ class LoginController {
     def me() {
         if (session[oauthService.findSessionKeyForAccessToken('google')]) {
             def googleResponse = googleAPIService.getJSON((Token) session[oauthService.findSessionKeyForAccessToken('google')])
-            //Map data = [name: googleResponse.name, id: googleResponse.id, hd: googleResponse.hd, email: googleResponse.email]
-            render googleResponse as JSON
+            Map userData = [:]
+            googleResponse.each { k, v ->
+                userData[k] = v
+            }
+            respond userData
         }
     }
 
