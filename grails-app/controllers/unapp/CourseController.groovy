@@ -13,7 +13,7 @@ class CourseController {
         def result = Location.list().collect { l ->
             [name   : l.name,
              courses: Course.findAllByLocation(l).collect { c ->
-                 [code: c.code, name: c.name, credits: c.credits]
+                 [id: c.id, code: c.code, name: c.name, credits: c.credits]
              }
             ]
         }
@@ -23,7 +23,7 @@ class CourseController {
 
     def search(String query) {
         def result = Course.findAllByNameIlike("%" + query + "%").collect { c ->
-            [code: c.code, name: c.name, credits: c.credits]
+            [id: c.id, code: c.code, name: c.name, credits: c.credits]
         }
 
         respond result, model: [result: result]
