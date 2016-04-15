@@ -190,8 +190,7 @@ class BootStrap {
     def loadCourses() {
         println("Loading Courses...")
         //Degree.list().each { degree ->
-        //Degree.findByCode(2879).each { degree ->
-        Degree.findAllByLocation(Location.findByName("Bogota")).each { degree ->
+        Degree.findByCode(2879).each { degree ->
             def http = new HTTPBuilder(degree.location.url + (degree.location.name == "Medellin" ? ":9401" : "") + "/buscador/JSON-RPC")
             http.request(POST, ContentType.JSON) {
                 body = [
