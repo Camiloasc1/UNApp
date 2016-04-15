@@ -7,6 +7,6 @@
     </tr>
     </thead>
     <tbody>
-    <g:render template="row" collection="${it}"/>
+    <g:render template="indexRow" collection="${it}"/>
     </tbody>
 </table>

@@ -5,6 +5,6 @@
 </head>
 
 <body>
-<g:render template="table" bean="${result}"/>
+<g:render template="indexTable" bean="${result}"/>
 </body>
 </html>
