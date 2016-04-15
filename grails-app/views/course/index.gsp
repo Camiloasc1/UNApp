@@ -7,7 +7,7 @@
 <body>
 <div>
     <ul class="nav nav-pills">
-        <g:each in="${locations}" status="i" var="location">
+        <g:each in="${result}" status="i" var="location">
             <g:if test="${i == 0}">
                 <li class="active"><a data-toggle="pill" href="#${location.name}Pill">${location.name}</a></li>
             </g:if>
@@ -18,15 +18,15 @@
     </ul>
 
     <div class="tab-content">
-        <g:each in="${locations}" status="i" var="location">
+        <g:each in="${result}" status="i" var="location">
             <g:if test="${i == 0}">
                 <div id="${location.name}Pill" class="tab-pane fade in active">
-                    <g:render template="table" bean="${courses[i]}"/>
+                    <g:render template="table" bean="${location.courses}"/>
                 </div>
             </g:if>
             <g:else>
                 <div id="${location.name}Pill" class="tab-pane fade">
-                    <g:render template="table" bean="${courses[i]}"/>
+                    <g:render template="table" bean="${location.courses}"/>
                 </div>
             </g:else>
         </g:each>

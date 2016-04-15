@@ -5,6 +5,6 @@
 </head>
 
 <body>
-<g:render template="table" bean="${courses}"/>
+<g:render template="table" bean="${result}"/>
 </body>
 </html>
