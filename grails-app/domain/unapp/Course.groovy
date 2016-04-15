@@ -28,6 +28,11 @@ class Course {
         evaluations nullable: true
     }
 
+    static mapping = {
+        code index:true
+        name index:true
+    }
+
     //static embedded = ['comments']
 
     @Override
