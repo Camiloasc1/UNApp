@@ -30,7 +30,7 @@
                             </ul>
                         </div>
 
-                        <div class="col-xs-12 display-rating" style="text-align: center">Tu voto fue de:</div>
+                        <div class="col-xs-12 display-rating">Tu voto fue de:</div>
 
                     </div>
 
@@ -81,7 +81,7 @@
                             </div>
 
                             <div class="col-lg-3 col-md-4">
-                                <button type="button" onclick="subirComentario()"
+                                <button type="button" onclick="subirComentario( ${result.id} )"
                                         class="btn btn-default btn-raised btn-block">Comentar</button>
                                 <!--<button type="button" class="btn btn-default btn-raised btn-block" onclick="document.getElementById('imagenComentario').click()">
                                     <i class="material-icons">photo</i>  Sube una imagen
@@ -126,7 +126,7 @@
                                             <strong>${comment.author}</strong> <span
                                                 class="text-muted">${comment.date}</span>
 
-                                            <div id="${comment.id}" style="float: right">
+                                            <div id="${comment.id}" class="voting-container">
                                                 <oauth:connected provider="google">
                                                     <i class="material-icons votes posiv-vote" onclick="upVotes(event)">thumb_up</i>
                                                 </oauth:connected>
@@ -162,79 +162,12 @@
                 <div class="row">
                     <div class="text-center">
                         <button class="btn btn-deafult btn-raised" type="button" name="ver-mas"
-                                onclick="cargarComentariosPrev()">Ver Mas</button>
+                                onclick="cargarComentariosPrev( ${result.id} )">Ver Mas</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    function upVotes(e) {
-        var obj = e.target;
-
-        $.post({
-            url: "upVote",
-            data: {id2: obj.parentNode.id},
-            success: function (data, status) {
-                var aux = $(e.target);
-                var aux2 = data.split(" ");
-                aux.next().html(aux2[0]);
-                aux.next().next().next().html(aux2[1])
-                var neg = obj.parentNode.getElementsByClassName("negav-vote")[0];
-                $( neg).removeClass("sel-negav-vote");
-                $(obj).addClass( "sel-posiv-vote" );
-            }
-
-        });
-    }
-    function downVotes(e) {
-        var obj = e.target;
-        $.post({
-            url: "downVote",
-            data: {id2: obj.parentNode.id},
-            success: function (data, status) {
-                var aux = $(e.target);
-                var aux2 = data.split(" ");
-                aux.prev().html(aux2[0]);
-                aux.next().html(aux2[1]);
-                var pos = obj.parentNode.getElementsByClassName("posiv-vote")[0];
-                $( pos ).removeClass("sel-posiv-vote");
-                $(obj).addClass( "sel-negav-vote" );
-            }
-
-        });
-    }
-    function subirComentario() {
-        var offset = document.getElementsByClassName("comment").length;
-        var body = document.getElementById("body").value;
-
-        $.post({
-
-            url: "comment",
-            data: {id: ${result.id}, offset: offset, body: body},
-
-            success: function (data, status) {
-                //alert("Data: " + data + "\nStatus: " + status + offset);
-                $("#comentarios-nuevos").prepend(data)
-            }
-
-        });
-
-    }
-
-    function cargarComentariosPrev() {
-        var offset = document.getElementsByClassName("comentario").length;
-        $.post({
-            url: "cargarComentarios",
-            data: {id: ${result.id}, offset: offset},
-
-            success: function (data, status) {
-                //alert("Data: " + data + "\nStatus: " + status + offset);
-                $("#comentarios-nuevos").append(data)
-            }
-        });
-    }
-</script>
 </body>
 </html>
