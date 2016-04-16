@@ -74,7 +74,8 @@
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <oauth:disconnected provider="google">
-                        <oauth:connect provider="google">
+                        <oauth:connect provider="google"
+                                       redirectUrl="${request.forwardURI.replace("/UNApp", "") + ((request.queryString) ? "?" + request.queryString : "")}">
                             <h4><i class="fa fa-google"></i> Ingresar con Google</h4>
                         </oauth:connect>
                     </oauth:disconnected>

@@ -15,7 +15,9 @@
                              width="250">
 
                         <h1 class="text-center">${c.name}</h1>
+
                         <h2 class="text-center">${c.code}</h2>
+
                         <h3 class="text-center">${c.location.name}</h3>
 
                         <div class="row text-center">
@@ -34,9 +36,11 @@
 
                     <div class="col-md-8 col-lg-7">
                         <h2>Descripción:</h2>
+
                         <div class="text-justify">${c.description}</div>
 
                         <h2>Contenidos:</h2>
+
                         <div class="text-justify">${c.contents}</div>
 
                         <h2>Profesores:</h2>
@@ -54,7 +58,9 @@
         <div class="col-xs-12">
             <div class="jumbotron">
                 <oauth:disconnected provider="google">
-                    <oauth:connect provider="google">
+                    <oauth:connect provider="google"
+                                   redirectUrl="${request.forwardURI.replace("/UNApp", "") + ((request.queryString) ? "?" + request.queryString : "")}">
+
                         <div class="text-center">
                             <button class="btn btn-raised btn-primary">
                                 <i class="fa fa-google"></i> Ingresar con Google Para Comentar
