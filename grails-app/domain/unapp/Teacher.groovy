@@ -16,6 +16,10 @@ class Teacher {
         courses nullable: true
         evaluations nullable: true
     }
+    static mapping = {
+        name index:true
+        username index:true
+    }
 
     //static embedded = ['comments']
 

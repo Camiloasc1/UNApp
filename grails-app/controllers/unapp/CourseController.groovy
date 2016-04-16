@@ -1,7 +1,6 @@
 package unapp
 
 
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
@@ -10,9 +9,24 @@ class CourseController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Course.list(params), model:[courseInstanceCount: Course.count()]
+    def index() {
+        def result = Location.list().collect { l ->
+            [name   : l.name,
+             courses: Course.findAllByLocation(l).collect { c ->
+                 [id: c.id, code: c.code, name: c.name, credits: c.credits]
+             }
+            ]
+        }
+
+        respond result, model: [result: result]
+    }
+
+    def search(String query) {
+        def result = Course.findAllByNameIlike("%" + query + "%").collect { c ->
+            [id: c.id, code: c.code, name: c.name, credits: c.credits]
+        }
+
+        respond result, model: [result: result]
     }
 
     def show(Course courseInstance) {
@@ -31,11 +45,11 @@ class CourseController {
         }
 
         if (courseInstance.hasErrors()) {
-            respond courseInstance.errors, view:'create'
+            respond courseInstance.errors, view: 'create'
             return
         }
 
-        courseInstance.save flush:true
+        courseInstance.save flush: true
 
         request.withFormat {
             form multipartForm {
@@ -58,18 +72,18 @@ class CourseController {
         }
 
         if (courseInstance.hasErrors()) {
-            respond courseInstance.errors, view:'edit'
+            respond courseInstance.errors, view: 'edit'
             return
         }
 
-        courseInstance.save flush:true
+        courseInstance.save flush: true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'Course.label', default: 'Course'), courseInstance.id])
                 redirect courseInstance
             }
-            '*'{ respond courseInstance, [status: OK] }
+            '*' { respond courseInstance, [status: OK] }
         }
     }
 
@@ -81,14 +95,14 @@ class CourseController {
             return
         }
 
-        courseInstance.delete flush:true
+        courseInstance.delete flush: true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'Course.label', default: 'Course'), courseInstance.id])
-                redirect action:"index", method:"GET"
+                redirect action: "index", method: "GET"
             }
-            '*'{ render status: NO_CONTENT }
+            '*' { render status: NO_CONTENT }
         }
     }
 
@@ -98,7 +112,7 @@ class CourseController {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'course.label', default: 'Course'), params.id])
                 redirect action: "index", method: "GET"
             }
-            '*'{ render status: NOT_FOUND }
+            '*' { render status: NOT_FOUND }
         }
     }
 }
