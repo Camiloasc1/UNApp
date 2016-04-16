@@ -69,6 +69,11 @@
                         <li><a href="${createLink(uri: '/')}#contact">Contactenos</a></li>
                     </ul>
                 </li>
+                <unapp:isAdmin>
+                    <li class="page-scroll">
+                        <a href="${createLink(controller: 'admin', action: 'index')}"><h4><i class="fa fa-cogs"></i> Administacion</h4></a>
+                    </li>
+                </unapp:isAdmin>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
@@ -88,15 +93,6 @@
             </ul>
         </div>
     </div>
-
-    <g:if test="${session["user"]?.isAdmin == true}">
-
-        <g:link controller="admin" action="index" style="height: 50px; width: 50px; background-color: red;">
-            Administrador
-        </g:link>
-
-    </g:if>
-
 </nav>
 
 <div class="main-content">
