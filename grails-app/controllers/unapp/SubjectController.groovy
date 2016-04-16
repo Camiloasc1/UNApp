@@ -4,30 +4,53 @@ class SubjectController {
 
     static allowedMethods = [save: "POST", read: "GET", update: "PUT", delete: "DELETE"]
 
-    def index() {
-        def course = Course.get( params.id )
-        def comentarios = Comment.findAllByCourse(course,[sort:"date",order:"desc", max:5])
-        render view: "index", model: [ c: course, comments: comentarios , offset: 5]
+    def index(int id) {
+        def result = Course.get(id).collect { course ->
+            [id         : course.id,
+             code       : course.code,
+             name       : course.name,
+             credits    : course.credits,
+             description: course.description,
+             contents   : course.contents,
+             location   : course.location.name,
+             teachers   : course.teachers.collect { teacher ->
+                 [id      : teacher.id,
+                  name    : teacher.name,
+                  username: teacher.username
+                 ]
+             },
+             comments   : course.comments.collect { comment ->
+                 [id           : comment.id,
+                  author       : comment.author.name,
+                  body         : comment.body,
+                  date         : comment.date,
+                  positiveVotes: comment.positiveVotes,
+                  negativeVotes: comment.negativeVotes
+                 ]
+             }
+            ]
+        }[0]
+
+        respond result, model: [result: result]
     }
 
 
-
-    def cargarComentarios(String offset, String id){
+    def cargarComentarios(String offset, String id) {
         def off = offset.toInteger()
-        def course = Course.get( id.toInteger() )
-        def comentarios = Comment.findAllByCourse(course,[sort:"date",order:"desc", max:5 , offset: off])
+        def course = Course.get(id.toInteger())
+        def comentarios = Comment.findAllByCourse(course, [sort: "date", order: "desc", max: 5, offset: off])
 
         def str = concatComentarios(comentarios)
 
-        if(str.size()==0)
+        if (str.size() == 0)
             render "<div align = \"center\"> No existen mas comentarios </div>"
         else
             render str
     }
 
-    def concatComentarios(comentarios){
+    def concatComentarios(comentarios) {
 
-        def str =""
+        def str = ""
 
         comentarios.each {
             str += '<div class = "comentario">\n' +
@@ -40,16 +63,16 @@ class SubjectController {
                     '    <div class="col-sm-11">\n' +
                     '        <div class="panel panel-default">\n' +
                     '            <div class="panel-heading">\n' +
-                    '                <strong>'+it.author.name+'</strong> <span class="text-muted">'+it.date+'</span>\n' +
-                    '                <div id="'+ it.id +'" style="float: right">\n' +
+                    '                <strong>' + it.author.name + '</strong> <span class="text-muted">' + it.date + '</span>\n' +
+                    '                <div id="' + it.id + '" style="float: right">\n' +
                     '                   <i class="material-icons" onclick="upVotes(event)" style=" float: left; margin-right: 10px; ">thumb_up</i>\n' +
-                    '                   <div style="width: auto;float: left;margin-right: 10;" class="positive-vote">'+ it.positiveVotes +'</div>\n' +
+                    '                   <div style="width: auto;float: left;margin-right: 10;" class="positive-vote">' + it.positiveVotes + '</div>\n' +
                     '                   <i class="material-icons" onclick="downVotes(event)" style=" float: left; margin-right: 10px; margin-left: 10px; ">thumb_down</i>\n' +
-                    '                   <div style="width: auto;float: left;" class="negative-vote">'+ it.negativeVotes +'</div>\n' +
+                    '                   <div style="width: auto;float: left;" class="negative-vote">' + it.negativeVotes + '</div>\n' +
                     '               </div>\n' +
                     '            </div>\n' +
                     '            <div class="panel-body">\n' +
-                    '                '+ it.body +'\n' +
+                    '                ' + it.body + '\n' +
                     '            </div><!-- /panel-body -->\n' +
                     '        </div><!-- /panel panel-default -->\n' +
                     '    </div><!-- /sm-11 -->\n' +
@@ -62,85 +85,85 @@ class SubjectController {
 
     }
 
-    def upVote(String id2){
+    def upVote(String id2) {
         def id = id2.toInteger()
 
         def comment = Comment.findById(id)
         def user = session["user"]
 
-        if(user==null){
-            render comment.positiveVotes+" "+comment.negativeVotes
+        if (user == null) {
+            render comment.positiveVotes + " " + comment.negativeVotes
             return
         }
 
-        def like = Vote.findByAuthorAndComment(user,comment)
+        def like = Vote.findByAuthorAndComment(user, comment)
 
 
-        if(like!=null){
-            if(like.value==0){
+        if (like != null) {
+            if (like.value == 0) {
                 like.value = 1
                 comment.negativeVotes--;
                 comment.positiveVotes++;
             }
-        }else{
+        } else {
             like = new Vote(value: 1, author: user, comment: comment)
             comment.positiveVotes++;
         }
 
 
-        comment.save(flush: true, failOnError : true)
+        comment.save(flush: true, failOnError: true)
 
         def aux = like.errors
-        like.save(flush: true, failOnError : true)
+        like.save(flush: true, failOnError: true)
 
-        render comment.positiveVotes+" "+comment.negativeVotes
+        render comment.positiveVotes + " " + comment.negativeVotes
     }
 
-    def downVote(String id2){
+    def downVote(String id2) {
         def id = id2.toInteger()
 
         def comment = Comment.findById(id)
         def user = session["user"]
 
-        if(user==null){
-            render comment.positiveVotes+" "+comment.negativeVotes
+        if (user == null) {
+            render comment.positiveVotes + " " + comment.negativeVotes
             return
         }
 
-        def like = Vote.findByAuthorAndComment(user,comment)
+        def like = Vote.findByAuthorAndComment(user, comment)
 
 
-        if(like!=null){
-            if(like.value==1){
+        if (like != null) {
+            if (like.value == 1) {
                 like.value = 0
                 comment.negativeVotes++;
                 comment.positiveVotes--;
             }
-        }else{
-            like = new Vote(value: 0,author: user, comment: comment)
+        } else {
+            like = new Vote(value: 0, author: user, comment: comment)
             comment.negativeVotes++;
         }
 
-        comment.save(flush: true, failOnError : true)
-        like.save(flush: true, failOnError : true)
+        comment.save(flush: true, failOnError: true)
+        like.save(flush: true, failOnError: true)
 
-        render comment.positiveVotes+" "+comment.negativeVotes
+        render comment.positiveVotes + " " + comment.negativeVotes
     }
 
-    def comment(){
+    def comment() {
 
         def user = session["user"]
 
-        if(user == null){
+        if (user == null) {
             render "<div align = \"center\"> Ingresar para comentar </div>"
             return
         }
 
-        def course = Course.get( params.id )
+        def course = Course.get(params.id)
 
         def teacher = null //TODO
 
-        Comment comment = new Comment( body:params.body , course: course ,teacher: teacher ,author: user, date: new Date() )
+        Comment comment = new Comment(body: params.body, course: course, teacher: teacher, author: user, date: new Date())
         comment.save()
 
         def str = concatComentarios([comment])
