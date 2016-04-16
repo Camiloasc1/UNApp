@@ -74,7 +74,7 @@
                         <form id="comentar-form">
                             <div class="col-lg-9 col-md-8">
                                 <div class="form-group">
-                                    <input type="hidden" id="id" name="id" value="${c.id}"/>
+                                    <input type="hidden" id="id" name="id" value="${result.id}"/>
                                     <input type="hidden" id="offset" name="offset" value="${offset}"/>
                                     <textarea name="body" id="body" rows="5" class="form-control"></textarea>
                                 </div>
@@ -84,9 +84,9 @@
                                 <button type="button" onclick="subirComentario()"
                                         class="btn btn-default btn-raised btn-block">Comentar</button>
                                 <!--<button type="button" class="btn btn-default btn-raised btn-block" onclick="document.getElementById('imagenComentario').click()">
-                            <i class="material-icons">photo</i>  Sube una imagen
-                        </button>
-                        <input type="file" id="imagenComentario" name="imagenComentario" style="display: none" /> -->
+                                    <i class="material-icons">photo</i>  Sube una imagen
+                                </button>
+                                <input type="file" id="imagenComentario" name="imagenComentario" style="display: none" /> -->
                             </div>
                         </form>
                     </oauth:connected>
@@ -215,10 +215,8 @@
     }
 
     function cargarComentariosPrev() {
-        var offset = document.getElementsByClassName("comment").length;
-
+        var offset = document.getElementsByClassName("comentario").length;
         $.post({
-
             url: "cargarComentarios",
             data: {id: ${result.id}, offset: offset},
 
@@ -226,9 +224,7 @@
                 //alert("Data: " + data + "\nStatus: " + status + offset);
                 $("#comentarios-nuevos").append(data)
             }
-
         });
-
     }
 </script>
 </body>
