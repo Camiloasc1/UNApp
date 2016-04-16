@@ -127,16 +127,24 @@
                                                 class="text-muted">${comment.date}</span>
 
                                             <div id="${comment.id}" style="float: right">
-                                                <i class="material-icons" onclick="upVotes(event)"
-                                                   style=" float: left; margin-right: 10px; ">thumb_up</i>
-
-                                                <div style="width: auto;float: left;margin-right: 10;"
-                                                     class="positive-vote">${comment.positiveVotes}</div>
-                                                <i class="material-icons" onclick="downVotes(event)"
-                                                   style=" float: left; margin-right: 10px; margin-left: 10px; ">thumb_down</i>
-
-                                                <div style="width: auto;float: left;"
-                                                     class="negative-vote">${comment.negativeVotes}</div>
+                                                <oauth:connected provider="google">
+                                                    <i class="material-icons votes posiv-vote" onclick="upVotes(event)">thumb_up</i>
+                                                </oauth:connected>
+                                                <oauth:disconnected provider="google">
+                                                    <i class="material-icons votes posiv-vote">thumb_up</i>
+                                                </oauth:disconnected>
+                                                <div class="votes content-vote positive-vote">
+                                                    ${comment.positiveVotes}
+                                                </div>
+                                                <oauth:connected provider="google">
+                                                    <i class="material-icons votes negav-vote" onclick="downVotes(event)">thumb_down</i>
+                                                </oauth:connected>
+                                                <oauth:disconnected provider="google">
+                                                    <i class="material-icons votes negav-vote">thumb_down</i>
+                                                </oauth:disconnected>
+                                                <div class="votes negative-vote">
+                                                    ${comment.negativeVotes}
+                                                </div>
                                             </div>
                                         </div>
 
@@ -164,34 +172,35 @@
 <script type="text/javascript">
     function upVotes(e) {
         var obj = e.target;
-        //alert(typeof obj.parentNode.id);
-        $.post({
 
+        $.post({
             url: "upVote",
             data: {id2: obj.parentNode.id},
-
             success: function (data, status) {
                 var aux = $(e.target);
                 var aux2 = data.split(" ");
                 aux.next().html(aux2[0]);
                 aux.next().next().next().html(aux2[1])
+                var neg = obj.parentNode.getElementsByClassName("negav-vote")[0];
+                $( neg).removeClass("sel-negav-vote");
+                $(obj).addClass( "sel-posiv-vote" );
             }
 
         });
     }
     function downVotes(e) {
         var obj = e.target;
-        //alert(typeof obj.parentNode.id);
         $.post({
-
             url: "downVote",
             data: {id2: obj.parentNode.id},
-
             success: function (data, status) {
                 var aux = $(e.target);
                 var aux2 = data.split(" ");
                 aux.prev().html(aux2[0]);
                 aux.next().html(aux2[1]);
+                var pos = obj.parentNode.getElementsByClassName("posiv-vote")[0];
+                $( pos ).removeClass("sel-posiv-vote");
+                $(obj).addClass( "sel-negav-vote" );
             }
 
         });
