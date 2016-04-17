@@ -42,7 +42,7 @@
 
                         <h2>Cursos:</h2>
                         <g:each in="${t.courses}">
-                            <a href="#">${it.name}</a>
+                            <a href="${request.contextPath}/subject/index?id=${it.id}">${it.name}</a>
                             <br/>
                         </g:each>
                     </div>
