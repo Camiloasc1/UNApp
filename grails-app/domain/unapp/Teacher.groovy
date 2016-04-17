@@ -3,12 +3,14 @@ package unapp
 class Teacher {
     String name
     String username // the institutional username
+    String information
     static belongsTo = [location: Location]
     static hasMany = [comments: Comment, courses: Course, evaluations: TeacherEvaluation]
 
     static constraints = {
         name nullable: false
         username nullable: false
+        information nullable: true
 
         location nullable: true
 

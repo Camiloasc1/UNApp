@@ -38,7 +38,7 @@
                         </div>
 
                         <h2>Links:</h2>
-                        <div class="text-justify"><a href="http://www.docentes.unal.edu.co/${t.username}">Pagina docente</a></div>
+                        <div class="text-justify"><a href="${t.getURL()}">Pagina docente</a></div>
 
                         <h2>Cursos:</h2>
                         <g:each in="${t.courses}">
@@ -53,7 +53,7 @@
 
     <div class="row">
         <div class="col-xs-12">
-            <div class="jumbotron row">
+            <div class="jumbotron col-xs-12">
                 <oauth:disconnected provider="google">
                     <oauth:connect provider="google">
                         <div class="text-center">
@@ -83,6 +83,5 @@
         </div>
     </div>
 </div>
-
 </body>
 </html>
