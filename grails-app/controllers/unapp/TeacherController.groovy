@@ -10,9 +10,24 @@ class TeacherController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Teacher.list(params), model:[teacherInstanceCount: Teacher.count()]
+    def index() {
+        def result = Location.list().collect { l ->
+            [name   : l.name,
+             teachers: Teacher.findAllByLocation(l).collect { c ->
+                 [id: c.id, name: c.name, username: c.username]
+             }
+            ]
+        }
+
+        respond result, model: [result: result]
+    }
+
+    def search(String query) {
+        def result = Teacher.findAllByNameIlike("%" + query + "%").collect { c ->
+            [id: c.id, name: c.name, username: c.username]
+        }
+
+        respond result, model: [result: result]
     }
 
     def show(Teacher teacherInstance) {
