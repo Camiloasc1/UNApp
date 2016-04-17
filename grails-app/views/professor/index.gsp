@@ -53,7 +53,7 @@
 
     <div class="row">
         <div class="col-xs-12">
-            <div class="jumbotron">
+            <div class="jumbotron row">
                 <oauth:disconnected provider="google">
                     <oauth:connect provider="google">
                         <div class="text-center">
