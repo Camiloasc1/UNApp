@@ -1,7 +1,6 @@
 package unapp
 
 
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
@@ -12,7 +11,7 @@ class TeacherController {
 
     def index() {
         def result = Location.list().collect { l ->
-            [name   : l.name,
+            [name    : l.name,
              teachers: Teacher.findAllByLocation(l).collect { c ->
                  [id: c.id, name: c.name, username: c.username]
              }
@@ -46,11 +45,11 @@ class TeacherController {
         }
 
         if (teacherInstance.hasErrors()) {
-            respond teacherInstance.errors, view:'create'
+            respond teacherInstance.errors, view: 'create'
             return
         }
 
-        teacherInstance.save flush:true
+        teacherInstance.save flush: true
 
         request.withFormat {
             form multipartForm {
@@ -73,18 +72,18 @@ class TeacherController {
         }
 
         if (teacherInstance.hasErrors()) {
-            respond teacherInstance.errors, view:'edit'
+            respond teacherInstance.errors, view: 'edit'
             return
         }
 
-        teacherInstance.save flush:true
+        teacherInstance.save flush: true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'Teacher.label', default: 'Teacher'), teacherInstance.id])
                 redirect teacherInstance
             }
-            '*'{ respond teacherInstance, [status: OK] }
+            '*' { respond teacherInstance, [status: OK] }
         }
     }
 
@@ -96,14 +95,14 @@ class TeacherController {
             return
         }
 
-        teacherInstance.delete flush:true
+        teacherInstance.delete flush: true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'Teacher.label', default: 'Teacher'), teacherInstance.id])
-                redirect action:"index", method:"GET"
+                redirect action: "index", method: "GET"
             }
-            '*'{ render status: NO_CONTENT }
+            '*' { render status: NO_CONTENT }
         }
     }
 
@@ -113,7 +112,7 @@ class TeacherController {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'teacher.label', default: 'Teacher'), params.id])
                 redirect action: "index", method: "GET"
             }
-            '*'{ render status: NOT_FOUND }
+            '*' { render status: NOT_FOUND }
         }
     }
 }
