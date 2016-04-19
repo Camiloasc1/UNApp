@@ -4,7 +4,7 @@
 </head>
 
 <body>
-<div class="container subjectInfo">
+<div ng-app="CommentsApp" class="container subjectInfo">
     <div class="row">
         <div class="col-xs-12">
             <div class="jumbotron">
@@ -56,42 +56,7 @@
 
     <div class="row">
         <div class="col-xs-12">
-            <div class="jumbotron">
-                <div class="row">
-                    <oauth:disconnected provider="google">
-                        <oauth:connect provider="google"
-                                       redirectUrl="${request.forwardURI.replace("/UNApp", "") + ((request.queryString) ? "?" + request.queryString : "")}">
-                            <div class="col-xs-12">
-                                <div class="text-center">
-                                    <button class="btn btn-raised btn-primary">
-                                        <i class="fa fa-google"></i> Ingresar con Google Para Comentar
-                                    </button>
-                                </div>
-                            </div>
-                        </oauth:connect>
-                    </oauth:disconnected>
-                    <oauth:connected provider="google">
-                        <form id="comentar-form">
-                            <div class="col-lg-9 col-md-8">
-                                <div class="form-group">
-                                    <input type="hidden" id="id" name="id" value="${result.id}"/>
-                                    <input type="hidden" id="offset" name="offset" value="${offset}"/>
-                                    <textarea name="body" id="body" rows="5" class="form-control"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 col-md-4">
-                                <button type="button" onclick="subirComentario( ${result.id} )"
-                                        class="btn btn-default btn-raised btn-block">Comentar</button>
-                                <!--<button type="button" class="btn btn-default btn-raised btn-block" onclick="document.getElementById('imagenComentario').click()">
-                                    <i class="material-icons">photo</i>  Sube una imagen
-                                </button>
-                                <input type="file" id="imagenComentario" name="imagenComentario" style="display: none" /> -->
-                            </div>
-                        </form>
-                    </oauth:connected>
-                </div>
-            </div>
+            <g:render template="commentForm" bean="${result}"/>
         </div>
     </div>
 

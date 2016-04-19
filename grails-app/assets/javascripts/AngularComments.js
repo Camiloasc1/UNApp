@@ -2,10 +2,12 @@ var app = angular.module('CommentsApp', []);
 
 app.controller('CommentFormController', ['$scope', '$rootScope', '$http', function ($scope, $rootScope, $http) {
     $scope.query = JSON.parse(window.location.search.replace("?", '{"').replace(/=/g, '":"').replace(/&/g, '","').concat('"}'));
-    $scope.id = $scope.query.id;
+    $scope.id = parseInt($scope.query.id);
+    $scope.commentBody = "";
     $scope.postComment = function () {
         $http.post("comment", {id: $scope.id, body: $scope.commentBody})
             .then(function (response) {
+                $scope.commentBody = "";
                 $rootScope.$broadcast('postComment');
             });
     };
@@ -27,7 +29,7 @@ app.controller('CommentsController', ['$scope', '$rootScope', '$http', function 
             });
     };
     $scope.loadMore();
-    $scope.$on('postComment', function (event, mass) {
+    $scope.$on('postComment', function (event, args) {
         $scope.offset++;
         $http.get("comments", {
                 params: {id: $scope.id, max: $scope.offset, offset: 0}

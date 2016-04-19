@@ -1,4 +1,4 @@
-<div ng-app="CommentsApp" ng-controller="CommentsController">
+<div ng-controller="CommentsController">
     <div class="jumbotron">
         <div ng-repeat="comment in comments">
             <div class="row">

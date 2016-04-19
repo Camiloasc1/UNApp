@@ -2,7 +2,7 @@ package unapp
 
 class SubjectController {
 
-    static allowedMethods = [save: "POST", read: "GET", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [index: "GET", comments: "GET", comment: "POST"]
 
     def index(int id) {
         def result = Course.get(id).collect { course ->
@@ -40,41 +40,20 @@ class SubjectController {
         respond result, model: [result: result]
     }
 
-    def concatComentarios(comentarios) {
-
-        def str = ""
-
-        comentarios.each {
-            str += '<div class = "comentario">\n' +
-                    '    <div class="col-sm-1">\n' +
-                    '        <div class="thumbnail">\n' +
-                    '            <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">\n' +
-                    '        </div><!-- /thumbnail -->\n' +
-                    '    </div><!-- /col-sm-1 -->\n' +
-                    '\n' +
-                    '    <div class="col-sm-11">\n' +
-                    '        <div class="panel panel-default">\n' +
-                    '            <div class="panel-heading">\n' +
-                    '                <strong>' + it.author.name + '</strong> <span class="text-muted">' + it.date + '</span>\n' +
-                    '                <div id="' + it.id + '" style="float: right">\n' +
-                    '                   <i class="material-icons" onclick="upVotes(event)" style=" float: left; margin-right: 10px; ">thumb_up</i>\n' +
-                    '                   <div style="width: auto;float: left;margin-right: 10;" class="positive-vote">' + it.positiveVotes + '</div>\n' +
-                    '                   <i class="material-icons" onclick="downVotes(event)" style=" float: left; margin-right: 10px; margin-left: 10px; ">thumb_down</i>\n' +
-                    '                   <div style="width: auto;float: left;" class="negative-vote">' + it.negativeVotes + '</div>\n' +
-                    '               </div>\n' +
-                    '            </div>\n' +
-                    '            <div class="panel-body">\n' +
-                    '                ' + it.body + '\n' +
-                    '            </div><!-- /panel-body -->\n' +
-                    '        </div><!-- /panel panel-default -->\n' +
-                    '    </div><!-- /sm-11 -->\n' +
-                    '</div>'
+    def comment() {
+        if (session.user == null) {
+            return
         }
+        def result = new Comment(body: request.JSON.body, course: Course.get(request.JSON.id), teacher: null, author: session.user, date: new Date()).save()
+        result = [id           : result.id,
+                  author       : result.author.name,
+                  body         : result.body,
+                  date         : result.date,
+                  positiveVotes: result.positiveVotes,
+                  negativeVotes: result.negativeVotes
+        ]
 
-
-
-        str
-
+        respond result, model: [result: result]
     }
 
     def upVote(String id2) {
@@ -141,26 +120,4 @@ class SubjectController {
 
         render comment.positiveVotes + " " + comment.negativeVotes
     }
-
-    def comment() {
-
-        def user = session["user"]
-
-        if (user == null) {
-            render "<div align = \"center\"> Ingresar para comentar </div>"
-            return
-        }
-
-        def course = Course.get(params.id)
-
-        def teacher = null //TODO
-
-        Comment comment = new Comment(body: params.body, course: course, teacher: teacher, author: user, date: new Date())
-        comment.save()
-
-        def str = concatComentarios([comment])
-
-        render str
-    }
-
 }
