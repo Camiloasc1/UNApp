@@ -1,6 +1,17 @@
 var app = angular.module('CommentsApp', []);
 
-app.controller('CommentsController', function ($scope, $http) {
+app.controller('CommentFormController', ['$scope', '$rootScope', '$http', function ($scope, $rootScope, $http) {
+    $scope.query = JSON.parse(window.location.search.replace("?", '{"').replace(/=/g, '":"').replace(/&/g, '","').concat('"}'));
+    $scope.id = $scope.query.id;
+    $scope.postComment = function () {
+        $http.post("comment", {id: $scope.id, body: $scope.commentBody})
+            .then(function (response) {
+                $rootScope.$broadcast('postComment');
+            });
+    };
+}]);
+
+app.controller('CommentsController', ['$scope', '$rootScope', '$http', function ($scope, $rootScope, $http) {
     $scope.query = JSON.parse(window.location.search.replace("?", '{"').replace(/=/g, '":"').replace(/&/g, '","').concat('"}'));
     $scope.id = $scope.query.id;
     $scope.max = 5;
@@ -17,4 +28,15 @@ app.controller('CommentsController', function ($scope, $http) {
             });
     };
     $scope.loadMore();
-});
+    $scope.$on('postComment', function (event, mass) {
+        $scope.offset++;
+        $http.get("comments", {
+                headers: {'User-Agent': ''},
+                params: {id: $scope.id, max: $scope.offset, offset: 0}
+            })
+            .then(function (response) {
+                $scope.comments = response.data;
+                $scope.offset = $scope.comments.length;
+            });
+    });
+}]);
