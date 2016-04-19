@@ -108,64 +108,7 @@
         </div>
 
         <div class="col-lg-8">
-            <div class="jumbotron" id="container-comentarios">
-                <div class="row">
-                    <div id="comentarios-nuevos">
-                        <g:each in="${result.comments}" var="comment">
-                            <div class="comentario">
-                                <div class="col-sm-1">
-                                    <div class="thumbnail">
-                                        <img class="img-responsive user-photo"
-                                             src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
-                                    </div><!-- /thumbnail -->
-                                </div><!-- /col-sm-1 -->
-
-                                <div class="col-sm-11">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <strong>${comment.author}</strong> <span
-                                                class="text-muted">${comment.date}</span>
-
-                                            <div id="${comment.id}" class="voting-container">
-                                                <oauth:connected provider="google">
-                                                    <i class="material-icons votes posiv-vote" onclick="upVotes(event)">thumb_up</i>
-                                                </oauth:connected>
-                                                <oauth:disconnected provider="google">
-                                                    <i class="material-icons votes posiv-vote">thumb_up</i>
-                                                </oauth:disconnected>
-                                                <div class="votes content-vote positive-vote">
-                                                    ${comment.positiveVotes}
-                                                </div>
-                                                <oauth:connected provider="google">
-                                                    <i class="material-icons votes negav-vote" onclick="downVotes(event)">thumb_down</i>
-                                                </oauth:connected>
-                                                <oauth:disconnected provider="google">
-                                                    <i class="material-icons votes negav-vote">thumb_down</i>
-                                                </oauth:disconnected>
-                                                <div class="votes negative-vote">
-                                                    ${comment.negativeVotes}
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="panel-body">
-                                            ${comment.body}
-                                        </div><!-- /panel-body -->
-                                    </div><!-- /panel panel-default -->
-                                </div><!-- /sm-11 -->
-                            </div>
-                        </g:each>
-                        <div id="comentarios-antiguos"></div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="text-center">
-                        <button class="btn btn-deafult btn-raised" type="button" name="ver-mas"
-                                onclick="cargarComentariosPrev( ${result.id} )">Ver Mas</button>
-                    </div>
-                </div>
-            </div>
+            <g:render template="comments"/>
         </div>
     </div>
 </div>

@@ -18,15 +18,6 @@ class SubjectController {
                   name    : teacher.name,
                   username: teacher.username
                  ]
-             },
-             comments   : course.comments.collect { comment ->
-                 [id           : comment.id,
-                  author       : comment.author.name,
-                  body         : comment.body,
-                  date         : comment.date,
-                  positiveVotes: comment.positiveVotes,
-                  negativeVotes: comment.negativeVotes
-                 ]
              }
             ]
         }[0]
@@ -35,17 +26,18 @@ class SubjectController {
     }
 
 
-    def cargarComentarios(String offset, String id) {
-        def off = offset.toInteger()
-        def course = Course.get(id.toInteger())
-        def comentarios = Comment.findAllByCourse(course, [sort: "date", order: "desc", max: 5, offset: off])
+    def comments(int id, int max, int offset) {
+        def result = Comment.findAllByCourse(Course.get(id), [sort: "date", order: "desc", max: max, offset: offset]).collect { comment ->
+            [id           : comment.id,
+             author       : comment.author.name,
+             body         : comment.body,
+             date         : comment.date,
+             positiveVotes: comment.positiveVotes,
+             negativeVotes: comment.negativeVotes
+            ]
+        }
 
-        def str = concatComentarios(comentarios)
-
-        if (str.size() == 0)
-            render "<div align = \"center\"> No existen mas comentarios </div>"
-        else
-            render str
+        respond result, model: [result: result]
     }
 
     def concatComentarios(comentarios) {

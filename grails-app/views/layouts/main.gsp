@@ -118,6 +118,8 @@
 </script>
 <!-- UNApp -->
 <asset:javascript src="unapp.js"/>
+<!-- AngularComments -->
+<asset:javascript src="AngularComments.js"/>
 </body>
 </html>
 
