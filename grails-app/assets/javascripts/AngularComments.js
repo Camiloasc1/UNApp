@@ -19,7 +19,6 @@ app.controller('CommentsController', ['$scope', '$rootScope', '$http', function 
     $scope.comments = [];
     $scope.loadMore = function () {
         $http.get("comments", {
-                headers: {'User-Agent': ''},
                 params: {id: $scope.id, max: $scope.max, offset: $scope.offset}
             })
             .then(function (response) {
@@ -31,7 +30,6 @@ app.controller('CommentsController', ['$scope', '$rootScope', '$http', function 
     $scope.$on('postComment', function (event, mass) {
         $scope.offset++;
         $http.get("comments", {
-                headers: {'User-Agent': ''},
                 params: {id: $scope.id, max: $scope.offset, offset: 0}
             })
             .then(function (response) {
