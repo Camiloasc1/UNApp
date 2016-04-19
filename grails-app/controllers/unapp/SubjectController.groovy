@@ -33,7 +33,7 @@ class SubjectController {
             str += '<div class = "comentario">\n' +
                     '    <div class="col-sm-1">\n' +
                     '        <div class="thumbnail">\n' +
-                    '            <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">\n' +
+                    '            <img class="img-responsive user-photo" src="'+it.author.picture+'">\n' +
                     '        </div><!-- /thumbnail -->\n' +
                     '    </div><!-- /col-sm-1 -->\n' +
                     '\n' +

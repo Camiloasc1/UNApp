@@ -18,8 +18,10 @@ class LoginController {
         }
 
         def user = User.findByGoogleID(googleResponse.id)
+        user.setPicture(googleResponse.picture) //Update picture in case the user was already created
         if (user == null) {
-            user = new User(googleID: googleResponse.id, name: googleResponse.name, email: googleResponse.email)
+            user = new User(googleID: googleResponse.id, name: googleResponse.name, email: googleResponse.email, picture: googleResponse.picture)
+            printl user
             user.save(flush: true)
         }
         session.user = user
