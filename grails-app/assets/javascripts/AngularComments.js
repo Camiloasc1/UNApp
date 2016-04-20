@@ -10,7 +10,7 @@ app.controller('CommentFormController', ['$scope', '$rootScope', '$http', '$loca
             .then(function (response) {
                 $scope.commentBody = "";
                 $scope.loading = false;
-                $rootScope.$broadcast('postComment', [response.data]);
+                $rootScope.$broadcast('postComment', response.data);
             });
     };
 }]);
@@ -21,6 +21,25 @@ app.controller('CommentsController', ['$scope', '$rootScope', '$http', '$locatio
     $scope.offset = 0;
     $scope.comments = [];
     $scope.loading = false;
+
+    $scope.voteUp = function (id, index) {
+        $scope.comments[index].positiveVotes++;
+        $http.post("voteUp", {id: id})
+            .then(function (response) {
+                $scope.comments[index] = response.data;
+                $scope.reload();
+            });
+    };
+
+    $scope.voteDown = function (id, index) {
+        $scope.comments[index].negativeVotes++;
+        $http.post("voteDown", {id: id})
+            .then(function (response) {
+                $scope.comments[index] = response.data;
+                $scope.reload();
+            });
+    };
+
     $scope.loadMore = function () {
         $scope.loading = true;
         $http.get("comments", {
@@ -32,10 +51,8 @@ app.controller('CommentsController', ['$scope', '$rootScope', '$http', '$locatio
                 $scope.loading = false;
             });
     };
-    $scope.loadMore();
-    $scope.$on('postComment', function (event, postedComment) {
-        $scope.comments = postedComment.concat($scope.comments);
-        $scope.offset++;
+
+    $scope.reload = function () {
         $scope.loading = true;
         $http.get("comments", {
                 params: {id: $scope.id, max: $scope.offset, offset: 0}
@@ -45,7 +62,15 @@ app.controller('CommentsController', ['$scope', '$rootScope', '$http', '$locatio
                 $scope.offset = $scope.comments.length;
                 $scope.loading = false;
             });
+    };
+
+    $scope.$on('postComment', function (event, postedComment) {
+        $scope.comments = [postedComment].concat($scope.comments);
+        $scope.offset++;
+        $scope.reload();
     });
+
+    $scope.loadMore();
 }]);
 
 app.config(['$locationProvider', function ($locationProvider) {

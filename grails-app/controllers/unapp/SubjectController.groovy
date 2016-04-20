@@ -2,7 +2,7 @@ package unapp
 
 class SubjectController {
 
-    static allowedMethods = [index: "GET", comments: "GET", comment: "POST"]
+    static allowedMethods = [index: "GET", comments: "GET", comment: "POST", voteUp: "POST", voteDown: "POST"]
 
     def index(int id) {
         def result = Course.get(id).collect { course ->
@@ -42,11 +42,11 @@ class SubjectController {
     }
 
     def comment() {
-        if (session.user == null) {
+        if (!session.user) {
             return
         }
 
-        def result = new Comment(
+        def comment = new Comment(
                 body: request.JSON.body,
                 course: Course.get(request.JSON.id),
                 teacher: null,
@@ -54,79 +54,91 @@ class SubjectController {
                 date: new Date()
         ).save(flush: true)
 
-        result = [id           : result.id,
-                  author       : result.author.name,
-                  body         : result.body,
-                  date         : result.date,
-                  positiveVotes: result.positiveVotes,
-                  negativeVotes: result.negativeVotes
+        def result = [id           : comment.id,
+                      author       : comment.author.name,
+                      picture      : comment.author.picture,
+                      body         : comment.body,
+                      date         : comment.date,
+                      positiveVotes: comment.positiveVotes,
+                      negativeVotes: comment.negativeVotes
         ]
 
         respond result, model: [result: result]
     }
 
-    def upVote(String id2) {
-        def id = id2.toInteger()
-
-        def comment = Comment.findById(id)
-        def user = session["user"]
-
-        if (user == null) {
-            render comment.positiveVotes + " " + comment.negativeVotes
+    def voteUp() {
+        def user = session.user
+        if (!user) {
             return
         }
 
-        def like = Vote.findByAuthorAndComment(user, comment)
+        def comment = Comment.findById(request.JSON.id)
+        if (!comment) {
+            return
+        }
 
-
-        if (like != null) {
-            if (like.value == 0) {
-                like.value = 1
+        def vote = Vote.findByAuthorAndComment(user, comment)
+        if (vote) {
+            if (vote.value == 0) {
+                vote.value = 1
                 comment.negativeVotes--;
                 comment.positiveVotes++;
             }
         } else {
-            like = new Vote(value: 1, author: user, comment: comment)
+            vote = new Vote(value: 1, author: user, comment: comment)
             comment.positiveVotes++;
         }
 
+        comment.save(flush: true)
+        vote.save(flush: true)
 
-        comment.save(flush: true, failOnError: true)
+        def result = [id           : comment.id,
+                      author       : comment.author.name,
+                      picture      : comment.author.picture,
+                      body         : comment.body,
+                      date         : comment.date,
+                      positiveVotes: comment.positiveVotes,
+                      negativeVotes: comment.negativeVotes
+        ]
 
-        def aux = like.errors
-        like.save(flush: true, failOnError: true)
-
-        render comment.positiveVotes + " " + comment.negativeVotes
+        respond result, model: [result: result]
     }
 
-    def downVote(String id2) {
-        def id = id2.toInteger()
-
-        def comment = Comment.findById(id)
-        def user = session["user"]
-
-        if (user == null) {
-            render comment.positiveVotes + " " + comment.negativeVotes
+    def voteDown() {
+        def user = session.user
+        if (!user) {
             return
         }
 
-        def like = Vote.findByAuthorAndComment(user, comment)
+        def comment = Comment.findById(request.JSON.id)
+        if (!comment) {
+            return
+        }
 
-
-        if (like != null) {
-            if (like.value == 1) {
-                like.value = 0
+        def vote = Vote.findByAuthorAndComment(user, comment)
+        if (vote) {
+            if (vote.value == 1) {
+                vote.value = 0
                 comment.negativeVotes++;
                 comment.positiveVotes--;
             }
         } else {
-            like = new Vote(value: 0, author: user, comment: comment)
+            vote = new Vote(value: 0, author: user, comment: comment)
             comment.negativeVotes++;
         }
 
-        comment.save(flush: true, failOnError: true)
-        like.save(flush: true, failOnError: true)
+        comment.save(flush: true)
+        vote.save(flush: true)
 
-        render comment.positiveVotes + " " + comment.negativeVotes
+        def result = [id           : comment.id,
+                      author       : comment.author.name,
+                      picture      : comment.author.picture,
+                      body         : comment.body,
+                      date         : comment.date,
+                      positiveVotes: comment.positiveVotes,
+                      negativeVotes: comment.negativeVotes
+        ]
+
+        respond result, model: [result: result]
     }
 }
