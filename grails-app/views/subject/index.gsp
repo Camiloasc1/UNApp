@@ -45,7 +45,7 @@
 
                         <h2>Profesores:</h2>
                         <g:each in="${result.teachers}" status="i" var="teacher">
-                            <a href="#">${teacher.name}</a>
+                            <a href="${request.contextPath}/professor/index?id=${teacher.id}">${teacher.name}</a>
                             <br/>
                         </g:each>
                     </div>

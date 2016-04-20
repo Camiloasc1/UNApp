@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-xs-1">
                     <div class="thumbnail">
-                        <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                        <img class="img-responsive user-photo" src="{{comment.picture}}">
                     </div>
                 </div>
 

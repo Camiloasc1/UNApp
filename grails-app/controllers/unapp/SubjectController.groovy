@@ -30,6 +30,7 @@ class SubjectController {
         def result = Comment.findAllByCourse(Course.get(id), [sort: "date", order: "desc", max: max, offset: offset]).collect { comment ->
             [id           : comment.id,
              author       : comment.author.name,
+             picture      : comment.author.picture,
              body         : comment.body,
              date         : comment.date,
              positiveVotes: comment.positiveVotes,

@@ -19,8 +19,9 @@ class LoginController {
 
         def user = User.findByGoogleID(googleResponse.id)
         if (!user) {
-            user = new User(googleID: googleResponse.id, name: googleResponse.name, email: googleResponse.email).save(flush: true)
+            user = new User(googleID: googleResponse.id, name: googleResponse.name, email: googleResponse.email, picture: googleResponse.picture).save(flush: true)
         }
+        user.setPicture(googleResponse.picture) //Update picture in case the user was already created
         session.user = user
 
         flash.message = "Login success."
