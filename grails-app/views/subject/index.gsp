@@ -10,13 +10,15 @@
             <div class="jumbotron">
                 <div class="row">
                     <div class="col-md-4 col-lg-5">
-                        <img src="${request.contextPath}/images/Font-Book.png" class="img-rounded center-block"
+                        <img src="${assetPath(src: 'book.png')}" class="img-rounded center-block"
                              height="250"
                              width="250">
 
-                        <h1 class="text-center">${c.name}</h1>
-                        <h2 class="text-center">${c.code}</h2>
-                        <h3 class="text-center">${c.location.name}</h3>
+                        <h1 class="text-center">${result.name}</h1>
+
+                        <h2 class="text-center">${result.code}</h2>
+
+                        <h3 class="text-center">${result.location}</h3>
 
                         <div class="row text-center">
                             <ul class="star-rating">
@@ -34,14 +36,16 @@
 
                     <div class="col-md-8 col-lg-7">
                         <h2>Descripción:</h2>
-                        <div class="text-justify">${c.description}</div>
+
+                        <div class="text-justify">${result.description}</div>
 
                         <h2>Contenidos:</h2>
-                        <div class="text-justify">${c.contents}</div>
+
+                        <div class="text-justify">${result.contents}</div>
 
                         <h2>Profesores:</h2>
-                        <g:each in="${c.teachers}">
-                            <a href="${request.contextPath}/professor/index?id=${it.id}">${it.name}</a>
+                        <g:each in="${result.teachers}" status="i" var="teacher">
+                            <a href="#">${teacher.name}</a>
                             <br/>
                         </g:each>
                     </div>
@@ -52,36 +56,41 @@
 
     <div class="row">
         <div class="col-xs-12">
-            <div class="jumbotron col-xs-12">
-                <oauth:disconnected provider="google">
-                    <oauth:connect provider="google">
-                        <div class="text-center">
-                            <button class="btn btn-raised btn-primary">
-                                <i class="fa fa-google"></i> Ingresar con Google Para Comentar
-                            </button>
-                        </div>
-                    </oauth:connect>
-                </oauth:disconnected>
-                <oauth:connected provider="google">
-                    <form id="comentar-form">
-                        <div class="col-lg-9 col-md-8">
-                            <div class="form-group">
-                                <input type="hidden" id="id" name="id" value="${c.id}"/>
-                                <input type="hidden" id="offset" name="offset" value="${offset}"/>
-                                <textarea name="body" id="body" rows="5" class="form-control"></textarea>
+            <div class="jumbotron">
+                <div class="row">
+                    <oauth:disconnected provider="google">
+                        <oauth:connect provider="google"
+                                       redirectUrl="${request.forwardURI.replace("/UNApp", "") + ((request.queryString) ? "?" + request.queryString : "")}">
+                            <div class="col-xs-12">
+                                <div class="text-center">
+                                    <button class="btn btn-raised btn-primary">
+                                        <i class="fa fa-google"></i> Ingresar con Google Para Comentar
+                                    </button>
+                                </div>
                             </div>
-                        </div>
+                        </oauth:connect>
+                    </oauth:disconnected>
+                    <oauth:connected provider="google">
+                        <form id="comentar-form">
+                            <div class="col-lg-9 col-md-8">
+                                <div class="form-group">
+                                    <input type="hidden" id="id" name="id" value="${c.id}"/>
+                                    <input type="hidden" id="offset" name="offset" value="${offset}"/>
+                                    <textarea name="body" id="body" rows="5" class="form-control"></textarea>
+                                </div>
+                            </div>
 
-                        <div class="col-lg-3 col-md-4">
-                            <button type="button" onclick="subirComentario()"
-                                    class="btn btn-default btn-raised btn-block">Comentar</button>
-                            <!--<button type="button" class="btn btn-default btn-raised btn-block" onclick="document.getElementById('imagenComentario').click()">
+                            <div class="col-lg-3 col-md-4">
+                                <button type="button" onclick="subirComentario()"
+                                        class="btn btn-default btn-raised btn-block">Comentar</button>
+                                <!--<button type="button" class="btn btn-default btn-raised btn-block" onclick="document.getElementById('imagenComentario').click()">
                             <i class="material-icons">photo</i>  Sube una imagen
                         </button>
                         <input type="file" id="imagenComentario" name="imagenComentario" style="display: none" /> -->
-                        </div>
-                    </form>
-                </oauth:connected>
+                            </div>
+                        </form>
+                    </oauth:connected>
+                </div>
             </div>
         </div>
     </div>
@@ -91,43 +100,48 @@
             <div class="jumbotron">
                 <h2 class="text-right">Comentarios:</h2>
             </div>
+            <unapp:isAdmin>
+                <div class="jumbotron">
+                    <h2 class="text-center"><i class="fa fa-cogs"></i> Administrar</h2>
+                </div>
+            </unapp:isAdmin>
         </div>
 
         <div class="col-lg-8">
             <div class="jumbotron" id="container-comentarios">
                 <div class="row">
                     <div id="comentarios-nuevos">
-                        <g:each in="${comments}" var="comentario">
+                        <g:each in="${result.comments}" var="comment">
                             <div class="comentario">
                                 <div class="col-sm-1">
                                     <div class="thumbnail">
                                         <img class="img-responsive user-photo"
-                                             src="${comentario.author.picture}">
+                                             src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
                                     </div><!-- /thumbnail -->
                                 </div><!-- /col-sm-1 -->
 
                                 <div class="col-sm-11">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <strong>${comentario.author.name}</strong> <span
-                                                class="text-muted">${comentario.date}</span>
+                                            <strong>${comment.author}</strong> <span
+                                                class="text-muted">${comment.date}</span>
 
-                                            <div id="${comentario.id}" style="float: right">
+                                            <div id="${comment.id}" style="float: right">
                                                 <i class="material-icons" onclick="upVotes(event)"
                                                    style=" float: left; margin-right: 10px; ">thumb_up</i>
 
                                                 <div style="width: auto;float: left;margin-right: 10;"
-                                                     class="positive-vote">${comentario.positiveVotes}</div>
+                                                     class="positive-vote">${comment.positiveVotes}</div>
                                                 <i class="material-icons" onclick="downVotes(event)"
                                                    style=" float: left; margin-right: 10px; margin-left: 10px; ">thumb_down</i>
 
                                                 <div style="width: auto;float: left;"
-                                                     class="negative-vote">${comentario.negativeVotes}</div>
+                                                     class="negative-vote">${comment.negativeVotes}</div>
                                             </div>
                                         </div>
 
                                         <div class="panel-body">
-                                            ${comentario.body}
+                                            ${comment.body}
                                         </div><!-- /panel-body -->
                                     </div><!-- /panel panel-default -->
                                 </div><!-- /sm-11 -->
@@ -183,13 +197,13 @@
         });
     }
     function subirComentario() {
-        var offset = document.getElementsByClassName("comentario").length;
+        var offset = document.getElementsByClassName("comment").length;
         var body = document.getElementById("body").value;
 
         $.post({
 
             url: "comment",
-            data: {id: ${c.id}, offset: offset, body: body},
+            data: {id: ${result.id}, offset: offset, body: body},
 
             success: function (data, status) {
                 //alert("Data: " + data + "\nStatus: " + status + offset);
@@ -201,12 +215,12 @@
     }
 
     function cargarComentariosPrev() {
-        var offset = document.getElementsByClassName("comentario").length;
+        var offset = document.getElementsByClassName("comment").length;
 
         $.post({
 
             url: "cargarComentarios",
-            data: {id: ${c.id}, offset: offset},
+            data: {id: ${result.id}, offset: offset},
 
             success: function (data, status) {
                 //alert("Data: " + data + "\nStatus: " + status + offset);

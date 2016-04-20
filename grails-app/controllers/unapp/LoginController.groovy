@@ -1,7 +1,7 @@
 package unapp
 
 import org.scribe.model.Token
-import grails.converters.JSON
+import uk.co.desirableobjects.oauth.scribe.holder.RedirectHolder
 
 class LoginController {
     def oauthService
@@ -10,24 +10,22 @@ class LoginController {
     def index() {}
 
     def success() {
-        def googleResponse = googleAPIService.getJSON((Token) session[oauthService.findSessionKeyForAccessToken('google')])
+        def googleResponse = googleAPIService.get((Token) session[oauthService.findSessionKeyForAccessToken('google')])
         if (googleResponse.hd != "unal.edu.co") {
             session[oauthService.findSessionKeyForAccessToken('google')] = null
             flash.message = "Only unal.edu.co users can login."
-            redirect(uri: '/')
+            redirect(uri: RedirectHolder.getRedirect().uri)
         }
 
         def user = User.findByGoogleID(googleResponse.id)
-        user.setPicture(googleResponse.picture) //Update picture in case the user was already created
-        if (user == null) {
-            user = new User(googleID: googleResponse.id, name: googleResponse.name, email: googleResponse.email, picture: googleResponse.picture)
-            printl user
-            user.save(flush: true)
+        if (!user) {
+            user = new User(googleID: googleResponse.id, name: googleResponse.name, email: googleResponse.email, picture: googleResponse.picture).save(flush: true)
         }
+        user.setPicture(googleResponse.picture) //Update picture in case the user was already created
         session.user = user
 
         flash.message = "Login success."
-        redirect(uri: '/')
+        redirect(uri: RedirectHolder.getRedirect().uri)
     }
 
     def failure() {
@@ -47,14 +45,8 @@ class LoginController {
 
     def me() {
         if (session[oauthService.findSessionKeyForAccessToken('google')]) {
-            def googleResponse = googleAPIService.getJSON((Token) session[oauthService.findSessionKeyForAccessToken('google')])
-            Map userData = [:]
-            googleResponse.each { k, v ->
-                userData[k] = v
-            }
+            Map userData = googleAPIService.get((Token) session[oauthService.findSessionKeyForAccessToken('google')])
             respond userData
         }
     }
-
-
 }
