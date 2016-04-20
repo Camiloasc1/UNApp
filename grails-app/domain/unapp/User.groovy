@@ -4,6 +4,7 @@ class User {
     String googleID // sub field is an unique identifier
     String name
     String email
+    String picture
     int positiveVotes = 0
     int negativeVotes = 0
     boolean isAdmin = false
@@ -16,6 +17,7 @@ class User {
         positiveVotes nullable: false, min: 0
         negativeVotes nullable: false, min: 0
         isAdmin nullable: false
+        picture nullable: false
 
         votes nullable: true
     }

@@ -16,7 +16,17 @@
 
                 <form method = "get" action = "course/search" >
                     <div class="input-group">
-                        <input style ="color: #41AF8A" name="query" type="text" class="form-control input-lg" placeholder="Buscar un Profesor o Materia..."/>
+                        <input style ="color: #41AF8A" name="query" type="text" class="form-control input-lg" placeholder="Buscar una materia"/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-info btn-lg" type="submit">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+                <form method = "get" action = "teacher/search" >
+                    <div class="input-group">
+                        <input style ="color: #41AF8A" name="query" type="text" class="form-control input-lg" placeholder="Buscar un profesor"/>
                         <span class="input-group-btn">
                             <button class="btn btn-info btn-lg" type="submit">
                                 <i class="glyphicon glyphicon-search"></i>
