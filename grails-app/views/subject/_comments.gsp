@@ -16,21 +16,21 @@
 
                             <div class="voting-container">
                                 <oauth:connected provider="google">
-                                    <i class="material-icons positive-vote"
-                                       onclick="upVotes(event)">thumb_up</i>
+                                    <i class="material-icons positive-vote clickable-element"
+                                       ng-click="voteUp(comment.id, $index)">thumb_up</i>
                                 </oauth:connected>
                                 <oauth:disconnected provider="google">
-                                    <i class="material-icons positive-vote">thumb_up</i>
+                                    <i class="material-icons positive-vote non-clickable-element">thumb_up</i>
                                 </oauth:disconnected>
                                 <div class="content-positive-vote">
                                     {{comment.positiveVotes}}
                                 </div>
                                 <oauth:connected provider="google">
-                                    <i class="material-icons negative-vote"
-                                       onclick="downVotes(event)">thumb_down</i>
+                                    <i class="material-icons negative-vote clickable-element"
+                                       ng-click="voteDown(comment.id, $index)">thumb_down</i>
                                 </oauth:connected>
                                 <oauth:disconnected provider="google">
-                                    <i class="material-icons negative-vote">thumb_down</i>
+                                    <i class="material-icons negative-vote non-clickable-element">thumb_down</i>
                                 </oauth:disconnected>
                                 <div class="content-negative-vote">
                                     {{comment.negativeVotes}}
@@ -46,14 +46,13 @@
             </div>
         </div>
 
-        <div class="text-center" ng-show="loading">
-            <i class="fa fa-spinner fa-pulse fa-5x"></i>
-            <span class="sr-only">Cargando...</span>
-        </div>
-
         <div class="row">
             <div class="col-xs-12">
                 <div class="text-center">
+                    <div ng-show="loading">
+                        <i class="fa fa-spinner fa-pulse fa-5x"></i>
+                        <span class="sr-only">Cargando...</span>
+                    </div>
                     <button class="btn btn-deafult btn-raised" type="button" ng-click="loadMore()">Ver Mas</button>
                 </div>
             </div>
