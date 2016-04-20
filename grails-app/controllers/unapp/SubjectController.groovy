@@ -44,7 +44,15 @@ class SubjectController {
         if (session.user == null) {
             return
         }
-        def result = new Comment(body: request.JSON.body, course: Course.get(request.JSON.id), teacher: null, author: session.user, date: new Date()).save()
+
+        def result = new Comment(
+                body: request.JSON.body,
+                course: Course.get(request.JSON.id),
+                teacher: null,
+                author: session.user,
+                date: new Date()
+        ).save(flush: true)
+
         result = [id           : result.id,
                   author       : result.author.name,
                   body         : result.body,

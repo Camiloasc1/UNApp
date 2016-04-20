@@ -7,7 +7,7 @@ app.controller('CommentFormController', ['$scope', '$rootScope', '$http', '$loca
         $http.post("comment", {id: $scope.id, body: $scope.commentBody})
             .then(function (response) {
                 $scope.commentBody = "";
-                $rootScope.$broadcast('postComment');
+                $rootScope.$broadcast('postComment', response.data);
             });
     };
 }]);
@@ -28,6 +28,7 @@ app.controller('CommentsController', ['$scope', '$rootScope', '$http', '$locatio
     };
     $scope.loadMore();
     $scope.$on('postComment', function (event, args) {
+        $scope.comments.push.apply(args, $scope.comments)
         $scope.offset++;
         $http.get("comments", {
                 params: {id: $scope.id, max: $scope.offset, offset: 0}
