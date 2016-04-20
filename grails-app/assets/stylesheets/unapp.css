@@ -164,8 +164,38 @@ ul {
     }
 }
 
-/* Index Tables and Rows */
+/* Clickable element */
 
-.index-list-row{
+.clickable-element {
     cursor: pointer;
+}
+
+.non-clickable-element {
+    cursor: not-allowed;
+}
+
+.voting-container {
+    float: right
+}
+
+.positive-vote {
+    float: left;
+    margin-right: 10px;
+}
+
+.negative-vote {
+    float: left;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.content-positive-vote {
+    width: auto;
+    float: left;
+    margin-right: 10px;
+}
+
+.content-negative-vote {
+    width: auto;
+    float: left;
 }

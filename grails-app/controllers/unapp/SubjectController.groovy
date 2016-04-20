@@ -2,7 +2,7 @@ package unapp
 
 class SubjectController {
 
-    static allowedMethods = [save: "POST", read: "GET", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [index: "GET", comments: "GET", comment: "POST"]
 
     def index(int id) {
         def result = Course.get(id).collect { course ->
@@ -18,75 +18,50 @@ class SubjectController {
                   name    : teacher.name,
                   username: teacher.username
                  ]
-             },
-             comments   : course.comments.collect { comment ->
-                 [id           : comment.id,
-                  author       : comment.author.name,
-                  body         : comment.body,
-                  date         : comment.date,
-                  positiveVotes: comment.positiveVotes,
-                  negativeVotes: comment.negativeVotes
-                 ]
              }
             ]
         }[0]
 
         respond result, model: [result: result]
-
-//        def course = Course.get(params.id)
-//        def comentarios = Comment.findAllByCourse(course, [sort: "date", order: "desc", max: 5])
-//        render view: "index", model: [c: course, comments: comentarios, offset: 5]
     }
 
 
-    def cargarComentarios(String offset, String id) {
-        def off = offset.toInteger()
-        def course = Course.get(id.toInteger())
-        def comentarios = Comment.findAllByCourse(course, [sort: "date", order: "desc", max: 5, offset: off])
-
-        def str = concatComentarios(comentarios)
-
-        if (str.size() == 0)
-            render "<div align = \"center\"> No existen mas comentarios </div>"
-        else
-            render str
-    }
-
-    def concatComentarios(comentarios) {
-
-        def str = ""
-
-        comentarios.each {
-            str += '<div class = "comentario">\n' +
-                    '    <div class="col-sm-1">\n' +
-                    '        <div class="thumbnail">\n' +
-                    '            <img class="img-responsive user-photo" src="'+it.author.picture+'">\n' +
-                    '        </div><!-- /thumbnail -->\n' +
-                    '    </div><!-- /col-sm-1 -->\n' +
-                    '\n' +
-                    '    <div class="col-sm-11">\n' +
-                    '        <div class="panel panel-default">\n' +
-                    '            <div class="panel-heading">\n' +
-                    '                <strong>' + it.author.name + '</strong> <span class="text-muted">' + it.date + '</span>\n' +
-                    '                <div id="' + it.id + '" style="float: right">\n' +
-                    '                   <i class="material-icons" onclick="upVotes(event)" style=" float: left; margin-right: 10px; ">thumb_up</i>\n' +
-                    '                   <div style="width: auto;float: left;margin-right: 10;" class="positive-vote">' + it.positiveVotes + '</div>\n' +
-                    '                   <i class="material-icons" onclick="downVotes(event)" style=" float: left; margin-right: 10px; margin-left: 10px; ">thumb_down</i>\n' +
-                    '                   <div style="width: auto;float: left;" class="negative-vote">' + it.negativeVotes + '</div>\n' +
-                    '               </div>\n' +
-                    '            </div>\n' +
-                    '            <div class="panel-body">\n' +
-                    '                ' + it.body + '\n' +
-                    '            </div><!-- /panel-body -->\n' +
-                    '        </div><!-- /panel panel-default -->\n' +
-                    '    </div><!-- /sm-11 -->\n' +
-                    '</div>'
+    def comments(int id, int max, int offset) {
+        def result = Comment.findAllByCourse(Course.get(id), [sort: "date", order: "desc", max: max, offset: offset]).collect { comment ->
+            [id           : comment.id,
+             author       : comment.author.name,
+             body         : comment.body,
+             date         : comment.date,
+             positiveVotes: comment.positiveVotes,
+             negativeVotes: comment.negativeVotes
+            ]
         }
 
+        respond result, model: [result: result]
+    }
 
+    def comment() {
+        if (session.user == null) {
+            return
+        }
 
-        str
+        def result = new Comment(
+                body: request.JSON.body,
+                course: Course.get(request.JSON.id),
+                teacher: null,
+                author: session.user,
+                date: new Date()
+        ).save(flush: true)
 
+        result = [id           : result.id,
+                  author       : result.author.name,
+                  body         : result.body,
+                  date         : result.date,
+                  positiveVotes: result.positiveVotes,
+                  negativeVotes: result.negativeVotes
+        ]
+
+        respond result, model: [result: result]
     }
 
     def upVote(String id2) {
@@ -153,26 +128,4 @@ class SubjectController {
 
         render comment.positiveVotes + " " + comment.negativeVotes
     }
-
-    def comment() {
-
-        def user = session["user"]
-
-        if (user == null) {
-            render "<div align = \"center\"> Ingresar para comentar </div>"
-            return
-        }
-
-        def course = Course.get(params.id)
-
-        def teacher = null //TODO
-
-        Comment comment = new Comment(body: params.body, course: course, teacher: teacher, author: user, date: new Date())
-        comment.save()
-
-        def str = concatComentarios([comment])
-
-        render str
-    }
-
 }
