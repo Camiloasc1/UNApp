@@ -56,6 +56,7 @@ class SubjectController {
 
         def result = [id           : comment.id,
                       author       : comment.author.name,
+                      picture      : comment.author.picture,
                       body         : comment.body,
                       date         : comment.date,
                       positiveVotes: comment.positiveVotes,
@@ -93,6 +94,7 @@ class SubjectController {
 
         def result = [id           : comment.id,
                       author       : comment.author.name,
+                      picture      : comment.author.picture,
                       body         : comment.body,
                       date         : comment.date,
                       positiveVotes: comment.positiveVotes,
@@ -130,6 +132,7 @@ class SubjectController {
 
         def result = [id           : comment.id,
                       author       : comment.author.name,
+                      picture      : comment.author.picture,
                       body         : comment.body,
                       date         : comment.date,
                       positiveVotes: comment.positiveVotes,
