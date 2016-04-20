@@ -1,8 +1,3 @@
-$(function () {
-    $("#navbar").load("_navbar.html");
-    $("#footer").load("_footer.html");
-});
-
 var star = { "selected" : false };
 
 $('.star').mouseenter(function(){
