@@ -56,7 +56,7 @@
 
     <div class="row">
         <div class="col-xs-12">
-            <g:render template="commentForm" bean="${result}"/>
+            <g:render template="commentForm"/>
         </div>
     </div>
 

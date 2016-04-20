@@ -1,8 +1,7 @@
 var app = angular.module('CommentsApp', []);
 
-app.controller('CommentFormController', ['$scope', '$rootScope', '$http', function ($scope, $rootScope, $http) {
-    $scope.query = JSON.parse(window.location.search.replace("?", '{"').replace(/=/g, '":"').replace(/&/g, '","').concat('"}'));
-    $scope.id = parseInt($scope.query.id);
+app.controller('CommentFormController', ['$scope', '$rootScope', '$http', '$location', function ($scope, $rootScope, $http, $location) {
+    $scope.id = parseInt($location.search().id);
     $scope.commentBody = "";
     $scope.postComment = function () {
         $http.post("comment", {id: $scope.id, body: $scope.commentBody})
@@ -13,9 +12,8 @@ app.controller('CommentFormController', ['$scope', '$rootScope', '$http', functi
     };
 }]);
 
-app.controller('CommentsController', ['$scope', '$rootScope', '$http', function ($scope, $rootScope, $http) {
-    $scope.query = JSON.parse(window.location.search.replace("?", '{"').replace(/=/g, '":"').replace(/&/g, '","').concat('"}'));
-    $scope.id = $scope.query.id;
+app.controller('CommentsController', ['$scope', '$rootScope', '$http', '$location', function ($scope, $rootScope, $http, $location) {
+    $scope.id = parseInt($location.search().id);
     $scope.max = 5;
     $scope.offset = 0;
     $scope.comments = [];
@@ -39,4 +37,8 @@ app.controller('CommentsController', ['$scope', '$rootScope', '$http', function 
                 $scope.offset = $scope.comments.length;
             });
     });
+}]);
+
+app.config(['$locationProvider', function ($locationProvider) {
+    $locationProvider.html5Mode(true);
 }]);

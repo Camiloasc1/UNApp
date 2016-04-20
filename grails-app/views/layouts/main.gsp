@@ -16,7 +16,7 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <!-- Bootstrap Material Design -->
     <link rel="stylesheet" type="text/css" href="${request.contextPath}/css/bootstrap-material-design.css">
     <link rel="stylesheet" type="text/css" href="${request.contextPath}/css/ripples.min.css">
@@ -25,7 +25,8 @@
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
     <!-- UNApp -->
     <asset:stylesheet src="unapp.css"/>
-
+    <!-- HTML5 base -->
+    <base href="${request.forwardURI}">
     <g:layoutHead/>
 </head>
 
@@ -105,7 +106,7 @@
 <div id="footer"></div>
 
 <!-- AngularJS -->
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 <!-- Bootstrap -->
