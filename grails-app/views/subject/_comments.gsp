@@ -46,6 +46,11 @@
             </div>
         </div>
 
+        <div class="text-center" ng-show="loading">
+            <i class="fa fa-spinner fa-pulse fa-5x"></i>
+            <span class="sr-only">Cargando...</span>
+        </div>
+
         <div class="row">
             <div class="col-xs-12">
                 <div class="text-center">

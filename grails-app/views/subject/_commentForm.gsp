@@ -25,6 +25,12 @@
                     <div class="col-lg-3 col-md-4">
                         <button class="btn btn-default btn-raised btn-block" type="button"
                                 ng-click="postComment()">Comentar</button>
+
+                        <div class="text-center" ng-show="loading">
+                            <br/>
+                            <i class="fa fa-spinner fa-pulse fa-5x"></i>
+                            <span class="sr-only">Cargando...</span>
+                        </div>
                     </div>
                 </form>
             </oauth:connected>
