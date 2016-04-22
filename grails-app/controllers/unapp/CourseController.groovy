@@ -50,7 +50,6 @@ class CourseController {
         respond result, model: [result: result]
     }
 
-
     def comments(int id, int max, int offset) {
         def result = Comment.findAllByCourse(Course.get(id), [sort: "date", order: "desc", max: max, offset: offset]).collect { comment ->
             [id           : comment.id,

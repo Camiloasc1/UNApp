@@ -2,7 +2,14 @@ package unapp
 
 class Vote {
 
-    int value //0,1 dependiendo si es negativo o positivo
+    boolean value // False: negative, True: positive
 
-    static belongsTo = [author: User,comment: Comment]
+    static belongsTo = [author: User, comment: Comment]
+
+    static constraints = {
+        value nullable: false
+
+        author nullable: false
+        comment nullable: true
+    }
 }
