@@ -1,86 +1,81 @@
-
-<%@ page import="unapp.Teacher" %>
-<!DOCTYPE html>
 <html>
-	<head>
-		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'teacher.label', default: 'Teacher')}" />
-		<title><g:message code="default.show.label" args="[entityName]" /></title>
-	</head>
-	<body>
-		<a href="#show-teacher" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-			</ul>
+<head>
+	<meta name="layout" content="main"/>
+</head>
+
+<body>
+<div ng-app="CommentsApp" class="container subjectInfo">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="jumbotron">
+				<div class="row">
+					<div class="col-md-4 col-lg-5">
+						<img src="${assetPath(src: 'teacher.png')}" class="img-rounded center-block"
+							 height="250"
+							 width="250">
+
+						<h1 class="text-center">${result.name}</h1>
+
+						<h3 class="text-center">${result.location}</h3>
+
+						<div class="row text-center">
+							<ul class="star-rating">
+								<li class="star" id="1">&#9734;</li>
+								<li class="star" id="2">&#9734;</li>
+								<li class="star" id="3">&#9734;</li>
+								<li class="star" id="4">&#9734;</li>
+								<li class="star" id="5">&#9734;</li>
+							</ul>
+						</div>
+
+						<div class="col-xs-12 display-rating" style="text-align: center">Tu voto fue de:</div>
+
+					</div>
+
+					<div class="col-md-8 col-lg-7">
+						<h2>Información:</h2>
+
+						<div class="text-justify">
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus elementum metus non nulla ultricies, ac pulvinar metus aliquet. Ut eu ex varius, lacinia ipsum ut, molestie elit. Proin sit amet orci scelerisque, auctor massa a, pellentesque purus. Praesent tellus felis, tincidunt eget sapien nec, placerat semper risus. Cras ultrices, mauris at condimentum aliquet, ante lorem efficitur mi, ac viverra nunc ipsum at quam. Integer tempus dolor est, id porta eros pulvinar sed. Nam condimentum lorem lectus, sit amet imperdiet orci faucibus in. In interdum sagittis metus quis pharetra. Quisque non purus auctor, rhoncus magna eget, rutrum libero. Pellentesque mauris magna, condimentum sit amet enim hendrerit, pretium egestas risus. Cras at sapien convallis ipsum maximus egestas sed ut libero.
+						</div>
+
+						<h2>Links:</h2>
+
+						<div class="text-justify"><a href="${result.URL}">Pagina docente</a></div>
+
+						<h2>Cursos:</h2>
+						<g:each in="${result.courses}" status="i" var="course">
+							<a href="${request.contextPath}/course/show?id=${course.id}">${course.name}</a>
+							<br/>
+						</g:each>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div id="show-teacher" class="content scaffold-show" role="main">
-			<h1><g:message code="default.show.label" args="[entityName]" /></h1>
-			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
-			</g:if>
-			<ol class="property-list teacher">
-			
-				<g:if test="${teacherInstance?.comments}">
-				<li class="fieldcontain">
-					<span id="comments-label" class="property-label"><g:message code="teacher.comments.label" default="Comments" /></span>
-					
-						<g:each in="${teacherInstance.comments}" var="c">
-						<span class="property-value" aria-labelledby="comments-label"><g:link controller="comment" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></span>
-						</g:each>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${teacherInstance?.username}">
-				<li class="fieldcontain">
-					<span id="username-label" class="property-label"><g:message code="teacher.username.label" default="Username" /></span>
-					
-						<span class="property-value" aria-labelledby="username-label"><g:fieldValue bean="${teacherInstance}" field="username"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${teacherInstance?.courses}">
-				<li class="fieldcontain">
-					<span id="courses-label" class="property-label"><g:message code="teacher.courses.label" default="Courses" /></span>
-					
-						<g:each in="${teacherInstance.courses}" var="c">
-						<span class="property-value" aria-labelledby="courses-label"><g:link controller="course" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></span>
-						</g:each>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${teacherInstance?.evaluations}">
-				<li class="fieldcontain">
-					<span id="evaluations-label" class="property-label"><g:message code="teacher.evaluations.label" default="Evaluations" /></span>
-					
-						<g:each in="${teacherInstance.evaluations}" var="e">
-						<span class="property-value" aria-labelledby="evaluations-label"><g:link controller="teacherEvaluation" action="show" id="${e.id}">${e?.encodeAsHTML()}</g:link></span>
-						</g:each>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${teacherInstance?.name}">
-				<li class="fieldcontain">
-					<span id="name-label" class="property-label"><g:message code="teacher.name.label" default="Name" /></span>
-					
-						<span class="property-value" aria-labelledby="name-label"><g:fieldValue bean="${teacherInstance}" field="name"/></span>
-					
-				</li>
-				</g:if>
-			
-			</ol>
-			<g:form url="[resource:teacherInstance, action:'delete']" method="DELETE">
-				<fieldset class="buttons">
-					<g:link class="edit" action="edit" resource="${teacherInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
-					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-				</fieldset>
-			</g:form>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-12">
+			<g:render template="commentForm"/>
 		</div>
-	</body>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-4">
+			<div class="jumbotron">
+				<h2 class="text-right">Comentarios:</h2>
+			</div>
+			<unapp:isAdmin>
+				<div class="jumbotron">
+					<h2 class="text-center"><i class="fa fa-cogs"></i> Administrar</h2>
+				</div>
+			</unapp:isAdmin>
+		</div>
+
+		<div class="col-lg-8">
+			<g:render template="comments"/>
+		</div>
+	</div>
+</div>
+</body>
 </html>
