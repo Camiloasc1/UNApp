@@ -2,16 +2,16 @@
     <div class="jumbotron">
         <div class="row">
             <oauth:disconnected provider="google">
-                <oauth:connect provider="google"
-                               redirectUrl="${request.forwardURI.replace("/UNApp", "") + ((request.queryString) ? "?" + request.queryString : "")}">
-                    <div class="col-xs-12">
-                        <div class="text-center">
+                <div class="col-xs-12">
+                    <div class="text-center">
+                        <oauth:connect provider="google"
+                                       redirectUrl="${request.forwardURI.replace("/UNApp", "") + ((request.queryString) ? "?" + request.queryString : "")}">
                             <button class="btn btn-raised btn-primary">
                                 <i class="fa fa-google"></i> Ingresar con Google Para Comentar
                             </button>
-                        </div>
+                        </oauth:connect>
                     </div>
-                </oauth:connect>
+                </div>
             </oauth:disconnected>
             <oauth:connected provider="google">
                 <form id="comment-form">
