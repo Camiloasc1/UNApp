@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-xs-1">
                     <div class="thumbnail">
-                        <img class="img-responsive user-photo" src="{{comment.picture}}">
+                        <img class="img-responsive user-photo" ng-src="{{comment.picture}}">
                     </div>
                 </div>
 
