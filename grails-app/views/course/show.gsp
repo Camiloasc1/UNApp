@@ -47,7 +47,7 @@
 
 	<div class="row">
 		<div class="col-xs-12">
-			<g:render template="commentForm"/>
+			<g:render template="/comment/commentForm"/>
 		</div>
 	</div>
 
@@ -64,7 +64,7 @@
 		</div>
 
 		<div class="col-lg-8">
-			<g:render template="comments"/>
+			<g:render template="/comment/comments"/>
 		</div>
 	</div>
 </div>
