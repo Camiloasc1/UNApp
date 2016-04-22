@@ -58,6 +58,7 @@ class CourseController {
              picture      : comment.author.picture,
              body         : comment.body,
              date         : comment.date,
+             voted        : ( Vote.findByCommentAndAuthor( comment, session.user ) != null  )? Vote.findByCommentAndAuthor( comment, session.user ).value: -1,
              positiveVotes: comment.positiveVotes,
              negativeVotes: comment.negativeVotes
             ]
@@ -84,6 +85,7 @@ class CourseController {
                       picture      : comment.author.picture,
                       body         : comment.body,
                       date         : comment.date,
+                      voted        : ( Vote.findByCommentAndAuthor( comment, session.user ) != null  )? Vote.findByCommentAndAuthor( comment, session.user ).value: -1,
                       positiveVotes: comment.positiveVotes,
                       negativeVotes: comment.negativeVotes
         ]
@@ -122,6 +124,7 @@ class CourseController {
                       picture      : comment.author.picture,
                       body         : comment.body,
                       date         : comment.date,
+                      voted        : ( Vote.findByCommentAndAuthor( comment, session.user ) != null  )? Vote.findByCommentAndAuthor( comment, session.user ).value: -1,
                       positiveVotes: comment.positiveVotes,
                       negativeVotes: comment.negativeVotes
         ]
@@ -160,6 +163,7 @@ class CourseController {
                       picture      : comment.author.picture,
                       body         : comment.body,
                       date         : comment.date,
+                      voted        : ( Vote.findByCommentAndAuthor( comment, session.user ) != null  )? Vote.findByCommentAndAuthor( comment, session.user ).value: -1,
                       positiveVotes: comment.positiveVotes,
                       negativeVotes: comment.negativeVotes
         ]

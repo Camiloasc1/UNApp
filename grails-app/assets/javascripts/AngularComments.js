@@ -1,5 +1,12 @@
 var app = angular.module('CommentsApp', []);
 
+app.controller('StarRatingController', ['$scope', '$rootScope', '$http', '$location', function ($scope, $rootScope, $http, $location) {
+        $scope.starRating = function (vote) {
+            console.log( vote )
+        }
+}]);
+
+
 app.controller('CommentFormController', ['$scope', '$rootScope', '$http', '$location', function ($scope, $rootScope, $http, $location) {
     $scope.id = parseInt($location.search().id);
     $scope.commentBody = "";
