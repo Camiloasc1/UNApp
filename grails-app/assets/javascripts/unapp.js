@@ -30,11 +30,11 @@ function fill_stars(num, direction){
 
     if(direction === "in"){
         for(i=0; i <= parseInt(num); i++){
-            $("#" + i).html('★');
+            $("#" + i).html('&#9733;');
         }
     } else {
         for(i=0; i <= parseInt(num); i++){
-            $("#" + i).html('☆');
+            $("#" + i).html('&#9734;');;
         }
     }
 

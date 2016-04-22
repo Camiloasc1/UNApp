@@ -178,15 +178,43 @@ ul {
     float: right
 }
 
+.ng-switch-container {
+    width: auto;
+    float: left;
+}
+
 .positive-vote {
     float: left;
     margin-right: 10px;
+    -webkit-transition: color 100ms ease-out 100ms;
+    -moz-transition: color 100ms ease-out 100ms;
+    -o-transition: color 100ms ease-out 100ms;
+    transition: color 100ms ease-out 100ms;;
+}
+
+.positive-vote:hover {
+     color: green;
 }
 
 .negative-vote {
     float: left;
     margin-right: 10px;
     margin-left: 10px;
+    -webkit-transition: color 100ms ease-out 100ms;
+    -moz-transition: color 100ms ease-out 100ms;
+    -o-transition: color 100ms ease-out 100ms;
+    transition: color 100ms ease-out 100ms;
+}
+
+
+.select-upvote {
+    color: green;
+    text-shadow: 1px 1px 1px #fff, 3px 3px 3px green;
+}
+
+.select-dwnvote {
+    color: red;
+    text-shadow: 1px 1px 1px #fff, 3px 3px 3px red;
 }
 
 .content-positive-vote {
