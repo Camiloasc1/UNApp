@@ -103,5 +103,5 @@ app.controller('CommentsController', ['$scope', '$rootScope', '$http', '$locatio
 }]);
 
 app.config(['$locationProvider', function ($locationProvider) {
-    $locationProvider.html5Mode(true);
+    $locationProvider.html5Mode({enabled: true, rewriteLinks: false});
 }]);
