@@ -57,9 +57,9 @@ class CourseController {
              picture      : comment.author.picture,
              body         : comment.body,
              date         : comment.date,
-             voted        : ( Vote.findByCommentAndAuthor( comment, session.user ) != null  )? Vote.findByCommentAndAuthor( comment, session.user ).value: -1,
-             positiveVotes: comment.positiveVotes,
-             negativeVotes: comment.negativeVotes
+             voted        : Vote.findByAuthorAndComment(session.user, comment)?.value ?: 0,
+             positiveVotes: comment.countPositiveVotes(),
+             negativeVotes: comment.countNegativeVotes()
             ]
         }
 
@@ -84,9 +84,9 @@ class CourseController {
                       picture      : comment.author.picture,
                       body         : comment.body,
                       date         : comment.date,
-                      voted        : ( Vote.findByCommentAndAuthor( comment, session.user ) != null  )? Vote.findByCommentAndAuthor( comment, session.user ).value: -1,
-                      positiveVotes: comment.positiveVotes,
-                      negativeVotes: comment.negativeVotes
+                      voted        : Vote.findByAuthorAndComment(session.user, comment)?.value ?: 0,
+                      positiveVotes: comment.countPositiveVotes(),
+                      negativeVotes: comment.countNegativeVotes()
         ]
 
         respond result, model: [result: result]
@@ -105,14 +105,9 @@ class CourseController {
 
         def vote = Vote.findByAuthorAndComment(user, comment)
         if (vote) {
-            if (vote.value == 0) {
-                vote.value = 1
-                comment.negativeVotes--;
-                comment.positiveVotes++;
-            }
+            vote.value = 1
         } else {
             vote = new Vote(value: 1, author: user, comment: comment)
-            comment.positiveVotes++;
         }
 
         comment.save(flush: true)
@@ -123,9 +118,9 @@ class CourseController {
                       picture      : comment.author.picture,
                       body         : comment.body,
                       date         : comment.date,
-                      voted        : ( Vote.findByCommentAndAuthor( comment, session.user ) != null  )? Vote.findByCommentAndAuthor( comment, session.user ).value: -1,
-                      positiveVotes: comment.positiveVotes,
-                      negativeVotes: comment.negativeVotes
+                      voted        : Vote.findByAuthorAndComment(session.user, comment)?.value ?: 0,
+                      positiveVotes: comment.countPositiveVotes(),
+                      negativeVotes: comment.countNegativeVotes()
         ]
 
         respond result, model: [result: result]
@@ -144,14 +139,9 @@ class CourseController {
 
         def vote = Vote.findByAuthorAndComment(user, comment)
         if (vote) {
-            if (vote.value == 1) {
-                vote.value = 0
-                comment.negativeVotes++;
-                comment.positiveVotes--;
-            }
+            vote.value = -1
         } else {
             vote = new Vote(value: 0, author: user, comment: comment)
-            comment.negativeVotes++;
         }
 
         comment.save(flush: true)
@@ -162,9 +152,9 @@ class CourseController {
                       picture      : comment.author.picture,
                       body         : comment.body,
                       date         : comment.date,
-                      voted        : ( Vote.findByCommentAndAuthor( comment, session.user ) != null  )? Vote.findByCommentAndAuthor( comment, session.user ).value: -1,
-                      positiveVotes: comment.positiveVotes,
-                      negativeVotes: comment.negativeVotes
+                      voted        : Vote.findByAuthorAndComment(session.user, comment)?.value ?: 0,
+                      positiveVotes: comment.countPositiveVotes(),
+                      negativeVotes: comment.countNegativeVotes()
         ]
 
         respond result, model: [result: result]

@@ -19,11 +19,12 @@
                                     <div ng-switch on="comment.voted" class="ng-switch-container">
                                         <div ng-switch-when="1">
                                             <i class="material-icons positive-vote clickable-element select-upvote"
-                                                ng-click="voteUp(comment.id, $index)">thumb_up</i>
+                                               ng-click="voteUp(comment.id, $index)">thumb_up</i>
                                         </div>
+
                                         <div ng-switch-default>
                                             <i class="material-icons positive-vote clickable-element"
-                                                ng-click="voteUp(comment.id, $index)">thumb_up</i>
+                                               ng-click="voteUp(comment.id, $index)">thumb_up</i>
                                         </div>
                                     </div>
                                 </oauth:connected>
@@ -35,10 +36,11 @@
                                 </div>
                                 <oauth:connected provider="google">
                                     <div ng-switch on="comment.voted" class="ng-switch-container">
-                                        <div ng-switch-when="0">
+                                        <div ng-switch-when="-1">
                                             <i class="material-icons negative-vote clickable-element select-dwnvote"
                                                ng-click="voteDown(comment.id, $index)">thumb_down</i>
                                         </div>
+
                                         <div ng-switch-default>
                                             <i class="material-icons negative-vote clickable-element"
                                                ng-click="voteDown(comment.id, $index)">thumb_down</i>

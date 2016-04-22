@@ -2,7 +2,7 @@ package unapp
 
 class Vote {
 
-    boolean value // False: negative, True: positive
+    int value // -1: negative, 1: positive
 
     static belongsTo = [author: User, comment: Comment]
 
@@ -10,6 +10,6 @@ class Vote {
         value nullable: false
 
         author nullable: false
-        comment nullable: true
+        comment nullable: false
     }
 }
