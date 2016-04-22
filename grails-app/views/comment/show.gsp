@@ -46,7 +46,7 @@
 					<span id="likes-label" class="property-label"><g:message code="comment.likes.label" default="Likes" /></span>
 					
 						<g:each in="${commentInstance.likes}" var="l">
-						<span class="property-value" aria-labelledby="likes-label"><g:link controller="votes" action="show" id="${l.id}">${l?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="likes-label"><g:link controller="vote" action="show" id="${l.id}">${l?.encodeAsHTML()}</g:link></span>
 						</g:each>
 					
 				</li>

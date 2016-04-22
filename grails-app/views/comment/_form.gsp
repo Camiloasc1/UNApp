@@ -28,10 +28,10 @@
 	
 <ul class="one-to-many">
 <g:each in="${commentInstance?.likes?}" var="l">
-    <li><g:link controller="votes" action="show" id="${l.id}">${l?.encodeAsHTML()}</g:link></li>
+    <li><g:link controller="vote" action="show" id="${l.id}">${l?.encodeAsHTML()}</g:link></li>
 </g:each>
 <li class="add">
-<g:link controller="votes" action="create" params="['comment.id': commentInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'votes.label', default: 'Vote')])}</g:link>
+<g:link controller="vote" action="create" params="['comment.id': commentInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'votes.label', default: 'Vote')])}</g:link>
 </li>
 </ul>
 
