@@ -26,7 +26,7 @@
     <!-- UNApp -->
     <asset:stylesheet src="unapp.css"/>
     <!-- HTML5 base -->
-    <base href="${request.forwardURI}">
+    <base href="${createLink(uri: '/')}">
     <g:layoutHead/>
 </head>
 
