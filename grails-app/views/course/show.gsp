@@ -21,17 +21,8 @@
 						<h3 class="text-center">${result.location}</h3>
 
 						<div class="row text-center">
-							<ul class="star-rating">
-								<li class="star" id="1">&#9734;</li>
-								<li class="star" id="2">&#9734;</li>
-								<li class="star" id="3">&#9734;</li>
-								<li class="star" id="4">&#9734;</li>
-								<li class="star" id="5">&#9734;</li>
-							</ul>
+                            <g:render template="starRating"/>
 						</div>
-
-						<div class="col-xs-12 display-rating">Tu voto fue de:</div>
-
 					</div>
 
 					<div class="col-md-8 col-lg-7">
