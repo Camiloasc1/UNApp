@@ -50,6 +50,57 @@ class CourseController {
         respond result, model: [result: result]
     }
 
+    def starMedian( int id ) {
+        def user = session.user
+        def star = 0
+        if(user){
+            star = CourseEvaluation.findByCourseAndAuthor( Course.findById( id ), user )
+            if( star )
+                star = star.overall
+            else
+                star = 0
+        }
+
+        def votes = CourseEvaluation.findAllByCourse( Course.findById( id ) )
+        def median = -1
+        if( votes.size() != 0 )
+            median = Math.floor( (votes.sum { it.overall }) / votes.size())
+
+
+        def result = [
+                median: median,
+                stars: star
+        ]
+        respond result, model: [result: result]
+    }
+
+    def starRate( int id, int vote ) {
+        def user = session.user
+        if (!user) {
+            return
+        }
+
+        def exists = CourseEvaluation.findByCourseAndAuthor( Course.findById(id), user )
+        if( exists == null ) {
+            def rate = new CourseEvaluation(
+                    author: user,
+                    overall: vote,
+                    course: Course.findById(id)
+            ).save(flush: true)
+        }else{
+            exists.overall = vote
+            exists.save( flush: true )
+        }
+
+        def votes = CourseEvaluation.findAllByCourse( Course.findById( id ) )
+        def median = Math.floor( (votes.sum { it.overall }) / votes.size())
+
+        def result = [
+                median: median,
+        ]
+        respond result, model: [result: result]
+    }
+
     def comments(int id, int max, int offset) {
         def result = Comment.findAllByCourse(Course.get(id), [sort: "date", order: "desc", max: max, offset: offset]).collect { comment ->
             [id           : comment.id,
