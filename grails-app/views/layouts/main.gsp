@@ -77,6 +77,13 @@
                 </unapp:isAdmin>
             </ul>
 
+            <form class="navbar-form navbar-left" method = "get" action = "course/search" >
+                <div class="form-group is-empty">
+                    <input type="text" name="query" class="form-control col-md-8" >
+                    <span class="material-input"></span>
+                </div>
+            </form>
+
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <oauth:disconnected provider="google">
