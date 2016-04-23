@@ -40,7 +40,7 @@ ul {
 @media screen and (min-width: 1000px) {
     .window_search {
         position: absolute;
-        top: 40%;
+        top: 20%;
     }
 
     /* subject styles */

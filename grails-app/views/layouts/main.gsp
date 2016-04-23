@@ -79,7 +79,8 @@
 
             <form class="navbar-form navbar-left" method = "get" action = "course/search" >
                 <div class="form-group is-empty">
-                    <input type="text" name="query" class="form-control col-md-8" >
+                    <input type="text" name="query" class="form-control col-md-8" style="text-align: center" placeholder="Buscar materia" >
+                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                     <span class="material-input"></span>
                 </div>
             </form>
