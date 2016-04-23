@@ -4,5 +4,5 @@
     <li class="star" ng-click="starRating(3)" id="3">&#9734;</li>
     <li class="star" ng-click="starRating(4)" id="4">&#9734;</li>
     <li class="star" ng-click="starRating(5)" id="5">&#9734;</li>
-    <div class="col-xs-12 display-rating">Tu voto fue de:</div>
 </ul>
+<div class="col-xs-12 display-rating"></div>
