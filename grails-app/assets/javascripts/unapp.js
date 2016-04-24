@@ -45,4 +45,11 @@ function fill_stars_voted( num ){
     star.id = num;
 }
 
+function fill_stars_median( num ){
+    $(".star-prom").html('&#9734;');
+    for(i=0; i <= parseInt(num); i++){
+        $("#p" + i).html('&#9733;');
+    }
+}
+
 //onmouseover="document.getElementById('star-1').className = 'glyphicon glyphicon-star'"

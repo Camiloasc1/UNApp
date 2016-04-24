@@ -36,6 +36,19 @@ ul {
     width: 100%;
 }
 
+.star-prom-rating {
+    list-style-type: none;
+    font-size: 215%;
+    color: gold;
+    cursor: pointer;
+    width: 100%
+}
+
+.star-prom-rating li {
+    display: inline-block;
+    margin: -0.9999%;
+}
+
 /* subject styles end */
 
 @media screen and (min-width: 1000px) {

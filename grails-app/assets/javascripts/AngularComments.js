@@ -9,7 +9,7 @@ app.controller('StarRatingController', ['$scope', '$rootScope', '$http', '$locat
             })
             .then(function (response) {
                 fill_stars_voted( vote );
-                (document.getElementsByClassName("display-rating"))[0].innerHTML = "El promedio de calificaci&oacute;n es de: " + response.data.median + " estrellas.";
+                fill_stars_median(response.data.median);
             });
     }
 
@@ -20,10 +20,8 @@ app.controller('StarRatingController', ['$scope', '$rootScope', '$http', '$locat
             .then(function (response) {
                 if( response.data.stars != 0 )
                     fill_stars_voted( response.data.stars );
-                if( response.data.median == -1 )
-                    (document.getElementsByClassName("display-rating"))[0].innerHTML = "No hay votos a&uacute;n, califica ya";
-                else
-                    (document.getElementsByClassName("display-rating"))[0].innerHTML = "El promedio de calificaci&oacute;n es de: " + response.data.median + " estrellas.";
+                if( response.data.median != -1)
+                    fill_stars_median(response.data.median);
             });
     }
     $scope.starMedian();
