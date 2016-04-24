@@ -3,6 +3,11 @@
     padding-top: 25px;
 }
 
+.index-background {
+    background: url('background.jpg');
+    height: 100vh;
+}
+
 /* subject styles */
 .subjectInfo {
     margin-top: 150px;
@@ -190,7 +195,7 @@ ul {
 }
 
 .positive-vote:hover {
-     color: green;
+    color: green;
 }
 
 .negative-vote {
@@ -202,7 +207,6 @@ ul {
     -o-transition: color 100ms ease-out 100ms;
     transition: color 100ms ease-out 100ms;
 }
-
 
 .select-upvote {
     color: green;
