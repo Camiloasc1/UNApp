@@ -50,3 +50,4 @@ classes/*
 .idea
 .asscache
 .slcache
+db.txt
