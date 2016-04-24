@@ -35,9 +35,9 @@
 					<div class="col-md-8 col-lg-7">
 						<h2>Información:</h2>
 
-						<div class="text-justify">
-							${result.information}
-						</div>
+                        <div class="text-justify" style="white-space: pre-line; word-wrap: break-word">
+                            ${result.information}
+                        </div>
 
 						<h2>Links:</h2>
 
