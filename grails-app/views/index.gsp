@@ -12,7 +12,7 @@
         <img class="img-responsive main_image" src="${request.contextPath}/welcome-index/img/welcome.jpg" alt="">
         <div class="row window_search" >
             <div id="custom-search-input" class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
-                <img class="img-responsive main_unapp search-logo" src="${assetPath(src: 'search_logo.png')}" alt="">
+                <img class="img-responsive main_unapp search-logo" src="${assetPath(src: 'white_search_logo.png')}" alt="">
 
                 <form method = "get" action = "course/search" >
                     <div class="input-group">

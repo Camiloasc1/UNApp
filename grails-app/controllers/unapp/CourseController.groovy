@@ -46,7 +46,6 @@ class CourseController {
              }
             ]
         }[0]
-
         respond result, model: [result: result]
     }
 
@@ -57,13 +56,14 @@ class CourseController {
              author       : comment.author.name,
              picture      : comment.author.picture,
              body         : comment.body,
-             date         : comment.date,
+             date         : comment.date.format("yyyy-MM-dd 'a las' HH:mm"),
              voted        : ( Vote.findByCommentAndAuthor( comment, session.user ) != null  )? Vote.findByCommentAndAuthor( comment, session.user ).value: -1,
              positiveVotes: comment.positiveVotes,
-             negativeVotes: comment.negativeVotes
+             negativeVotes: comment.negativeVotes,
+             teacher      : comment.teacher ? comment.teacher.name : null,
+             teacherId      : comment.teacher ? comment.teacher.id : null
             ]
         }
-
         respond result, model: [result: result]
     }
 
@@ -75,7 +75,7 @@ class CourseController {
         def comment = new Comment(
                 body: request.JSON.body,
                 course: Course.get(request.JSON.id),
-                teacher: null,
+                teacher: Teacher.get(request.JSON.teacherId.toInteger()),
                 author: session.user,
                 date: new Date()
         ).save(flush: true)
@@ -87,7 +87,9 @@ class CourseController {
                       date         : comment.date,
                       voted        : ( Vote.findByCommentAndAuthor( comment, session.user ) != null  )? Vote.findByCommentAndAuthor( comment, session.user ).value: -1,
                       positiveVotes: comment.positiveVotes,
-                      negativeVotes: comment.negativeVotes
+                      negativeVotes: comment.negativeVotes,
+                      teacher      : comment.teacher ? comment.teacher.name : null,
+                      teacherId      : comment.teacher ? comment.teacher.id : null
         ]
 
         respond result, model: [result: result]
@@ -123,10 +125,12 @@ class CourseController {
                       author       : comment.author.name,
                       picture      : comment.author.picture,
                       body         : comment.body,
-                      date         : comment.date,
+                      date         : comment.date.format("yyyy-MM-dd 'a las' HH:mm"),
                       voted        : ( Vote.findByCommentAndAuthor( comment, session.user ) != null  )? Vote.findByCommentAndAuthor( comment, session.user ).value: -1,
                       positiveVotes: comment.positiveVotes,
-                      negativeVotes: comment.negativeVotes
+                      negativeVotes: comment.negativeVotes,
+                      teacher      : comment.teacher ? comment.teacher.name : null,
+                      teacherId      : comment.teacher ? comment.teacher.id : null
         ]
 
         respond result, model: [result: result]
@@ -162,10 +166,12 @@ class CourseController {
                       author       : comment.author.name,
                       picture      : comment.author.picture,
                       body         : comment.body,
-                      date         : comment.date,
+                      date         : comment.date.format("yyyy-MM-dd 'a las' HH:mm"),
                       voted        : ( Vote.findByCommentAndAuthor( comment, session.user ) != null  )? Vote.findByCommentAndAuthor( comment, session.user ).value: -1,
                       positiveVotes: comment.positiveVotes,
-                      negativeVotes: comment.negativeVotes
+                      negativeVotes: comment.negativeVotes,
+                      teacher      : comment.teacher ? comment.teacher.name : null,
+                      teacherId      : comment.teacher ? comment.teacher.id : null
         ]
 
         respond result, model: [result: result]
