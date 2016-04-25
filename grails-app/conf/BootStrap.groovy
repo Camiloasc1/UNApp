@@ -22,7 +22,7 @@ class BootStrap {
 
         if (Course.list().size() == 0) {
             new Course(
-                    name: "SIN PREREQUISITOS",
+                    name: "[SIN PREREQUISITOS]",
                     code: 0,
                     credits: 0,
                     typology: "P",
