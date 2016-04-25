@@ -55,6 +55,11 @@
                     </tr>
                     </tbody>
                 </table>
+
+                <div ng-show="loadingTeachers" class="text-center">
+                    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+                    <span class="sr-only">Cargando...</span>
+                </div>
             </div>
         </div>
 
@@ -77,6 +82,11 @@
                     </tr>
                     </tbody>
                 </table>
+
+                <div ng-show="loadingCourses" class="text-center">
+                    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+                    <span class="sr-only">Cargando...</span>
+                </div>
             </div>
         </div>
     </div>

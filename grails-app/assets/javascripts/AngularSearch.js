@@ -7,21 +7,25 @@ app.controller('SearchController', ['$scope', '$rootScope', '$http', '$window', 
     $scope.loadingCourses = false;
     $scope.loadingTeachers = false;
     $scope.search = function () {
-        $scope.loadingCourses = true;
         $scope.loadingTeachers = true;
-        $http.get('course/search', {
-                params: {query: $scope.query}
-            })
-            .then(function (response) {
-                $scope.courses = response.data;
-                $scope.loadingCourses = false;
-            });
+        $scope.loadingCourses = true;
+        
+        $scope.courses = [];
+        $scope.teachers = [];
+        
         $http.get('teacher/search', {
                 params: {query: $scope.query}
             })
             .then(function (response) {
                 $scope.teachers = response.data;
                 $scope.loadingTeachers = false;
+            });
+        $http.get('course/search', {
+                params: {query: $scope.query}
+            })
+            .then(function (response) {
+                $scope.courses = response.data;
+                $scope.loadingCourses = false;
             });
     };
     $scope.showTeacher = function (id) {
