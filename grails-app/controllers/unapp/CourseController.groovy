@@ -30,7 +30,6 @@ class CourseController {
     }
 
     def show(int id) {
-
         def result = Course.get(id).collect { course ->
             [id         : course.id,
              code       : course.code,
@@ -47,11 +46,7 @@ class CourseController {
              }
             ]
         }[0]
-
-
-
         respond result, model: [result: result]
-
     }
 
 
