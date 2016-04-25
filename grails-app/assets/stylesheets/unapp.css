@@ -1,9 +1,14 @@
-.main_unapp {
-    height: 150px;
+.search-logo {
+    width: 30%;
+    padding-top: 25px;
 }
 
-.search-logo {
-    padding-top: 25px;
+.index-background {
+    background: url('background.jpg');
+    background-size:     cover;
+    background-repeat:   no-repeat;
+    background-position: center center;
+    height: 100vh;
 }
 
 /* subject styles */
@@ -43,7 +48,7 @@ ul {
 @media screen and (min-width: 1000px) {
     .window_search {
         position: absolute;
-        top: 40%;
+        top: 25%;
     }
 
     /* subject styles */
@@ -54,14 +59,7 @@ ul {
     /* subject styles end */
 }
 
-@media screen and (min-width: 750px) and (max-width: 1000px) {
-    .window_search {
-        position: absolute;
-        top: 30%;
-    }
-}
-
-@media screen and (min-width: 650px) and (max-width: 750px) {
+@media screen and (min-width: 850px) and (max-width: 1000px) {
     .window_search {
         position: absolute;
         top: 20%;
@@ -69,7 +67,10 @@ ul {
 }
 
 @media screen and (max-width: 850px) {
-
+    .window_search {
+        position: absolute;
+        top: 15%;
+    }
     /* subject styles */
     .subjectInfo {
         margin-top: 80px;
@@ -78,12 +79,13 @@ ul {
     /* subject styles end */
 }
 
-@media screen and (min-width: 800px) {
-    .window_search > #custom-search-input {
-        background-color: rgba(44, 47, 75, 0.9);
-        border-radius: 20px;
-        padding: 22px;
-    }
+
+.window_search > #custom-search-input {
+    background-color: rgba(44, 47, 75, 0.9);
+    border-radius: 20px;
+    padding: 22px;
+}
+
 }
 
 /*  comment sections css*/
@@ -297,7 +299,7 @@ ul {
 }
 
 .positive-vote:hover {
-     color: green;
+    color: green;
 }
 
 .negative-vote {
@@ -309,7 +311,6 @@ ul {
     -o-transition: color 100ms ease-out 100ms;
     transition: color 100ms ease-out 100ms;
 }
-
 
 .select-upvote {
     color: green;
