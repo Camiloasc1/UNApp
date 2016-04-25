@@ -35,9 +35,9 @@
 					<div class="col-md-8 col-lg-7">
 						<h2>Información:</h2>
 
-						<div class="text-justify">
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus elementum metus non nulla ultricies, ac pulvinar metus aliquet. Ut eu ex varius, lacinia ipsum ut, molestie elit. Proin sit amet orci scelerisque, auctor massa a, pellentesque purus. Praesent tellus felis, tincidunt eget sapien nec, placerat semper risus. Cras ultrices, mauris at condimentum aliquet, ante lorem efficitur mi, ac viverra nunc ipsum at quam. Integer tempus dolor est, id porta eros pulvinar sed. Nam condimentum lorem lectus, sit amet imperdiet orci faucibus in. In interdum sagittis metus quis pharetra. Quisque non purus auctor, rhoncus magna eget, rutrum libero. Pellentesque mauris magna, condimentum sit amet enim hendrerit, pretium egestas risus. Cras at sapien convallis ipsum maximus egestas sed ut libero.
-						</div>
+                        <div class="text-justify" style="white-space: pre-line; word-wrap: break-word">
+                            ${result.information}
+                        </div>
 
 						<h2>Links:</h2>
 

@@ -1,12 +1,20 @@
-.main_unapp {
-    height: 150px;
-}
-
 .search-logo {
+    width: 30%;
     padding-top: 25px;
 }
 
+.index-background {
+    background: url('background.jpg');
+    background-size:     cover;
+    background-repeat:   no-repeat;
+    background-position: center center;
+    height: 100vh;
+}
+
 /* subject styles */
+.select-teacher{
+    font-size: 13px;
+}
 .subjectInfo {
     margin-top: 150px;
 }
@@ -40,7 +48,7 @@ ul {
 @media screen and (min-width: 1000px) {
     .window_search {
         position: absolute;
-        top: 40%;
+        top: 25%;
     }
 
     /* subject styles */
@@ -51,14 +59,7 @@ ul {
     /* subject styles end */
 }
 
-@media screen and (min-width: 750px) and (max-width: 1000px) {
-    .window_search {
-        position: absolute;
-        top: 30%;
-    }
-}
-
-@media screen and (min-width: 650px) and (max-width: 750px) {
+@media screen and (min-width: 850px) and (max-width: 1000px) {
     .window_search {
         position: absolute;
         top: 20%;
@@ -66,7 +67,10 @@ ul {
 }
 
 @media screen and (max-width: 850px) {
-
+    .window_search {
+        position: absolute;
+        top: 15%;
+    }
     /* subject styles */
     .subjectInfo {
         margin-top: 80px;
@@ -75,15 +79,23 @@ ul {
     /* subject styles end */
 }
 
-@media screen and (min-width: 800px) {
-    .window_search > #custom-search-input {
-        background-color: rgba(44, 47, 75, 0.9);
-        border-radius: 20px;
-        padding: 22px;
-    }
+
+.window_search > #custom-search-input {
+    background-color: rgba(44, 47, 75, 0.9);
+    border-radius: 20px;
+    padding: 22px;
+}
+
 }
 
 /*  comment sections css*/
+.date-comment{
+    padding-left: 5px;
+    font-size: 12px;
+}
+.login-comment{
+    white-space: normal;
+}
 
 .thumbnail {
     padding: 0px;
@@ -118,6 +130,100 @@ ul {
     border-right-color: #ddd;
     border-width: 8px;
 }
+
+
+.link-profesor {
+    width: 90px;
+    white-space: normal;
+    float: right;
+    margin: -8px -5px 8px 8px;
+}
+
+.color-1 {
+    background: white;
+}
+
+
+.color-1 a {
+    position: relative;
+    display: inline-block;
+    outline: none;
+    color: #009688;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 400;
+    text-shadow: 0 0 1px rgba(255,255,255,0.3);
+    font-size: 10px;
+}
+
+.color-1 a:hover {
+    outline: none;
+}
+
+
+/* Effect 14: border switch */
+.cl-effect-14 a {
+    padding: 0 2px;
+    line-height: normal;
+    height: 65px;
+}
+
+.cl-effect-14 a::before,
+.cl-effect-14 a::after {
+    position: absolute;
+    width: 63px;
+    height: 1px;
+    background: #009688;
+    content: '';
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+    pointer-events: none;
+}
+
+.cl-effect-14 a::before {
+    top: 0;
+    left: 0;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    transform: rotate(90deg);
+    -webkit-transform-origin: 0 0;
+    -moz-transform-origin: 0 0;
+    transform-origin: 0 0;
+}
+
+.cl-effect-14 a::after {
+    right: 0;
+    bottom: 0;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    transform: rotate(90deg);
+    -webkit-transform-origin: 100% 0;
+    -moz-transform-origin: 100% 0;
+    transform-origin: 100% 0;
+}
+
+.cl-effect-14 a:hover::before,
+.cl-effect-14 a:hover::after {
+    opacity: 1;
+}
+
+.cl-effect-14 a:hover::before{
+    left: 50%;
+    -webkit-transform: rotate(0deg) translateX(-50%);
+    -moz-transform: rotate(0deg) translateX(-50%);
+    transform: rotate(0deg) translateX(-50%);
+}
+
+.cl-effect-14 a:hover::after{
+    right: 50%;
+    -webkit-transform: rotate(0deg) translateX(50%);
+    -moz-transform: rotate(0deg) translateX(50%);
+    transform: rotate(0deg) translateX(50%);
+}
+
+
+
 
 /* Navbar and Content */
 
@@ -193,7 +299,7 @@ ul {
 }
 
 .positive-vote:hover {
-     color: green;
+    color: green;
 }
 
 .negative-vote {
@@ -205,7 +311,6 @@ ul {
     -o-transition: color 100ms ease-out 100ms;
     transition: color 100ms ease-out 100ms;
 }
-
 
 .select-upvote {
     color: green;
