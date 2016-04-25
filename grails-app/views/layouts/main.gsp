@@ -118,6 +118,8 @@
 <asset:javascript src="unapp.js"/>
 <!-- AngularComments -->
 <asset:javascript src="AngularComments.js"/>
+<!-- AngularSearch -->
+<asset:javascript src="AngularSearch.js"/>
 </body>
 </html>
 
