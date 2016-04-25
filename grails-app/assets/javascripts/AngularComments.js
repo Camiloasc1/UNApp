@@ -10,10 +10,15 @@ app.controller('StarRatingController', ['$scope', '$rootScope', '$http', '$locat
 app.controller('CommentFormController', ['$scope', '$rootScope', '$http', '$location', function ($scope, $rootScope, $http, $location) {
     $scope.id = parseInt($location.search().id);
     $scope.commentBody = "";
+    $scope.showSelect = function(teacher) {
+        $scope.teacherId = parseInt(teacher);
+        return
+    }
     $scope.loading = false;
     $scope.postComment = function () {
         $scope.loading = true;
-        $http.post("comment", {id: $scope.id, body: $scope.commentBody})
+
+        $http.post("comment", {id: $scope.id, body: $scope.commentBody, teacherId: $scope.teacherId})
             .then(function (response) {
                 $scope.commentBody = "";
                 $scope.loading = false;

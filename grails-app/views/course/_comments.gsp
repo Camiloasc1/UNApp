@@ -12,7 +12,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <strong>{{comment.author}}</strong>
-                            <span class="text-muted">{{comment.date}}</span>
+                            <span class="text-muted date-comment">{{comment.date}}</span>
 
                             <div class="voting-container">
                                 <oauth:connected provider="google">
@@ -55,6 +55,16 @@
                         </div>
 
                         <div class="panel-body">
+                            <div ng-if="comment.teacher">
+                                <div class="link-profesor">
+                                    <div class="color-1">
+                                        <nav class="cl-effect-14">
+                                            <a href="${request.contextPath}/teacher/show?id={{comment.teacherId}}">Profesor: {{comment.teacher}}</a>
+                                        </nav>
+                                    </div>
+
+                                </div>
+                            </div>
                             {{comment.body}}
                         </div>
                     </div>
