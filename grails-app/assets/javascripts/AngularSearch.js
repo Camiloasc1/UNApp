@@ -1,6 +1,6 @@
 var app = angular.module('SearchApp', []);
 
-app.controller('SearchController', ['$scope', '$rootScope', '$http', '$location', function ($scope, $rootScope, $http, $location) {
+app.controller('SearchController', ['$scope', '$rootScope', '$http', '$window', function ($scope, $rootScope, $http, $window) {
     $scope.query = "";
     $scope.courses = [];
     $scope.teachers = [];
@@ -23,6 +23,12 @@ app.controller('SearchController', ['$scope', '$rootScope', '$http', '$location'
                 $scope.teachers = response.data;
                 $scope.loadingTeachers = false;
             });
+    };
+    $scope.showTeacher = function (id) {
+        $window.location.href = 'teacher/show?id=' + id;
+    };
+    $scope.showCourse = function (id) {
+        $window.location.href = 'course/show?id=' + id;
     };
 }]);
 
