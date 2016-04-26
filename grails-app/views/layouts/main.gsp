@@ -26,7 +26,7 @@
     <!-- UNApp -->
     <asset:stylesheet src="unapp.css"/>
     <!-- HTML5 base -->
-    <base href="${request.forwardURI}">
+    <base href="${createLink(uri: '/')}">
     <g:layoutHead/>
 </head>
 
@@ -76,6 +76,14 @@
                     </li>
                 </unapp:isAdmin>
             </ul>
+
+            <form class="navbar-form navbar-left" method = "get" action = "course/search" >
+                <div class="form-group is-empty">
+                    <input type="text" name="query" class="form-control col-md-8" style="text-align: center" placeholder="Buscar materia" >
+                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                    <span class="material-input"></span>
+                </div>
+            </form>
 
             <ul class="nav navbar-nav navbar-right">
                 <li>

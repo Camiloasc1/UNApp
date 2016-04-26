@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-xs-1">
                     <div class="thumbnail">
-                        <img class="img-responsive user-photo" src="{{comment.picture}}">
+                        <img class="img-responsive user-photo" ng-src="{{comment.picture}}">
                     </div>
                 </div>
 
@@ -16,8 +16,17 @@
 
                             <div class="voting-container">
                                 <oauth:connected provider="google">
-                                    <i class="material-icons positive-vote clickable-element"
-                                       ng-click="voteUp(comment.id, $index)">thumb_up</i>
+                                    <div ng-switch on="comment.voted" class="ng-switch-container">
+                                        <div ng-switch-when="1">
+                                            <i class="material-icons positive-vote clickable-element select-upvote"
+                                               ng-click="voteUp(comment.id, $index)">thumb_up</i>
+                                        </div>
+
+                                        <div ng-switch-default>
+                                            <i class="material-icons positive-vote clickable-element"
+                                               ng-click="voteUp(comment.id, $index)">thumb_up</i>
+                                        </div>
+                                    </div>
                                 </oauth:connected>
                                 <oauth:disconnected provider="google">
                                     <i class="material-icons positive-vote non-clickable-element">thumb_up</i>
@@ -26,8 +35,17 @@
                                     {{comment.positiveVotes}}
                                 </div>
                                 <oauth:connected provider="google">
-                                    <i class="material-icons negative-vote clickable-element"
-                                       ng-click="voteDown(comment.id, $index)">thumb_down</i>
+                                    <div ng-switch on="comment.voted" class="ng-switch-container">
+                                        <div ng-switch-when="-1">
+                                            <i class="material-icons negative-vote clickable-element select-dwnvote"
+                                               ng-click="voteDown(comment.id, $index)">thumb_down</i>
+                                        </div>
+
+                                        <div ng-switch-default>
+                                            <i class="material-icons negative-vote clickable-element"
+                                               ng-click="voteDown(comment.id, $index)">thumb_down</i>
+                                        </div>
+                                    </div>
                                 </oauth:connected>
                                 <oauth:disconnected provider="google">
                                     <i class="material-icons negative-vote non-clickable-element">thumb_down</i>

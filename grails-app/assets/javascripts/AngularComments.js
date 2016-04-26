@@ -1,37 +1,49 @@
 var app = angular.module('CommentsApp', []);
 
 app.controller('StarRatingController', ['$scope', '$rootScope', '$http', '$location', function ($scope, $rootScope, $http, $location) {
-        $scope.starRating = function (vote) {
-            console.log( vote )
-        }
+    $scope.starRating = function (vote) {
+        console.log(vote)
+    }
 }]);
 
 
 app.controller('CommentFormController', ['$scope', '$rootScope', '$http', '$location', function ($scope, $rootScope, $http, $location) {
     $scope.id = parseInt($location.search().id);
-    $scope.commentBody = "";
+    $scope.context = $location.path().toLowerCase().contains('course') ? 'Course' : $location.path().toLowerCase().contains('teacher') ? 'Teacher' : '';
+    $scope.commentBody = '';
     $scope.loading = false;
     $scope.postComment = function () {
         $scope.loading = true;
-        $http.post("comment", {id: $scope.id, body: $scope.commentBody})
+        $http.post('comment/add' + $scope.context + 'Comment', {id: $scope.id, body: $scope.commentBody})
             .then(function (response) {
                 $scope.commentBody = "";
                 $scope.loading = false;
-                $rootScope.$broadcast('postComment', response.data);
+                $rootScope.$broadcast('newComment', response.data);
             });
     };
 }]);
 
 app.controller('CommentsController', ['$scope', '$rootScope', '$http', '$location', function ($scope, $rootScope, $http, $location) {
     $scope.id = parseInt($location.search().id);
+    $scope.context = $location.path().toLowerCase().contains('course') ? 'Course' : $location.path().toLowerCase().contains('teacher') ? 'Teacher' : '';
     $scope.max = 5;
     $scope.offset = 0;
     $scope.comments = [];
     $scope.loading = false;
 
     $scope.voteUp = function (id, index) {
-        $scope.comments[index].positiveVotes++;
-        $http.post("voteUp", {id: id})
+        switch ($scope.comments[index].voted) {
+            case -1:
+                $scope.comments[index].negativeVotes--;
+            case 0:
+                $scope.comments[index].positiveVotes++;
+            case 1:
+            default:
+                break;
+        }
+        $scope.comments[index].voted = 1;
+
+        $http.post("comment/voteUp", {id: id})
             .then(function (response) {
                 $scope.comments[index] = response.data;
                 $scope.reload();
@@ -39,8 +51,18 @@ app.controller('CommentsController', ['$scope', '$rootScope', '$http', '$locatio
     };
 
     $scope.voteDown = function (id, index) {
-        $scope.comments[index].negativeVotes++;
-        $http.post("voteDown", {id: id})
+        switch ($scope.comments[index].voted) {
+            case 1:
+                $scope.comments[index].positiveVotes--;
+            case 0:
+                $scope.comments[index].negativeVotes++;
+            case -1:
+            default:
+                break;
+        }
+        $scope.comments[index].voted = -1;
+
+        $http.post("comment/voteDown", {id: id})
             .then(function (response) {
                 $scope.comments[index] = response.data;
                 $scope.reload();
@@ -49,7 +71,7 @@ app.controller('CommentsController', ['$scope', '$rootScope', '$http', '$locatio
 
     $scope.loadMore = function () {
         $scope.loading = true;
-        $http.get("comments", {
+        $http.get($scope.context + '/comments', {
                 params: {id: $scope.id, max: $scope.max, offset: $scope.offset}
             })
             .then(function (response) {
@@ -61,7 +83,7 @@ app.controller('CommentsController', ['$scope', '$rootScope', '$http', '$locatio
 
     $scope.reload = function () {
         $scope.loading = true;
-        $http.get("comments", {
+        $http.get($scope.context + '/comments', {
                 params: {id: $scope.id, max: $scope.offset, offset: 0}
             })
             .then(function (response) {
@@ -71,7 +93,7 @@ app.controller('CommentsController', ['$scope', '$rootScope', '$http', '$locatio
             });
     };
 
-    $scope.$on('postComment', function (event, postedComment) {
+    $scope.$on('newComment', function (event, postedComment) {
         $scope.comments = [postedComment].concat($scope.comments);
         $scope.offset++;
         $scope.reload();
@@ -81,5 +103,5 @@ app.controller('CommentsController', ['$scope', '$rootScope', '$http', '$locatio
 }]);
 
 app.config(['$locationProvider', function ($locationProvider) {
-    $locationProvider.html5Mode(true);
+    $locationProvider.html5Mode({enabled: true, rewriteLinks: false});
 }]);

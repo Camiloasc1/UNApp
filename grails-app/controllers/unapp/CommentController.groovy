@@ -1,104 +1,131 @@
 package unapp
 
-
-
-import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class CommentController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [addCourseComment: "POST", addTeacherComment: "POST", voteUp: "POST", voteDown: "POST"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Comment.list(params), model:[commentInstanceCount: Comment.count()]
-    }
-
-    def show(Comment commentInstance) {
-        respond commentInstance
-    }
-
-    def create() {
-        respond new Comment(params)
-    }
-
-    @Transactional
-    def save(Comment commentInstance) {
-        if (commentInstance == null) {
-            notFound()
+    def addCourseComment() {
+        def user = session.user
+        if (!user) {
             return
         }
 
-        if (commentInstance.hasErrors()) {
-            respond commentInstance.errors, view:'create'
+        def comment = new Comment(
+                body: request.JSON.body,
+                course: Course.get(request.JSON.id),
+                teacher: null,
+                author: user,
+                date: new Date()
+        ).save(flush: true)
+
+        def result = [id           : comment.id,
+                      author       : comment.author.name,
+                      picture      : comment.author.picture,
+                      body         : comment.body,
+                      date         : comment.date,
+                      voted        : Vote.findByAuthorAndComment(user, comment)?.value ?: 0,
+                      positiveVotes: comment.countPositiveVotes(),
+                      negativeVotes: comment.countNegativeVotes()
+        ]
+
+        respond result, model: [result: result]
+    }
+
+    def addTeacherComment() {
+        def user = session.user
+        if (!user) {
             return
         }
 
-        commentInstance.save flush:true
+        def comment = new Comment(
+                body: request.JSON.body,
+                course: null,
+                teacher: Teacher.get(request.JSON.id),
+                author: session.user,
+                date: new Date()
+        ).save(flush: true)
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'comment.label', default: 'Comment'), commentInstance.id])
-                redirect commentInstance
-            }
-            '*' { respond commentInstance, [status: CREATED] }
-        }
+        def result = [id           : comment.id,
+                      author       : comment.author.name,
+                      picture      : comment.author.picture,
+                      body         : comment.body,
+                      date         : comment.date,
+                      voted        : Vote.findByAuthorAndComment(user, comment)?.value ?: 0,
+                      positiveVotes: comment.countPositiveVotes(),
+                      negativeVotes: comment.countNegativeVotes()
+        ]
+
+        respond result, model: [result: result]
     }
 
-    def edit(Comment commentInstance) {
-        respond commentInstance
-    }
-
-    @Transactional
-    def update(Comment commentInstance) {
-        if (commentInstance == null) {
-            notFound()
+    def voteUp() {
+        def user = session.user
+        if (!user) {
             return
         }
 
-        if (commentInstance.hasErrors()) {
-            respond commentInstance.errors, view:'edit'
+        def comment = Comment.findById(request.JSON.id)
+        if (!comment) {
             return
         }
 
-        commentInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Comment.label', default: 'Comment'), commentInstance.id])
-                redirect commentInstance
-            }
-            '*'{ respond commentInstance, [status: OK] }
+        def vote = Vote.findByAuthorAndComment(user, comment)
+        if (vote) {
+            vote.value = 1
+        } else {
+            vote = new Vote(value: 1, author: user, comment: comment)
         }
+
+        comment.save(flush: true)
+        vote.save(flush: true)
+
+        def result = [id           : comment.id,
+                      author       : comment.author.name,
+                      picture      : comment.author.picture,
+                      body         : comment.body,
+                      date         : comment.date,
+                      voted        : Vote.findByAuthorAndComment(user, comment)?.value ?: 0,
+                      positiveVotes: comment.countPositiveVotes(),
+                      negativeVotes: comment.countNegativeVotes()
+        ]
+
+        respond result, model: [result: result]
     }
 
-    @Transactional
-    def delete(Comment commentInstance) {
-
-        if (commentInstance == null) {
-            notFound()
+    def voteDown() {
+        def user = session.user
+        if (!user) {
             return
         }
 
-        commentInstance.delete flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Comment.label', default: 'Comment'), commentInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
+        def comment = Comment.findById(request.JSON.id)
+        if (!comment) {
+            return
         }
-    }
 
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'comment.label', default: 'Comment'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
+        def vote = Vote.findByAuthorAndComment(user, comment)
+        if (vote) {
+            vote.value = -1
+        } else {
+            vote = new Vote(value: 0, author: user, comment: comment)
         }
+
+        comment.save(flush: true)
+        vote.save(flush: true)
+
+        def result = [id           : comment.id,
+                      author       : comment.author.name,
+                      picture      : comment.author.picture,
+                      body         : comment.body,
+                      date         : comment.date,
+                      voted        : Vote.findByAuthorAndComment(user, comment)?.value ?: 0,
+                      positiveVotes: comment.countPositiveVotes(),
+                      negativeVotes: comment.countNegativeVotes()
+        ]
+
+        respond result, model: [result: result]
     }
 }

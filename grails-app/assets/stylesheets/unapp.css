@@ -40,7 +40,7 @@ ul {
 @media screen and (min-width: 1000px) {
     .window_search {
         position: absolute;
-        top: 40%;
+        top: 20%;
     }
 
     /* subject styles */
@@ -193,7 +193,7 @@ ul {
 }
 
 .positive-vote:hover {
-     color: green;
+    color: green;
 }
 
 .negative-vote {
@@ -206,6 +206,9 @@ ul {
     transition: color 100ms ease-out 100ms;
 }
 
+.negative-vote:hover {
+    color: red;
+}
 
 .select-upvote {
     color: green;
