@@ -59,8 +59,8 @@ class TeacherController {
              voted        : Vote.findByAuthorAndComment(session.user, comment)?.value ?: 0,
              positiveVotes: comment.countPositiveVotes(),
              negativeVotes: comment.countNegativeVotes(),
-             item         : comment.course ? comment.course.name : null,
-             itemId       : comment.course ? comment.course.id : null
+             course       : [id: comment.course?.id, name: comment.course?.name],
+             teacher      : [id: comment.teacher?.id, name: comment.teacher?.name]
             ]
         }
 

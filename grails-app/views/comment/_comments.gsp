@@ -56,35 +56,16 @@
                             </div>
                         </div>
 
-
-
                         <div class="panel-body">
+                            <div ng-if="context=='Course' && comment.teacher.id"
+                                 class="link-profesor color-1 cl-effect-14">
+                                <a href="${request.contextPath}/teacher/show?id={{comment.teacher.id}}">{{comment.teacher.name}}</a>
+                            </div>
 
-                            <g:if test="${request.forwardURI.toLowerCase().find("course")}">
-
-                                <div ng-if="comment.item">
-                                    <div class="link-profesor">
-                                        <div class="color-1">
-                                            <nav class="cl-effect-14">
-
-                                                <a href="${request.contextPath}/teacher/show?id={{comment.itemId}}">Profesor: {{comment.item}}</a>
-                                            </nav>
-                                        </div>
-                                    </div>
-                                </div>
-                            </g:if>
-                            <g:if test="${request.forwardURI.toLowerCase().find("teacher")}">
-                                <div ng-if="comment.item">
-                                    <div class="link-profesor">
-                                        <div class="color-1">
-                                            <nav class="cl-effect-14">
-                                                <a href="${request.contextPath}/Course/show?id={{comment.itemId}}">Materia: {{comment.item}}</a>
-                                            </nav>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </g:if>
+                            <div ng-if="context=='Teacher' && comment.course.id"
+                                 class="link-profesor color-1 cl-effect-14">
+                                <a href="${request.contextPath}/course/show?id={{comment.course.id}}">{{comment.course.name}}</a>
+                            </div>
                             {{comment.body}}
                         </div>
 

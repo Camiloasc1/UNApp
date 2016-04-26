@@ -51,6 +51,24 @@ class CourseController {
         respond result, model: [result: result]
     }
 
+    def comments(int id, int max, int offset) {
+        def result = Comment.findAllByCourse(Course.get(id), [sort: "date", order: "desc", max: max, offset: offset]).collect { comment ->
+            [id           : comment.id,
+             author       : comment.author.name,
+             picture      : comment.author.picture,
+             body         : comment.body,
+             date         : comment.date.format("yyyy-MM-dd 'a las' HH:mm"),
+             voted        : Vote.findByAuthorAndComment(session.user, comment)?.value ?: 0,
+             positiveVotes: comment.countPositiveVotes(),
+             negativeVotes: comment.countNegativeVotes(),
+             course       : [id: comment.course?.id, name: comment.course?.name],
+             teacher      : [id: comment.teacher?.id, name: comment.teacher?.name]
+            ]
+        }
+
+        respond result, model: [result: result]
+    }
+
     def starMedian( int id ) {
         def user = session.user
         def star = 0
@@ -99,24 +117,6 @@ class CourseController {
         def result = [
                 median: median,
         ]
-        respond result, model: [result: result]
-    }
-
-    def comments(int id, int max, int offset) {
-        def result = Comment.findAllByCourse(Course.get(id), [sort: "date", order: "desc", max: max, offset: offset]).collect { comment ->
-            [id           : comment.id,
-             author       : comment.author.name,
-             picture      : comment.author.picture,
-             body         : comment.body,
-             date         : comment.date.format("yyyy-MM-dd 'a las' HH:mm"),
-             voted        : Vote.findByAuthorAndComment(session.user, comment)?.value ?: 0,
-             positiveVotes: comment.countPositiveVotes(),
-             negativeVotes: comment.countNegativeVotes(),
-             item         : comment.teacher ? comment.teacher.name : null,
-             itemId       : comment.teacher ? comment.teacher.id : null
-            ]
-        }
-
         respond result, model: [result: result]
     }
 
