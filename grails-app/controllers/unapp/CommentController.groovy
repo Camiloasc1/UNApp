@@ -16,7 +16,7 @@ class CommentController {
         def comment = new Comment(
                 body: request.JSON.body,
                 course: Course.get(request.JSON.id),
-                teacher: null,
+                teacher: request.JSON.itemId == null ? null:Course.get(request.JSON.itemId.toInteger()),
                 author: user,
                 date: new Date()
         ).save(flush: true)
@@ -28,7 +28,9 @@ class CommentController {
                       date         : comment.date,
                       voted        : Vote.findByAuthorAndComment(user, comment)?.value ?: 0,
                       positiveVotes: comment.countPositiveVotes(),
-                      negativeVotes: comment.countNegativeVotes()
+                      negativeVotes: comment.countNegativeVotes(),
+                      item         : comment.teacher ? comment.teacher.name : null,
+                      itemId       : comment.teacher ? comment.teacher.id : null
         ]
 
         respond result, model: [result: result]
@@ -42,7 +44,7 @@ class CommentController {
 
         def comment = new Comment(
                 body: request.JSON.body,
-                course: null,
+                course: request.JSON.itemId == null ? null:Course.get(request.JSON.itemId.toInteger()),
                 teacher: Teacher.get(request.JSON.id),
                 author: session.user,
                 date: new Date()
@@ -55,7 +57,9 @@ class CommentController {
                       date         : comment.date,
                       voted        : Vote.findByAuthorAndComment(user, comment)?.value ?: 0,
                       positiveVotes: comment.countPositiveVotes(),
-                      negativeVotes: comment.countNegativeVotes()
+                      negativeVotes: comment.countNegativeVotes(),
+                      item         : comment.course ? comment.course.name : null,
+                      itemId       : comment.course ? comment.course.id : null
         ]
 
         respond result, model: [result: result]
@@ -81,15 +85,26 @@ class CommentController {
 
         comment.save(flush: true)
         vote.save(flush: true)
+        def item = ""
+        def itemId = -1
+        if(request.JSON.context == "Course"){
+            item = comment.teacher ? comment.teacher.name : null
+            itemId = comment.teacher ? comment.teacher.id : null
+        }else if(request.JSON.context == "Teacher"){
+            item = comment.course ? comment.course.name : null
+            itemId = comment.course ? comment.course.id : null
+        }
 
         def result = [id           : comment.id,
                       author       : comment.author.name,
                       picture      : comment.author.picture,
                       body         : comment.body,
-                      date         : comment.date,
+                      date         : comment.date.format("yyyy-MM-dd 'a las' HH:mm"),
                       voted        : Vote.findByAuthorAndComment(user, comment)?.value ?: 0,
                       positiveVotes: comment.countPositiveVotes(),
-                      negativeVotes: comment.countNegativeVotes()
+                      negativeVotes: comment.countNegativeVotes(),
+                      item         : item,
+                      itemId       : itemId
         ]
 
         respond result, model: [result: result]
@@ -116,14 +131,26 @@ class CommentController {
         comment.save(flush: true)
         vote.save(flush: true)
 
+        def item = ""
+        def itemId = -1
+        if(request.JSON.context == "Course"){
+            item = comment.teacher ? comment.teacher.name : null
+            itemId = comment.teacher ? comment.teacher.id : null
+        }else if(request.JSON.context == "Teacher"){
+            item = comment.course ? comment.course.name : null
+            itemId = comment.course ? comment.course.id : null
+        }
+
         def result = [id           : comment.id,
                       author       : comment.author.name,
                       picture      : comment.author.picture,
                       body         : comment.body,
-                      date         : comment.date,
+                      date         : comment.date.format("yyyy-MM-dd 'a las' HH:mm"),
                       voted        : Vote.findByAuthorAndComment(user, comment)?.value ?: 0,
                       positiveVotes: comment.countPositiveVotes(),
-                      negativeVotes: comment.countNegativeVotes()
+                      negativeVotes: comment.countNegativeVotes(),
+                      item         : item,
+                      itemId       : itemId
         ]
 
         respond result, model: [result: result]

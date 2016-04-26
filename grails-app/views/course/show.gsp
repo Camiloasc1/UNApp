@@ -10,7 +10,7 @@
             <div class="jumbotron">
                 <div class="row">
                     <div class="col-md-4 col-lg-5">
-                        <img src="${assetPath(src: 'book.png')}" class="img-rounded center-block"
+                        <img src="${assetPath(src: 'book.png')}" class="img-rounded center-block photo-size"
                              height="250"
                              width="250">
 

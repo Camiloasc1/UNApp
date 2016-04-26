@@ -10,7 +10,7 @@
 
                 <div class="col-xs-11">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
+                        <div class="panel-heading info-comment">
                             <strong>{{comment.author}}</strong>
                             <span class="text-muted">{{comment.date}}</span>
 
@@ -56,9 +56,38 @@
                             </div>
                         </div>
 
+
+
                         <div class="panel-body">
+
+                            <g:if test="${request.forwardURI.toLowerCase().find("course")}">
+
+                                <div ng-if="comment.item">
+                                    <div class="link-profesor">
+                                        <div class="color-1">
+                                            <nav class="cl-effect-14">
+
+                                                <a href="${request.contextPath}/teacher/show?id={{comment.itemId}}">Profesor: {{comment.item}}</a>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </g:if>
+                            <g:if test="${request.forwardURI.toLowerCase().find("teacher")}">
+                                <div ng-if="comment.item">
+                                    <div class="link-profesor">
+                                        <div class="color-1">
+                                            <nav class="cl-effect-14">
+                                                <a href="${request.contextPath}/Course/show?id={{comment.itemId}}">Materia: {{comment.item}}</a>
+                                            </nav>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </g:if>
                             {{comment.body}}
                         </div>
+
                     </div>
                 </div>
             </div>

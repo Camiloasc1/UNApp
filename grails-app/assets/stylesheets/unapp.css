@@ -16,6 +16,18 @@
 }
 
 /* subject styles */
+
+.photo-size{
+    max-height: 250px;
+    max-width: 250px;
+    width: 100%;
+    height: auto;
+}
+
+.select-teacher{
+    font-size: 13px;
+}
+
 .subjectInfo {
     margin-top: 150px;
 }
@@ -101,9 +113,23 @@ ul {
     padding: 22px;
 }
 
-}
+
 
 /*  comment sections css*/
+
+.info-comment{
+    overflow: hidden;
+}
+
+.date-comment{
+    padding-left: 5px;
+    font-size: 12px;
+}
+.login-comment{
+    white-space: normal;
+}
+
+
 
 .thumbnail {
     padding: 0px;
@@ -138,6 +164,98 @@ ul {
     border-right-color: #ddd;
     border-width: 8px;
 }
+
+
+.link-profesor {
+    width: 90px;
+    white-space: normal;
+    float: right;
+    margin: -8px -5px 8px 8px;
+}
+
+.color-1 {
+    background: white;
+}
+
+
+.color-1 a {
+    position: relative;
+    display: inline-block;
+    outline: none;
+    color: #009688;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 400;
+    text-shadow: 0 0 1px rgba(255,255,255,0.3);
+    font-size: 10px;
+}
+
+.color-1 a:hover {
+    outline: none;
+}
+
+
+/* Effect 14: border switch */
+.cl-effect-14 a {
+    padding: 0 2px;
+    line-height: normal;
+    height: 65px;
+}
+
+.cl-effect-14 a::before,
+.cl-effect-14 a::after {
+    position: absolute;
+    width: 63px;
+    height: 1px;
+    background: #009688;
+    content: '';
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+    pointer-events: none;
+}
+
+.cl-effect-14 a::before {
+    top: 0;
+    left: 0;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    transform: rotate(90deg);
+    -webkit-transform-origin: 0 0;
+    -moz-transform-origin: 0 0;
+    transform-origin: 0 0;
+}
+
+.cl-effect-14 a::after {
+    right: 0;
+    bottom: 0;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    transform: rotate(90deg);
+    -webkit-transform-origin: 100% 0;
+    -moz-transform-origin: 100% 0;
+    transform-origin: 100% 0;
+}
+
+.cl-effect-14 a:hover::before,
+.cl-effect-14 a:hover::after {
+    opacity: 1;
+}
+
+.cl-effect-14 a:hover::before{
+    left: 50%;
+    -webkit-transform: rotate(0deg) translateX(-50%);
+    -moz-transform: rotate(0deg) translateX(-50%);
+    transform: rotate(0deg) translateX(-50%);
+}
+
+.cl-effect-14 a:hover::after{
+    right: 50%;
+    -webkit-transform: rotate(0deg) translateX(50%);
+    -moz-transform: rotate(0deg) translateX(50%);
+    transform: rotate(0deg) translateX(50%);
+}
+
 
 /* Navbar and Content */
 

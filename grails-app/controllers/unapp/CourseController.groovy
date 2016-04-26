@@ -108,10 +108,12 @@ class CourseController {
              author       : comment.author.name,
              picture      : comment.author.picture,
              body         : comment.body,
-             date         : comment.date,
+             date         : comment.date.format("yyyy-MM-dd 'a las' HH:mm"),
              voted        : Vote.findByAuthorAndComment(session.user, comment)?.value ?: 0,
              positiveVotes: comment.countPositiveVotes(),
-             negativeVotes: comment.countNegativeVotes()
+             negativeVotes: comment.countNegativeVotes(),
+             item         : comment.teacher ? comment.teacher.name : null,
+             itemId       : comment.teacher ? comment.teacher.id : null
             ]
         }
 

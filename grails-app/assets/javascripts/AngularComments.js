@@ -32,15 +32,28 @@ app.controller('CommentFormController', ['$scope', '$rootScope', '$http', '$loca
     $scope.id = parseInt($location.search().id);
     $scope.context = ( $location.path().toLowerCase().indexOf('course') != -1 ) ? 'Course' : ( $location.path().toLowerCase().indexOf('teacher') != -1 ) ? 'Teacher' : '';
     $scope.commentBody = '';
+    $scope.showSelect = function(item) {
+        $scope.itemId = parseInt(item);
+        return
+    }
     $scope.loading = false;
     $scope.postComment = function () {
         $scope.loading = true;
-        $http.post('comment/add' + $scope.context + 'Comment', {id: $scope.id, body: $scope.commentBody})
-            .then(function (response) {
-                $scope.commentBody = "";
-                $scope.loading = false;
-                $rootScope.$broadcast('newComment', response.data);
-            });
+        if( $scope.commentBody.split(' ').join('').length > 0) { // check if it's not an empty comment
+            $http.post('comment/add' + $scope.context + 'Comment', {
+                    id: $scope.id,
+                    body: $scope.commentBody,
+                    itemId: $scope.itemId
+                })
+                .then(function (response) {
+                    $scope.commentBody = "";
+                    $scope.loading = false;
+                    $rootScope.$broadcast('newComment', response.data);
+                });
+        }else{
+            $scope.commentBody = "";
+            $scope.loading = false;
+        }
     };
 }]);
 
@@ -63,8 +76,9 @@ app.controller('CommentsController', ['$scope', '$rootScope', '$http', '$locatio
                 break;
         }
         $scope.comments[index].voted = 1;
+        $scope.context = ( $location.path().toLowerCase().indexOf('course') != -1 ) ? 'Course' : ( $location.path().toLowerCase().indexOf('teacher') != -1 ) ? 'Teacher' : '';
 
-        $http.post("comment/voteUp", {id: id})
+        $http.post("comment/voteUp", {id: id , context: $scope.context })
             .then(function (response) {
                 $scope.comments[index] = response.data;
                 $scope.reload();
@@ -82,8 +96,9 @@ app.controller('CommentsController', ['$scope', '$rootScope', '$http', '$locatio
                 break;
         }
         $scope.comments[index].voted = -1;
+        $scope.context = ( $location.path().toLowerCase().indexOf('course') != -1 ) ? 'Course' : ( $location.path().toLowerCase().indexOf('teacher') != -1 ) ? 'Teacher' : '';
 
-        $http.post("comment/voteDown", {id: id})
+        $http.post("comment/voteDown", {id: id , context: $scope.context})
             .then(function (response) {
                 $scope.comments[index] = response.data;
                 $scope.reload();
