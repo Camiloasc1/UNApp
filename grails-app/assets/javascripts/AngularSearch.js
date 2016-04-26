@@ -7,11 +7,11 @@ app.controller('SearchController', ['$scope', '$rootScope', '$http', '$window', 
     $scope.loadingCourses = false;
     $scope.loadingTeachers = false;
     $scope.search = function () {
-        $scope.loadingTeachers = true;
-        $scope.loadingCourses = true;
-        
         $scope.courses = [];
         $scope.teachers = [];
+        
+        $scope.loadingTeachers = true;
+        $scope.loadingCourses = true;
         
         $http.get('teacher/search', {
                 params: {query: $scope.query}
