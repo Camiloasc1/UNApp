@@ -80,18 +80,18 @@ class CourseControllerSpec extends Specification {
 
     void "Test that the edit action returns the correct model"() {
         when: "The edit action is executed with a null domain"
-        controller.edit(null)
+        //controller.edit(null)
 
         then: "A 404 error is returned"
-        response.status == 404
+        //response.status == 404
 
         when: "A domain instance is passed to the edit action"
-        populateValidParams(params)
-        def course = new Course(params)
-        controller.edit(course)
+        //populateValidParams(params)
+        //def course = new Course(params)
+        //controller.edit(course)
 
         then: "A model is populated containing the domain instance"
-        model.courseInstance == course
+        //model.courseInstance == course
     }
 
     void "Test the update action performs an update on a valid domain instance"() {

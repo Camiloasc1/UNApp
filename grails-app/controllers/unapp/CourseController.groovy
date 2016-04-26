@@ -146,6 +146,7 @@ class CourseController {
     }
 
     def edit(Course courseInstance) {
+
         def result = [
             courseInstance: courseInstance,
             locations: Location.findAll().collect { location ->
