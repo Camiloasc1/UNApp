@@ -60,15 +60,8 @@
                 <li class="page-scroll">
                     <a href="${createLink(controller: 'course', action: 'index')}"><h4>Materias</h4></a>
                 </li>
-                <li class="dropdown">
-                    <a href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown"><h4>Nosotros
-                        <span class="caret"></span></h4>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="${createLink(uri: '/')}#portfolio">Desarrolladores</a></li>
-                        <li><a href="${createLink(uri: '/')}#about">Acerca</a></li>
-                        <li><a href="${createLink(uri: '/')}#contact">Contactenos</a></li>
-                    </ul>
+                <li class="page-scroll">
+                    <a href="${createLink( uri: '/about' )}"><h4>Acerca</h4></a>
                 </li>
                 <unapp:isAdmin>
                     <li class="page-scroll">
