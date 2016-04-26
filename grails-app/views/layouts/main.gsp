@@ -32,7 +32,7 @@
 
 <body>
 
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-default">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -72,7 +72,8 @@
                 </li>
                 <unapp:isAdmin>
                     <li class="page-scroll">
-                        <a href="${createLink(controller: 'admin', action: 'index')}"><h4><i class="fa fa-cogs"></i> Administacion</h4></a>
+                        <a href="${createLink(controller: 'admin', action: 'index')}"><h4><i
+                                class="fa fa-cogs"></i> Administacion</h4></a>
                     </li>
                 </unapp:isAdmin>
             </ul>
@@ -104,9 +105,7 @@
     </div>
 </nav>
 
-<div class="main-content">
-    <g:layoutBody/>
-</div>
+<g:layoutBody/>
 
 <div id="footer"></div>
 
@@ -126,6 +125,8 @@
 <asset:javascript src="unapp.js"/>
 <!-- AngularComments -->
 <asset:javascript src="AngularComments.js"/>
+<!-- AngularSearch -->
+<asset:javascript src="AngularSearch.js"/>
 </body>
 </html>
 

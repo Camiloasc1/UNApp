@@ -5,7 +5,6 @@
 </head>
 <body>
 <div class="container-fluid">
-	<br />
 	<ul class="nav nav-pills nav-justified">
 		<g:each in="${result}" status="i" var="location">
 			<g:if test="${i == 0}">
