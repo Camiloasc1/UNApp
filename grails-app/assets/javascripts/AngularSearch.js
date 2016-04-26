@@ -9,10 +9,10 @@ app.controller('SearchController', ['$scope', '$rootScope', '$http', '$window', 
     $scope.search = function () {
         $scope.courses = [];
         $scope.teachers = [];
-        
+
         $scope.loadingTeachers = true;
         $scope.loadingCourses = true;
-        
+
         $http.get('teacher/search', {
                 params: {query: $scope.query}
             })
@@ -34,6 +34,15 @@ app.controller('SearchController', ['$scope', '$rootScope', '$http', '$window', 
     $scope.showCourse = function (id) {
         $window.location.href = 'course/show?id=' + id;
     };
+
+    $scope.$watch('query', function () {
+        if ($scope.query.length < 3) {
+            $scope.courses = [];
+            $scope.teachers = [];
+        } else {
+            $scope.search();
+        }
+    });
 }]);
 
 app.config(['$locationProvider', function ($locationProvider) {
