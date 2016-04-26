@@ -3,10 +3,9 @@
 }
 
 .search-logo {
-    width: 30%;
+    width: 50%;
     padding-top: 25px;
 }
-
 .index-background {
     background: url('background.jpg');
     background-size:     cover;
@@ -417,7 +416,7 @@ hr.star-primary:after {
 }
 
 section {
-    padding: 100px 0;
+    padding: 50px 0;
 }
 
 section h2 {
@@ -441,7 +440,7 @@ section.success a.active {
 
 @media(max-width:767px) {
     section {
-        padding: 75px 0;
+        padding: 30px 0;
     }
 
     section.first {
