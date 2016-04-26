@@ -3,6 +3,7 @@ package unapp
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import grails.converters.JSON
 
 @Transactional(readOnly = true)
 class CourseController {
@@ -145,7 +146,49 @@ class CourseController {
     }
 
     def edit(Course courseInstance) {
-        respond courseInstance
+
+        def result = [
+            courseInstance: courseInstance,
+            locations: Location.findAll().collect { location ->
+                [
+                 name   : location.name,
+                 url    : location.url
+                ]
+            }
+        ]
+        respond result, model: [result: result]
+    }
+
+    def updateCourse( int id, String location, int code, String name, String typo, String descr, String teachers ) {
+        def course = Course.findById( id )
+
+        course.location = Location.findByName( location )
+        course.code = code
+        course.name = name
+        course.typology = typo
+        course.description = descr
+
+        def teach = JSON.parse(teachers)
+        def teachers_array = teach["teachers"].collect {
+            Teacher.findById( it.value )
+        }
+
+        course.teachers = teachers_array
+        if(course.save(flush: true))
+            render 1
+        else
+            render 0
+    }
+
+    def teacherSearch( String teacher ) {
+        def result = Teacher.findAllByNameIlike( "%"+teacher+"%", [ max: 5 ] ).collect { teach ->
+            [
+                    id: teach.id,
+                    name: teach.name
+            ]
+        }
+        //respond result, model: [result: result]
+        render result as JSON
     }
 
     @Transactional
