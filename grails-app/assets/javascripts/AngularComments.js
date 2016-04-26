@@ -8,7 +8,7 @@ app.controller('StarRatingController', ['$scope', '$rootScope', '$http', '$locat
                 params: {id: $scope.id, vote: vote}
             })
             .then(function (response) {
-                fill_stars_voted( vote );
+                fill_stars_voted(vote);
                 fill_stars_median(response.data.median);
             });
     }
@@ -18,9 +18,9 @@ app.controller('StarRatingController', ['$scope', '$rootScope', '$http', '$locat
                 params: {id: $scope.id}
             })
             .then(function (response) {
-                if( response.data.stars != 0 )
-                    fill_stars_voted( response.data.stars );
-                if( response.data.median != -1)
+                if (response.data.stars != 0)
+                    fill_stars_voted(response.data.stars);
+                if (response.data.median != -1)
                     fill_stars_median(response.data.median);
             });
     }
@@ -32,12 +32,23 @@ app.controller('CommentFormController', ['$scope', '$rootScope', '$http', '$loca
     $scope.id = parseInt($location.search().id);
     $scope.context = ( $location.path().toLowerCase().indexOf('course') != -1 ) ? 'Course' : ( $location.path().toLowerCase().indexOf('teacher') != -1 ) ? 'Teacher' : '';
     $scope.commentBody = '';
+    $scope.selectedCourse = -1;
+    $scope.selectedTeacher = -1;
     $scope.loading = false;
     $scope.postComment = function () {
+        if ($scope.commentBody.trim().length == 0) {
+            return;
+        }
+        $scope.selectedCourse = parseInt($scope.selectedCourse);
+        $scope.selectedTeacher = parseInt($scope.selectedTeacher);
         $scope.loading = true;
-        $http.post('comment/add' + $scope.context + 'Comment', {id: $scope.id, body: $scope.commentBody})
+        $http.post('comment/addComment', {
+                body: $scope.commentBody,
+                course: $scope.context == 'Course' ? $scope.id : $scope.selectedCourse,
+                teacher: $scope.context == 'Teacher' ? $scope.id : $scope.selectedTeacher
+            })
             .then(function (response) {
-                $scope.commentBody = "";
+                $scope.commentBody = '';
                 $scope.loading = false;
                 $rootScope.$broadcast('newComment', response.data);
             });
@@ -64,7 +75,7 @@ app.controller('CommentsController', ['$scope', '$rootScope', '$http', '$locatio
         }
         $scope.comments[index].voted = 1;
 
-        $http.post("comment/voteUp", {id: id})
+        $http.post("comment/voteUp", {id: id, context: $scope.context})
             .then(function (response) {
                 $scope.comments[index] = response.data;
                 $scope.reload();
@@ -83,7 +94,7 @@ app.controller('CommentsController', ['$scope', '$rootScope', '$http', '$locatio
         }
         $scope.comments[index].voted = -1;
 
-        $http.post("comment/voteDown", {id: id})
+        $http.post("comment/voteDown", {id: id, context: $scope.context})
             .then(function (response) {
                 $scope.comments[index] = response.data;
                 $scope.reload();

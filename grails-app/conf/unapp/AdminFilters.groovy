@@ -23,5 +23,15 @@ class AdminFilters {
             }
         }
 
+        usr(controller: 'user', action: '*') {
+            before = {
+                def user = session["user"]
+                if(user == null || !user.isAdmin ){
+                    redirect uri:"/"
+                    return false
+                }
+            }
+        }
+
     }
 }

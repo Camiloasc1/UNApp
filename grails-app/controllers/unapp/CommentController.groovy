@@ -7,45 +7,20 @@ class CommentController {
 
     static allowedMethods = [addCourseComment: "POST", addTeacherComment: "POST", voteUp: "POST", voteDown: "POST"]
 
-    def addCourseComment() {
+    def addComment() {
         def user = session.user
         if (!user) {
             return
         }
+        def course = request.JSON.course != -1 ? Course.get(request.JSON.course) : null
+        def teacher = request.JSON.teacher != -1 ? Teacher.get(request.JSON.teacher) : null
 
         def comment = new Comment(
-                body: request.JSON.body,
-                course: Course.get(request.JSON.id),
-                teacher: null,
                 author: user,
-                date: new Date()
-        ).save(flush: true)
-
-        def result = [id           : comment.id,
-                      author       : comment.author.name,
-                      picture      : comment.author.picture,
-                      body         : comment.body,
-                      date         : comment.date,
-                      voted        : Vote.findByAuthorAndComment(user, comment)?.value ?: 0,
-                      positiveVotes: comment.countPositiveVotes(),
-                      negativeVotes: comment.countNegativeVotes()
-        ]
-
-        respond result, model: [result: result]
-    }
-
-    def addTeacherComment() {
-        def user = session.user
-        if (!user) {
-            return
-        }
-
-        def comment = new Comment(
                 body: request.JSON.body,
-                course: null,
-                teacher: Teacher.get(request.JSON.id),
-                author: session.user,
-                date: new Date()
+                date: new Date(),
+                course: course,
+                teacher: teacher
         ).save(flush: true)
 
         def result = [id           : comment.id,
@@ -55,7 +30,9 @@ class CommentController {
                       date         : comment.date,
                       voted        : Vote.findByAuthorAndComment(user, comment)?.value ?: 0,
                       positiveVotes: comment.countPositiveVotes(),
-                      negativeVotes: comment.countNegativeVotes()
+                      negativeVotes: comment.countNegativeVotes(),
+                      course       : [id: comment.course?.id, name: comment.course?.name],
+                      teacher      : [id: comment.teacher?.id, name: comment.teacher?.name]
         ]
 
         respond result, model: [result: result]
@@ -81,15 +58,26 @@ class CommentController {
 
         comment.save(flush: true)
         vote.save(flush: true)
+        def item = ""
+        def itemId = -1
+        if (request.JSON.context == "Course") {
+            item = comment.teacher ? comment.teacher.name : null
+            itemId = comment.teacher ? comment.teacher.id : null
+        } else if (request.JSON.context == "Teacher") {
+            item = comment.course ? comment.course.name : null
+            itemId = comment.course ? comment.course.id : null
+        }
 
         def result = [id           : comment.id,
                       author       : comment.author.name,
                       picture      : comment.author.picture,
                       body         : comment.body,
-                      date         : comment.date,
+                      date         : comment.date.format("yyyy-MM-dd 'a las' HH:mm"),
                       voted        : Vote.findByAuthorAndComment(user, comment)?.value ?: 0,
                       positiveVotes: comment.countPositiveVotes(),
-                      negativeVotes: comment.countNegativeVotes()
+                      negativeVotes: comment.countNegativeVotes(),
+                      item         : item,
+                      itemId       : itemId
         ]
 
         respond result, model: [result: result]
@@ -116,14 +104,26 @@ class CommentController {
         comment.save(flush: true)
         vote.save(flush: true)
 
+        def item = ""
+        def itemId = -1
+        if (request.JSON.context == "Course") {
+            item = comment.teacher ? comment.teacher.name : null
+            itemId = comment.teacher ? comment.teacher.id : null
+        } else if (request.JSON.context == "Teacher") {
+            item = comment.course ? comment.course.name : null
+            itemId = comment.course ? comment.course.id : null
+        }
+
         def result = [id           : comment.id,
                       author       : comment.author.name,
                       picture      : comment.author.picture,
                       body         : comment.body,
-                      date         : comment.date,
+                      date         : comment.date.format("yyyy-MM-dd 'a las' HH:mm"),
                       voted        : Vote.findByAuthorAndComment(user, comment)?.value ?: 0,
                       positiveVotes: comment.countPositiveVotes(),
-                      negativeVotes: comment.countNegativeVotes()
+                      negativeVotes: comment.countNegativeVotes(),
+                      item         : item,
+                      itemId       : itemId
         ]
 
         respond result, model: [result: result]
