@@ -1,15 +1,36 @@
 var app = angular.module('CommentsApp', []);
 
 app.controller('StarRatingController', ['$scope', '$rootScope', '$http', '$location', function ($scope, $rootScope, $http, $location) {
+    $scope.id = parseInt($location.search().id);
+    $scope.context = ( $location.path().toLowerCase().indexOf('course') != -1 ) ? 'Course' : ( $location.path().toLowerCase().indexOf('teacher') != -1 ) ? 'Teacher' : '';
     $scope.starRating = function (vote) {
-        console.log(vote)
+        $http.get($scope.context + '/starRate', {
+                params: {id: $scope.id, vote: vote}
+            })
+            .then(function (response) {
+                fill_stars_voted( vote );
+                fill_stars_median(response.data.median);
+            });
     }
+
+    $scope.starMedian = function () {
+        $http.get($scope.context + '/starMedian', {
+                params: {id: $scope.id}
+            })
+            .then(function (response) {
+                if( response.data.stars != 0 )
+                    fill_stars_voted( response.data.stars );
+                if( response.data.median != -1)
+                    fill_stars_median(response.data.median);
+            });
+    }
+    $scope.starMedian();
 }]);
 
 
 app.controller('CommentFormController', ['$scope', '$rootScope', '$http', '$location', function ($scope, $rootScope, $http, $location) {
     $scope.id = parseInt($location.search().id);
-    $scope.context = $location.path().toLowerCase().contains('course') ? 'Course' : $location.path().toLowerCase().contains('teacher') ? 'Teacher' : '';
+    $scope.context = ( $location.path().toLowerCase().indexOf('course') != -1 ) ? 'Course' : ( $location.path().toLowerCase().indexOf('teacher') != -1 ) ? 'Teacher' : '';
     $scope.commentBody = '';
     $scope.loading = false;
     $scope.postComment = function () {
@@ -25,7 +46,7 @@ app.controller('CommentFormController', ['$scope', '$rootScope', '$http', '$loca
 
 app.controller('CommentsController', ['$scope', '$rootScope', '$http', '$location', function ($scope, $rootScope, $http, $location) {
     $scope.id = parseInt($location.search().id);
-    $scope.context = $location.path().toLowerCase().contains('course') ? 'Course' : $location.path().toLowerCase().contains('teacher') ? 'Teacher' : '';
+    $scope.context = ( $location.path().toLowerCase().indexOf('course') != -1 ) ? 'Course' : ( $location.path().toLowerCase().indexOf('teacher') != -1 ) ? 'Teacher' : '';
     $scope.max = 5;
     $scope.offset = 0;
     $scope.comments = [];

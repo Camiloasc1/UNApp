@@ -15,6 +15,7 @@
     list-style-type: none;
     font-size: 175%;
     color: gold;
+    cursor: pointer;
     width: 100%
 }
 
@@ -33,6 +34,19 @@ ul {
     clear: both;
     padding: 5px;
     width: 100%;
+}
+
+.star-prom-rating {
+    list-style-type: none;
+    font-size: 215%;
+    color: gold;
+    cursor: pointer;
+    width: 100%
+}
+
+.star-prom-rating li {
+    display: inline-block;
+    margin: -0.9999%;
 }
 
 /* subject styles end */
