@@ -1,3 +1,7 @@
+.main_unapp {
+    height: 150px;
+}
+
 .search-logo {
     width: 30%;
     padding-top: 25px;
@@ -20,6 +24,7 @@
     list-style-type: none;
     font-size: 175%;
     color: gold;
+    cursor: pointer;
     width: 100%
 }
 
@@ -38,6 +43,19 @@ ul {
     clear: both;
     padding: 5px;
     width: 100%;
+}
+
+.star-prom-rating {
+    list-style-type: none;
+    font-size: 215%;
+    color: gold;
+    cursor: pointer;
+    width: 100%
+}
+
+.star-prom-rating li {
+    display: inline-block;
+    margin: -0.9999%;
 }
 
 /* subject styles end */
@@ -206,6 +224,10 @@ ul {
     -moz-transition: color 100ms ease-out 100ms;
     -o-transition: color 100ms ease-out 100ms;
     transition: color 100ms ease-out 100ms;
+}
+
+.negative-vote:hover {
+    color: red;
 }
 
 .select-upvote {

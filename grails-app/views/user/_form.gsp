@@ -10,10 +10,10 @@
 	
 <ul class="one-to-many">
 <g:each in="${userInstance?.likes?}" var="l">
-    <li><g:link controller="votes" action="show" id="${l.id}">${l?.encodeAsHTML()}</g:link></li>
+    <li><g:link controller="vote" action="show" id="${l.id}">${l?.encodeAsHTML()}</g:link></li>
 </g:each>
 <li class="add">
-<g:link controller="votes" action="create" params="['user.id': userInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'votes.label', default: 'Vote')])}</g:link>
+<g:link controller="vote" action="create" params="['user.id': userInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'votes.label', default: 'Vote')])}</g:link>
 </li>
 </ul>
 

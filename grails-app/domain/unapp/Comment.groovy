@@ -3,8 +3,6 @@ package unapp
 class Comment {
     User author
     String body
-    int positiveVotes = 0
-    int negativeVotes = 0
     Date date
     static belongsTo = [teacher: Teacher, course: Course]
     static hasMany = [votes: Vote]
@@ -12,8 +10,6 @@ class Comment {
     static constraints = {
         author nullable: false
         body nullable: false
-        positiveVotes nullable: false, min: 0
-        negativeVotes nullable: false, min: 0
         date nullable: false
 
         teacher nullable: true
@@ -22,5 +18,13 @@ class Comment {
         votes nullable: true
     }
 
-    //static embedded = ['votes']
+    def countPositiveVotes() {
+        if (!votes) return 0
+        return votes.count { vote -> vote.value == 1 }
+    }
+
+    def countNegativeVotes() {
+        if (!votes) return 0
+        return votes.count { vote -> vote.value == -1 }
+    }
 }

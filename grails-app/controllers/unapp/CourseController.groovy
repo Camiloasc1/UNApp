@@ -7,7 +7,7 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class CourseController {
 
-    static allowedMethods = [index: "GET", show: "GET", comments: "GET", comment: "POST", voteUp: "POST", voteDown: "POST", save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [index: "GET", search: "GET", show: "GET", comments: "GET", save: "POST", update: "PUT", delete: "DELETE"]
 
     def index() {
         def result = Location.list().collect { l ->
@@ -50,6 +50,56 @@ class CourseController {
         respond result, model: [result: result]
     }
 
+    def starMedian( int id ) {
+        def user = session.user
+        def star = 0
+        if(user){
+            star = CourseEvaluation.findByCourseAndAuthor( Course.findById( id ), user )
+            if( star )
+                star = star.overall
+            else
+                star = 0
+        }
+
+        def votes = CourseEvaluation.findAllByCourse( Course.findById( id ) )
+        def median = -1
+        if( votes.size() != 0 )
+            median = Math.floor( (votes.sum { it.overall }) / votes.size())
+
+
+        def result = [
+                median: median,
+                stars: star
+        ]
+        respond result, model: [result: result]
+    }
+
+    def starRate( int id, int vote ) {
+        def user = session.user
+        if (!user) {
+            return
+        }
+
+        def exists = CourseEvaluation.findByCourseAndAuthor( Course.findById(id), user )
+        if( exists == null ) {
+            def rate = new CourseEvaluation(
+                    author: user,
+                    overall: vote,
+                    course: Course.findById(id)
+            ).save(flush: true)
+        }else{
+            exists.overall = vote
+            exists.save( flush: true )
+        }
+
+        def votes = CourseEvaluation.findAllByCourse( Course.findById( id ) )
+        def median = Math.floor( (votes.sum { it.overall }) / votes.size())
+
+        def result = [
+                median: median,
+        ]
+        respond result, model: [result: result]
+    }
 
     def comments(int id, int max, int offset) {
         def result = Comment.findAllByCourse(Course.get(id), [sort: "date", order: "desc", max: max, offset: offset]).collect { comment ->
@@ -58,115 +108,11 @@ class CourseController {
              picture      : comment.author.picture,
              body         : comment.body,
              date         : comment.date,
-             voted        : ( Vote.findByCommentAndAuthor( comment, session.user ) != null  )? Vote.findByCommentAndAuthor( comment, session.user ).value: -1,
-             positiveVotes: comment.positiveVotes,
-             negativeVotes: comment.negativeVotes
+             voted        : Vote.findByAuthorAndComment(session.user, comment)?.value ?: 0,
+             positiveVotes: comment.countPositiveVotes(),
+             negativeVotes: comment.countNegativeVotes()
             ]
         }
-
-        respond result, model: [result: result]
-    }
-
-    def comment() {
-        if (!session.user) {
-            return
-        }
-
-        def comment = new Comment(
-                body: request.JSON.body,
-                course: Course.get(request.JSON.id),
-                teacher: null,
-                author: session.user,
-                date: new Date()
-        ).save(flush: true)
-
-        def result = [id           : comment.id,
-                      author       : comment.author.name,
-                      picture      : comment.author.picture,
-                      body         : comment.body,
-                      date         : comment.date,
-                      voted        : ( Vote.findByCommentAndAuthor( comment, session.user ) != null  )? Vote.findByCommentAndAuthor( comment, session.user ).value: -1,
-                      positiveVotes: comment.positiveVotes,
-                      negativeVotes: comment.negativeVotes
-        ]
-
-        respond result, model: [result: result]
-    }
-
-    def voteUp() {
-        def user = session.user
-        if (!user) {
-            return
-        }
-
-        def comment = Comment.findById(request.JSON.id)
-        if (!comment) {
-            return
-        }
-
-        def vote = Vote.findByAuthorAndComment(user, comment)
-        if (vote) {
-            if (vote.value == 0) {
-                vote.value = 1
-                comment.negativeVotes--;
-                comment.positiveVotes++;
-            }
-        } else {
-            vote = new Vote(value: 1, author: user, comment: comment)
-            comment.positiveVotes++;
-        }
-
-        comment.save(flush: true)
-        vote.save(flush: true)
-
-        def result = [id           : comment.id,
-                      author       : comment.author.name,
-                      picture      : comment.author.picture,
-                      body         : comment.body,
-                      date         : comment.date,
-                      voted        : ( Vote.findByCommentAndAuthor( comment, session.user ) != null  )? Vote.findByCommentAndAuthor( comment, session.user ).value: -1,
-                      positiveVotes: comment.positiveVotes,
-                      negativeVotes: comment.negativeVotes
-        ]
-
-        respond result, model: [result: result]
-    }
-
-    def voteDown() {
-        def user = session.user
-        if (!user) {
-            return
-        }
-
-        def comment = Comment.findById(request.JSON.id)
-        if (!comment) {
-            return
-        }
-
-        def vote = Vote.findByAuthorAndComment(user, comment)
-        if (vote) {
-            if (vote.value == 1) {
-                vote.value = 0
-                comment.negativeVotes++;
-                comment.positiveVotes--;
-            }
-        } else {
-            vote = new Vote(value: 0, author: user, comment: comment)
-            comment.negativeVotes++;
-        }
-
-        comment.save(flush: true)
-        vote.save(flush: true)
-
-        def result = [id           : comment.id,
-                      author       : comment.author.name,
-                      picture      : comment.author.picture,
-                      body         : comment.body,
-                      date         : comment.date,
-                      voted        : ( Vote.findByCommentAndAuthor( comment, session.user ) != null  )? Vote.findByCommentAndAuthor( comment, session.user ).value: -1,
-                      positiveVotes: comment.positiveVotes,
-                      negativeVotes: comment.negativeVotes
-        ]
 
         respond result, model: [result: result]
     }
