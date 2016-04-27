@@ -57,19 +57,31 @@
                 <li class="page-scroll">
                     <a href="${createLink(controller: 'teacher', action: 'index')}"><h4>Profesores</h4></a>
                 </li>
+                <!--
+                <form class="navbar-form navbar-left" method="get" action="teacher/search">
+                    <div class="form-group is-empty">
+                        <input type="text" name="query" class="form-control col-md-8" style="text-align: center"
+                               placeholder="Buscar un profesor">
+                        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i>
+                        </button>
+                        <span class="material-input"></span>
+                    </div>
+                </form>
+                -->
                 <li class="page-scroll">
                     <a href="${createLink(controller: 'course', action: 'index')}"><h4>Materias</h4></a>
                 </li>
-                <li class="dropdown">
-                    <a href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown"><h4>Nosotros
-                        <span class="caret"></span></h4>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="${createLink(uri: '/')}#portfolio">Desarrolladores</a></li>
-                        <li><a href="${createLink(uri: '/')}#about">Acerca</a></li>
-                        <li><a href="${createLink(uri: '/')}#contact">Contactenos</a></li>
-                    </ul>
-                </li>
+            <!--
+                <form class="navbar-form navbar-left" method="get" action="course/search">
+                    <div class="form-group is-empty">
+                        <input type="text" name="query" class="form-control col-md-8" style="text-align: center"
+                               placeholder="Buscar una materia">
+                        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i>
+                        </button>
+                        <span class="material-input"></span>
+                    </div>
+                </form>
+                -->
                 <unapp:isAdmin>
                     <li class="page-scroll">
                         <a href="${createLink(controller: 'admin', action: 'index')}"><h4><i
@@ -77,14 +89,6 @@
                     </li>
                 </unapp:isAdmin>
             </ul>
-
-            <form class="navbar-form navbar-left" method = "get" action = "course/search" >
-                <div class="form-group is-empty">
-                    <input type="text" name="query" class="form-control col-md-8" style="text-align: center" placeholder="Buscar materia" >
-                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                    <span class="material-input"></span>
-                </div>
-            </form>
 
             <ul class="nav navbar-nav navbar-right">
                 <li>
