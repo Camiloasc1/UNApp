@@ -12,7 +12,7 @@ class TeacherController {
     def index() {
         def result = Location.list().collect { l ->
             [name    : l.name,
-             teachers: Teacher.findAllByLocation(l).collect { c ->
+             teachers: Teacher.findAllByLocation(l, [sort: "name", order: "asc"]).collect { c ->
                  [id: c.id, name: c.name, username: c.username]
              }
             ]

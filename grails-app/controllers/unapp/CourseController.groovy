@@ -13,7 +13,7 @@ class CourseController {
     def index() {
         def result = Location.list().collect { l ->
             [name   : l.name,
-             courses: Course.findAllByLocation(l).collect { c ->
+             courses: Course.findAllByLocation(l, [sort: "name", order: "asc"]).collect { c ->
                  [id: c.id, code: c.code, name: c.name, credits: c.credits]
              }
             ]
@@ -69,50 +69,50 @@ class CourseController {
         respond result, model: [result: result]
     }
 
-    def starMedian( int id ) {
+    def starMedian(int id) {
         def user = session.user
         def star = 0
-        if(user){
-            star = CourseEvaluation.findByCourseAndAuthor( Course.findById( id ), user )
-            if( star )
+        if (user) {
+            star = CourseEvaluation.findByCourseAndAuthor(Course.findById(id), user)
+            if (star)
                 star = star.overall
             else
                 star = 0
         }
 
-        def votes = CourseEvaluation.findAllByCourse( Course.findById( id ) )
+        def votes = CourseEvaluation.findAllByCourse(Course.findById(id))
         def median = -1
-        if( votes.size() != 0 )
-            median = Math.floor( (votes.sum { it.overall }) / votes.size())
+        if (votes.size() != 0)
+            median = Math.floor((votes.sum { it.overall }) / votes.size())
 
 
         def result = [
                 median: median,
-                stars: star
+                stars : star
         ]
         respond result, model: [result: result]
     }
 
-    def starRate( int id, int vote ) {
+    def starRate(int id, int vote) {
         def user = session.user
         if (!user) {
             return
         }
 
-        def exists = CourseEvaluation.findByCourseAndAuthor( Course.findById(id), user )
-        if( exists == null ) {
+        def exists = CourseEvaluation.findByCourseAndAuthor(Course.findById(id), user)
+        if (exists == null) {
             def rate = new CourseEvaluation(
                     author: user,
                     overall: vote,
                     course: Course.findById(id)
             ).save(flush: true)
-        }else{
+        } else {
             exists.overall = vote
-            exists.save( flush: true )
+            exists.save(flush: true)
         }
 
-        def votes = CourseEvaluation.findAllByCourse( Course.findById( id ) )
-        def median = Math.floor( (votes.sum { it.overall }) / votes.size())
+        def votes = CourseEvaluation.findAllByCourse(Course.findById(id))
+        def median = Math.floor((votes.sum { it.overall }) / votes.size())
 
         def result = [
                 median: median,
@@ -150,21 +150,21 @@ class CourseController {
     def edit(Course courseInstance) {
 
         def result = [
-            courseInstance: courseInstance,
-            locations: Location.findAll().collect { location ->
-                [
-                 name   : location.name,
-                 url    : location.url
-                ]
-            }
+                courseInstance: courseInstance,
+                locations     : Location.findAll().collect { location ->
+                    [
+                            name: location.name,
+                            url : location.url
+                    ]
+                }
         ]
         respond result, model: [result: result]
     }
 
-    def updateCourse( int id, String location, int code, String name, String typo, String descr, String teachers ) {
-        def course = Course.findById( id )
+    def updateCourse(int id, String location, int code, String name, String typo, String descr, String teachers) {
+        def course = Course.findById(id)
 
-        course.location = Location.findByName( location )
+        course.location = Location.findByName(location)
         course.code = code
         course.name = name
         course.typology = typo
@@ -172,20 +172,20 @@ class CourseController {
 
         def teach = JSON.parse(teachers)
         def teachers_array = teach["teachers"].collect {
-            Teacher.findById( it.value )
+            Teacher.findById(it.value)
         }
 
         course.teachers = teachers_array
-        if(course.save(flush: true))
+        if (course.save(flush: true))
             render 1
         else
             render 0
     }
 
-    def teacherSearch( String teacher ) {
-        def result = Teacher.findAllByNameIlike( "%"+teacher+"%", [ max: 5 ] ).collect { teach ->
+    def teacherSearch(String teacher) {
+        def result = Teacher.findAllByNameIlike("%" + teacher + "%", [max: 5]).collect { teach ->
             [
-                    id: teach.id,
+                    id  : teach.id,
                     name: teach.name
             ]
         }
