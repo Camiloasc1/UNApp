@@ -13,7 +13,7 @@ class TeacherController {
         def result = Location.list().collect { l ->
             [name    : l.name,
              teachers: Teacher.findAllByLocation(l, [sort: "name", order: "asc"]).collect { c ->
-                 [id: c.id, name: c.name, username: c.username]
+                 [id: c.id, name: c.name, email: c.getEmail()]
              }
             ]
         }
@@ -23,7 +23,7 @@ class TeacherController {
 
     def search(String query) {
         def result = Teacher.findAllByNameIlike("%" + query + "%").collect { c ->
-            [id: c.id, name: c.name, username: c.username]
+            [id: c.id, name: c.name, email: c.getEmail()]
         }
 
         respond result, model: [result: result]
@@ -33,7 +33,7 @@ class TeacherController {
         def result = Teacher.get(id).collect { teacher ->
             [id         : teacher.id,
              name       : teacher.name,
-             username   : teacher.username,
+             email      : teacher.getEmail(),
              information: teacher.information,
              location   : teacher.location.name,
              URL        : teacher.getURL(),

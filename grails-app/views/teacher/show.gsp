@@ -14,9 +14,11 @@
                              height="250"
                              width="250">
 
-                        <h1 class="text-center">${result.name}</h1>
+                        <h2 class="text-center">${result.name}</h2>
 
-                        <h3 class="text-center">${result.location}</h3>
+                        <h3 class="text-center">${result.email}</h3>
+
+                        <h4 class="text-center">${result.location}</h4>
 
                         <div class="row text-center">
                             <ul class="star-rating">
