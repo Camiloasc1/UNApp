@@ -82,6 +82,7 @@
                     </div>
                 </form>
                 -->
+
                 <unapp:isAdmin>
                     <li class="page-scroll">
                         <a href="${createLink(controller: 'admin', action: 'index')}"><h4><i
@@ -91,6 +92,11 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <form action="" autocomplete="on">
+                        <input id="search_nav" name="search_nav" type="text" placeholder="Busar una materia o profesor"><input id="search_submit_nav" value="" type="submit">
+                    </form>
+                </li>
                 <li>
                     <oauth:disconnected provider="google">
                         <oauth:connect provider="google"
