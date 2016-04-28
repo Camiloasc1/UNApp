@@ -157,10 +157,13 @@ class BootStrap {
     def loadDegrees() {
         println("Loading Degrees...")
         def types = ['PRE', 'POS']
-        Location.list().each { loc ->
-            types.each { ty ->
+        //Location.list().each { location ->
+        Location.findByName("Bogota").each { location ->
+            println location
+            types.each { type ->
+                println type
                 try {
-                    def strings = new URL(loc.url + '/academia/scripts/catalogo-programas/items_catalogo_' + ty + '.js')
+                    def strings = new URL(location.url + '/academia/scripts/catalogo-programas/items_catalogo_' + type + '.js')
                             .getText('ISO-8859-1').findAll(/'(.+)'/, { it[1] })
 
                     def currentFac = ''
@@ -173,15 +176,15 @@ class BootStrap {
                                     code: strings[i].find(/[0-9]+/)?.toInteger() ?: 0,
                                     name: strings[i - 1],
                                     faculty: currentFac,
-                                    type: ty,
-                                    location: loc
+                                    type: type,
+                                    location: location
                             ).save(flush: true)
                         }
                     }
 
                 } catch (Exception e) {
                     //e.printStackTrace()
-                    println "Sede $loc.name no disponible"
+                    println "Sede $location.name no disponible"
                 }
             }
         }
@@ -189,8 +192,8 @@ class BootStrap {
 
     def loadCourses() {
         println("Loading Courses...")
-        //Degree.list().each { degree ->
-        Degree.findByCode(2879).each { degree ->
+        Degree.list().each { degree ->
+            println degree
             def http = new HTTPBuilder(degree.location.url + (degree.location.name == "Medellin" ? ":9401" : "") + "/buscador/JSON-RPC")
             http.request(POST, ContentType.JSON) {
                 body = [
@@ -229,6 +232,7 @@ class BootStrap {
     def loadCourseContents() {
         print "Loading Contents"
         Course.list().each { course ->
+            println course
             //def http = new HTTPBuilder(course.location.url + '/academia/catalogo-programas/info-asignatura.sdo?asignatura=' + course.code)
             def http = new HTTPBuilder(course.location.url + '/buscador/service/asignaturaInfo.pub?cod_asignatura=' + course.code)
             def html = http.get([:])
@@ -245,6 +249,7 @@ class BootStrap {
         println("Loading Teachers...")
         def nullTeacher = Teacher.findByName("[Información Pendiente]")
         Course.list().each { course ->
+            println course
             def http = new HTTPBuilder(course.location.url + (course.location.name == "Medellin" ? ":9401" : "") + "/buscador/JSON-RPC")
             http.request(POST, ContentType.JSON) {
                 body = [

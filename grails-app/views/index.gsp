@@ -44,14 +44,14 @@
                     <thead>
                     <tr>
                         <th>Nombre</th>
-                        <th>Usuario Institucional</th>
+                        <th>Correo Institucional</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr ng-repeat="teacher in teachers" class="clickable-element"
                         ng-click="showTeacher(teacher.id)">
                         <td>{{teacher.name}}</td>
-                        <td>{{teacher.username}}</td>
+                        <td>{{teacher.email}}</td>
                     </tr>
                     </tbody>
                 </table>
