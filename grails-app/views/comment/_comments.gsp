@@ -11,9 +11,17 @@
                 <div class="col-xs-11">
                     <div class="panel panel-default">
                         <div class="panel-heading info-comment">
-                            <strong>{{comment.author}}</strong>
-                            <span class="text-muted">{{comment.date}}</span>
+                            <strong class="username-comment" style="float: left">{{comment.author}}</strong>
+                            <span class="text-muted date-comment">{{comment.date}}</span>
+                            <div ng-if="context=='Course' && comment.teacher.id"
+                                 class="link-profesor" >
+                                en: <a href="${request.contextPath}/teacher/show?id={{comment.teacher.id}}">{{comment.teacher.name}}</a>
+                            </div>
 
+                            <div ng-if="context=='Teacher' && comment.course.id"
+                                 class="link-profesor" >
+                                en: <a href="${request.contextPath}/course/show?id={{comment.course.id}}">{{comment.course.name}}</a>
+                            </div>
                             <div class="voting-container">
                                 <oauth:connected provider="google">
                                     <div ng-switch on="comment.voted" class="ng-switch-container">
@@ -57,15 +65,6 @@
                         </div>
 
                         <div class="panel-body">
-                            <div ng-if="context=='Course' && comment.teacher.id"
-                                 class="link-profesor color-1 cl-effect-14">
-                                <a href="${request.contextPath}/teacher/show?id={{comment.teacher.id}}">{{comment.teacher.name}}</a>
-                            </div>
-
-                            <div ng-if="context=='Teacher' && comment.course.id"
-                                 class="link-profesor color-1 cl-effect-14">
-                                <a href="${request.contextPath}/course/show?id={{comment.course.id}}">{{comment.course.name}}</a>
-                            </div>
                             {{comment.body}}
                         </div>
 

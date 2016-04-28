@@ -167,10 +167,21 @@ ul {
 
 
 .link-profesor {
-    width: 90px;
     white-space: normal;
-    float: right;
     margin: -8px -5px 8px 8px;
+    position: relative;
+    float: left;
+    clear: both;
+    background: none;
+    width: auto;
+    max-height: 9px;
+    margin-top: 2px;
+    padding-left: 30px;
+}
+
+.username-comment{
+    float:left;
+    padding-right: 10px;
 }
 
 .color-1 {
@@ -269,39 +280,6 @@ ul {
     margin-top: 50px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 
-/* Small devices (tablets, 768px and up) */
-@media (min-width: 768px) {
-    .navbar-logo {
-        height: 35px;
-    }
-
-    .main-content {
-        margin-top: 70px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-    }
-}
-
-/* Medium devices (desktops, 992px and up) */
-@media (min-width: 992px) {
-    .navbar-logo {
-        height: 40px;
-    }
-
-    .main-content {
-        margin-top: 70px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-    }
-}
-
-/* Large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {
-    .navbar-logo {
-        height: 50px;
-    }
-
-    .main-content {
-        margin-top: 80px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-    }
-}
-
 /* Clickable element */
 
 .clickable-element {
@@ -367,4 +345,59 @@ ul {
 .content-negative-vote {
     width: auto;
     float: left;
+}
+
+@media ( max-width: 540px  ){
+    .voting-container{
+        margin-top: 10px;
+    }
+
+    .link-profesor{
+        float: none;
+        margin: 0;
+        padding: 0;
+    }
+    .username-comment{
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    .date-comment{
+        display: block;
+        width: 100%;
+        padding: 0;
+    }
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .navbar-logo {
+        height: 35px;
+    }
+
+    .main-content {
+        margin-top: 70px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .navbar-logo {
+        height: 40px;
+    }
+
+    .main-content {
+        margin-top: 70px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .navbar-logo {
+        height: 50px;
+    }
+
+    .main-content {
+        margin-top: 80px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    }
 }
