@@ -65,7 +65,7 @@
                             <div class="text-center">
                                 <oauth:connect provider="google"
                                                redirectUrl="${request.forwardURI.replace("/UNApp", "") + ((request.queryString) ? "?" + request.queryString : "")}">
-                                    <button class="btn btn-raised btn-primary">
+                                    <button class="btn btn-raised btn-primary login-comment">
                                         <i class="fa fa-google"></i> Ingresar con Google Para Comentar
                                     </button>
                                 </oauth:connect>

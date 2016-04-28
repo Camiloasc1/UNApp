@@ -69,6 +69,9 @@ ul {
     display: inline-block;
     margin: -0.9999%;
 }
+.login-comment{
+    white-space: normal;
+}
 
 /* subject styles end */
 
@@ -165,7 +168,6 @@ ul {
     border-width: 8px;
 }
 
-
 .link-profesor {
     white-space: normal;
     margin: -8px -5px 8px 8px;
@@ -177,7 +179,9 @@ ul {
     max-height: 9px;
     margin-top: 2px;
     padding-left: 30px;
+    display: inline-block;
 }
+
 
 .username-comment{
     float:left;
