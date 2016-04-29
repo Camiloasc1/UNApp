@@ -15,17 +15,17 @@ class LoginController {
             session[oauthService.findSessionKeyForAccessToken('google')] = null
             flash.message = "Only unal.edu.co users can login."
             redirect(uri: RedirectHolder.getRedirect().uri)
-        }
+        }else {
+            def user = User.findByGoogleID(googleResponse.id)
+            if (!user) {
+                user = new User(googleID: googleResponse.id, name: googleResponse.name, email: googleResponse.email, picture: googleResponse.picture).save(flush: true)
+            }
+            user.setPicture(googleResponse.picture) //Update picture in case the user was already created
+            session.user = user
 
-        def user = User.findByGoogleID(googleResponse.id)
-        if (!user) {
-            user = new User(googleID: googleResponse.id, name: googleResponse.name, email: googleResponse.email, picture: googleResponse.picture).save(flush: true)
+            flash.message = "Login success."
+            redirect(uri: RedirectHolder.getRedirect().uri)
         }
-        user.setPicture(googleResponse.picture) //Update picture in case the user was already created
-        session.user = user
-
-        flash.message = "Login success."
-        redirect(uri: RedirectHolder.getRedirect().uri)
     }
 
     def failure() {
