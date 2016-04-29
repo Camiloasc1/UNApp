@@ -131,6 +131,8 @@
 <asset:javascript src="AngularComments.js"/>
 <!-- AngularSearch -->
 <asset:javascript src="AngularSearch.js"/>
+<!-- AngularEditCourse -->
+<asset:javascript src="AngularEditCourse.js"/>
 </body>
 </html>
 

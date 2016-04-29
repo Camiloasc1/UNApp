@@ -8,7 +8,7 @@ import grails.converters.JSON
 @Transactional(readOnly = true)
 class CourseController {
 
-    static allowedMethods = [index: "GET", search: "GET", show: "GET", comments: "GET", save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [index: "GET", search: "GET", show: "GET", comments: "GET", save: "POST", update: "PUT", delete: "DELETE", updateCourse: "POST"]
 
     def index() {
         def result = Location.list().collect { l ->
@@ -161,18 +161,55 @@ class CourseController {
         respond result, model: [result: result]
     }
 
-    def updateCourse(int id, String location, int code, String name, String typo, String descr, String teachers) {
+    def getCourseForm( int id ){
+        def course = Course.findById(id)
+        def result = [
+                courseInstance: course,
+                teachers: course.teachers.collect { teacher ->
+                    [
+                            id: teacher.id,
+                            name: teacher.name
+                    ]
+                },
+                locations     : Location.findAll().collect { location ->
+                    [
+                        id: location.id,
+                        location: location.name,
+                        selected: ( course.location.id == location.id  )? 1 : 0
+                    ]
+                }
+        ]
+        respond result, model: [result: result]
+    }
+
+    def updateCourse(/*, String location, int code, String name, String typo, String descr, String teachers*/) {
+
+        def id = request.JSON.id.toInteger()
+        def location = request.JSON.location
+        def code = request.JSON.code.toInteger()
+        def name = request.JSON.name
+        def typo = request.JSON.typo
+        def descr = request.JSON.descr
+        def teachers = request.JSON.teachers
+
+        print id
+        print location
+        print code
+        print name
+        print typo
+        print descr
+        print teachers
+
         def course = Course.findById(id)
 
-        course.location = Location.findByName(location)
+        course.location = Location.findById(location)
         course.code = code
         course.name = name
         course.typology = typo
         course.description = descr
 
-        def teach = JSON.parse(teachers)
-        def teachers_array = teach["teachers"].collect {
-            Teacher.findById(it.value)
+        def teachers_array = teachers.collect {
+            Teacher.findById(it.id)
         }
 
         course.teachers = teachers_array
