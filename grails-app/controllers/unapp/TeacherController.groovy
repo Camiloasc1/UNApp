@@ -49,6 +49,10 @@ class TeacherController {
         respond result, model: [result: result]
     }
 
+    def erase(){
+        render view: "erase"
+    }
+
     def comments(int id, int max, int offset) {
         def result = Comment.findAllByTeacher(Teacher.get(id), [sort: "date", order: "desc", max: max, offset: offset]).collect { comment ->
             [id           : comment.id,
