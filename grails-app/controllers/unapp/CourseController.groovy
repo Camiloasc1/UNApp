@@ -192,14 +192,6 @@ class CourseController {
         def descr = request.JSON.descr
         def teachers = request.JSON.teachers
 
-        print id
-        print location
-        print code
-        print name
-        print typo
-        print descr
-        print teachers
-
         def course = Course.findById(id)
 
         course.location = Location.findById(location)

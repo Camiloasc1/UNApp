@@ -47,7 +47,16 @@ app.controller('FormEdit', ['$scope', '$rootScope', '$http', '$location', functi
     };
 
     $scope.appendToTeachers = function( id,name ){
-        $scope.teachers.push( { id: id, name: name } );
+        teacher = { id: id, name: name };
+        find = false;
+        for(var i = 0, len = $scope.teachers.length; i < len; i++) {
+            if ($scope.teachers[i].id == id && $scope.teachers[i].name == name) {
+                find = true;
+                break;
+            }
+        }
+        if( find === false )
+            $scope.teachers.push( teacher );
     };
 
     $scope.popFromTeachers = function( event ){
