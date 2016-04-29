@@ -302,15 +302,15 @@
                         <p>Info sobre la aplicacion</p>
                         <ul class="list-inline item-details">
                             <li>Facebook:
-                                <strong><a href="https://www.facebook.com/diego.rojas.37266136">UN-App</a>
+                                <strong><a href="https://www.facebook.com/UNapp-1700543420198446">UN-App</a>
                                 </strong>
                             </li>
                             <li>Correo:
-                                <strong><a href="mailto:keacastropo@unal.edu.co">UN-App</a>
+                                <strong><a href="mailto:unapp2016@gmail.com">UN-App</a>
                                 </strong>
                             </li>
                             <li>Github:
-                                <strong><a href="https://github.com/kecastro">UN-App</a>
+                                <strong><a href="https://github.com/UN-app/UNApp">UN-App</a>
                                 </strong>
                             </li>
                         </ul>

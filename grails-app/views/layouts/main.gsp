@@ -71,14 +71,6 @@
                 </unapp:isAdmin>
             </ul>
 
-            <form class="navbar-form navbar-left" method = "get" action = "course/search" >
-                <div class="form-group is-empty">
-                    <input type="text" name="query" class="form-control col-md-8" style="text-align: center" placeholder="Buscar materia" >
-                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                    <span class="material-input"></span>
-                </div>
-            </form>
-
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <oauth:disconnected provider="google">
@@ -100,7 +92,31 @@
 
 <g:layoutBody/>
 
-<div id="footer"></div>
+<div id="footer">
+
+    <footer class="footer-distributed">
+
+        <div class="footer-right">
+
+            <a href="https://www.facebook.com/UNapp-1700543420198446"><i class="fa fa-facebook"></i></a>
+            <a href="https://twitter.com/unapp2016"><i class="fa fa-twitter"></i></a>
+            <a href="https://github.com/UN-app/UNApp"><i class="fa fa-github"></i></a>
+
+        </div>
+
+        <div class="footer-left">
+
+            <p class="footer-links">
+                <a href="${createLink(uri: '/')}">Home</a>
+                <a href="${createLink(uri: '/about')}">Acerca</a>
+            </p>
+
+            <p>UNapp &copy; 2016</p>
+        </div>
+
+    </footer>
+
+</div>
 
 <!-- AngularJS -->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
