@@ -4,60 +4,49 @@
 		<meta name="layout" content="main"/>
 	</head>
 	<body>
-		<div class="container contain-menu-admin">
-			<div class="row">
-				<div class="jumbotron">
-					<div class="col-xs-1">
-						<nav class="main-menu">
-							<ul>
-								<li>
-									<div onclick="alert('entra')">
-										<i class="glyphicon glyphicon-book glyph glyph-2x"></i>
-										<span class="nav-text">
-											Materias
-										</span>
-									</div>
+		<ul class="nav nav-tabs">
+			<li class="dropdown">
+				<a href="#" data-toggle="dropdown"><span class="fa fa-graduation-cap"></span> Profesores <span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="#addTeacher" data-toggle="tab">Agregar</a></li>
+					<li class="divider"></li>
+					<li><a href="#editTeacher" data-toggle="tab">Modificar</a></li>
+					<li class="divider"></li>
+					<li><a href="#eraseTeacher" data-toggle="tab">Borrar</a></li>
+				</ul>
+			</li>
+			<li class="dropdown">
+				<a href="#" data-toggle="dropdown"><span class="fa fa-book"></span> Materias<span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="#addCourse" data-toggle="tab">Agregar</a></li>
+					<li class="divider"></li>
+					<li><a href="#editCourse" data-toggle="tab">Modificar</a></li>
+					<li class="divider"></li>
+					<li><a href="#eraseCourse" data-toggle="tab">Borrar</a></li>
+				</ul>
+			</li>
+			<li class="dropdown">
+				<a href="#" data-toggle="dropdown"><span class="fa fa-user"></span> Usuarios <span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="#addUser" data-toggle="tab">Agregar</a></li>
+					<li class="divider"></li>
+					<li><a href="#editUser" data-toggle="tab">Modificar</a></li>
+					<li class="divider"></li>
+					<li><a href="#eraseUser" data-toggle="tab">Borrar</a></li>
+				</ul>
+			</li>
+		</ul>
 
-								</li>
-								<li class="has-subnav">
-									<div onclick="alert('entra')">
-										<i class="glyphicon glyphicon-user glyph glyph-2x"></i>
-										<span class="nav-text">
-											Profesores
-										</span>
-									</div>
-
-								</li>
-								<li class="has-subnav">
-									<div onclick="alert('entra')">
-										<i class="glyphicon glyphicon-globe glyph glyph-2x"></i>
-										<span class="nav-text">
-											Usuarios
-										</span>
-									</div>
-								</li>
-							</ul>
-						</nav>
-					</div>
-					<div class="col-xs-11">
-						<a href="#page-body" class="skip"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-						<div id="controller-list" role="navigation">
-							<h2>Available Controllers:</h2>
-							<ul>
-
-								<li class="controller"><a href="/UNApp/comment/index">unapp.CommentController</a></li>
-
-								<li class="controller"><a href="/UNApp/course/index">unapp.CourseController</a></li>
-
-								<li class="controller"><a href="/UNApp/teacher/index">unapp.TeacherController</a></li>
-
-								<li class="controller"><a href="/UNApp/user/index">unapp.UserController</a></li>
-
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
+		<div class="tab-content">
+			<div class="tab-pane fade" id="addTeacher">agregar profesor</div>
+			<div class="tab-pane fade" id="editTeacher">modificar profesor</div>
+			<div class="tab-pane fade" id="eraseTeacher"><g:render template="/teacher/erase"></g:render></div>
+			<div class="tab-pane fade" id="addCourse">agregar materia</div>
+			<div class="tab-pane fade" id="editCourse">modificar materia</div>
+			<div class="tab-pane fade" id="eraseCourse">borrar materia</div>
+			<div class="tab-pane fade" id="addUser">agregar usuario</div>
+			<div class="tab-pane fade" id="editUser">modificar usuario</div>
+			<div class="tab-pane fade" id="eraseUser">borrar usuario</div>
 		</div>
 	</body>
 </html>
