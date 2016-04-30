@@ -3,7 +3,7 @@ package unapp
 class AdminFilters {
 
     def filters = {
-        all(controller: '*', action: 'create|update|save|delete|edit|erase') {
+        all(controller: '*', action: 'create|update|save|delete*|edit|erase') {
             before = {
                 def user = session["user"]
                 if(user == null || !user.isAdmin ){
