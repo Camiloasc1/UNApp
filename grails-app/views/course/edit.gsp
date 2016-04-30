@@ -4,6 +4,8 @@
 		<meta name="layout" content="main">
 	</head>
 	<body>
+
+
 		<div class="container" ng-app="EditCourse">
 			<div class="jumbotron" style="padding: 50px 100px;">
 				<div class="row" ng-controller="FormEdit">
@@ -13,8 +15,7 @@
 							<option ng-repeat="loc in location" value="{{loc.id}}" ng-selected="loc.selected == 1">{{loc.location}}</option>
 						</select>
 						<br />
-						<label for="code">Código</label>
-						<input type="text" id="code" ng-model ="code" class="form-control" value="" />
+
 						<br />
 						<label for="name">Nombre</label>
 						<input type="text"  id="name" ng-model ="name" class="form-control" value="" />
@@ -24,6 +25,9 @@
 						<br />
 						<label for="descr">Descripción</label>
 						<textarea id="descr" ng-model ="descr" class="form-control"></textarea>
+						<br />
+						<label for="cont">Contenido</label>
+						<textarea id="cont" ng-model ="cont" class="form-control"></textarea>
 						<br />
 						<label>Profesores</label>
 						<input class="teachers" ng-keyup="searchTeacher($event)" placeholder="Busca un profesor"/>

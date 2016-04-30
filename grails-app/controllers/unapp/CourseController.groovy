@@ -190,6 +190,7 @@ class CourseController {
         def name = request.JSON.name
         def typo = request.JSON.typo
         def descr = request.JSON.descr
+        def cont = request.JSON.cont
         def teachers = request.JSON.teachers
 
         def course = Course.findById(id)
@@ -199,6 +200,7 @@ class CourseController {
         course.name = name
         course.typology = typo
         course.description = descr
+        course.contents = cont
 
         def teachers_array = teachers.collect {
             Teacher.findById(it.id)

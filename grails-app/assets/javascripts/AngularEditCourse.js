@@ -7,6 +7,7 @@ app.controller('FormEdit', ['$scope', '$rootScope', '$http', '$location', functi
     $scope.name = "";
     $scope.typo = "";
     $scope.descr = "";
+    $scope.cont = "";
     $scope.teachers = [];
     $scope.teachersSearch = [];
     $scope.sendFormEdit = function( course ){
@@ -19,6 +20,7 @@ app.controller('FormEdit', ['$scope', '$rootScope', '$http', '$location', functi
                     name: $scope.name,
                     typo: $scope.typo,
                     descr: $scope.descr,
+                    cont: $scope.cont,
                     teachers: $scope.teachers
                 }
             )
@@ -78,9 +80,12 @@ app.controller('FormEdit', ['$scope', '$rootScope', '$http', '$location', functi
                 $scope.name = response.data.courseInstance.name;
                 $scope.typo = response.data.courseInstance.typology;
                 $scope.descr = response.data.courseInstance.description;
+                $scope.cont = response.data.courseInstance.contents;
                 $scope.location = response.data.locations;
                 $scope.teachers = response.data.teachers;
+                console.log(response.data.courseInstance);
             });
     };
     $scope.findCourse();
 }]);
+
