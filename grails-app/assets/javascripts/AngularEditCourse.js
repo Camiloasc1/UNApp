@@ -26,7 +26,6 @@ app.controller('FormEdit', ['$scope', '$rootScope', '$http', '$location', functi
             )
 
             .then(function (response) {
-                console.log(response);
                 if( parseInt(response.data) == 1 ){
                     document.getElementById("message-response").innerHTML = "Se ha guardado correctamente";
                 }else

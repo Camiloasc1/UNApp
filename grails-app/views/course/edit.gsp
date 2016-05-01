@@ -21,7 +21,7 @@
 
 
 									<label for="code">Código</label>
-									<input type="text" id="code" ng-model ="code" class="form-control edit-txtinput" value="" />
+									<input type="text" id="code" ng-model ="code" class="form-control edit-txtinput" value="" disabled="disabled"/>
 
 
 									<label for="location">Locación</label>
@@ -63,8 +63,8 @@
 										</table>
 									</div>
 								</div>
+								<div id="message-response" class="response-txt"></div>
 								<input type="submit" ng-click="sendFormEdit(course)" class="btn btn-default edit-save-btn" value="Guardar" />
-								<div id="message-response"></div>
 							</form>
 						</div>
 					</div>

@@ -214,12 +214,6 @@ class CourseController {
     }
 
     def teacherSearch(String teacher) {
-        def alg = Course.findById(276)
-        alg.location = Location.findById(1)
-        alg.save(flush: true)
-
-        print alg.location
-
         def result = Teacher.findAllByNameIlike("%" + teacher + "%", [max: 5]).collect { teach ->
             [
                     id  : teach.id,
