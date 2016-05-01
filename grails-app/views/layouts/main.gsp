@@ -133,6 +133,8 @@
 <asset:javascript src="AngularSearch.js"/>
 <!-- AngularEditCourse -->
 <asset:javascript src="AngularEditCourse.js"/>
+<!-- AngularCreateCourse -->
+<asset:javascript src="AngularCreateCourse.js"/>
 </body>
 </html>
 

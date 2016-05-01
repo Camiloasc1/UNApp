@@ -1,7 +1,6 @@
-var app = angular.module('EditCourse', []);
+var app = angular.module('CreateCourse', []);
 
-app.controller('FormEdit', ['$scope', '$rootScope', '$http', '$location', function ($scope, $rootScope, $http, $location) {
-    $scope.id = parseInt(($location.absUrl().split("id="))[1]);
+app.controller('FormCreate', ['$scope', '$rootScope', '$http', '$location', function ($scope, $rootScope, $http, $location) {
     $scope.location = [];
     $scope.code = "";
     $scope.name = "";
@@ -10,21 +9,20 @@ app.controller('FormEdit', ['$scope', '$rootScope', '$http', '$location', functi
     $scope.cont = "";
     $scope.teachers = [];
     $scope.teachersSearch = [];
-    $scope.sendFormEdit = function(){
-        document.getElementById("message-response").innerHTML = "... ...";
-        $http.post("course/updateCourse",
-                {
-                    id: $scope.id,
-                    location: $scope.location.id,
-                    code: $scope.code,
-                    name: $scope.name,
-                    typo: $scope.typo,
-                    descr: $scope.descr,
-                    cont: $scope.cont,
-                    teachers: $scope.teachers
-                }
-            )
 
+    $scope.sendFormCreate = function(){
+        document.getElementById("message-response").innerHTML = "... ...";
+
+        $http.post("course/createCourse",
+            {
+                location: $scope.location.id,
+                code: $scope.code,
+                name: $scope.name,
+                typo: $scope.typo,
+                descr: $scope.descr,
+                cont: $scope.cont,
+                teachers: $scope.teachers
+            })
             .then(function (response) {
                 if( parseInt(response.data) == 1 ){
                     document.getElementById("message-response").innerHTML = "Se ha guardado correctamente";
@@ -37,12 +35,12 @@ app.controller('FormEdit', ['$scope', '$rootScope', '$http', '$location', functi
         var str = event.target.value;
         if( str.length >= 4 ) {
             $http.get('course/teacherSearch', {
-                params: {teacher : str}
-            })
-            .then(function (response) {
-                document.getElementById("livesearch").style.display = "block";
-                $scope.teachersSearch = response.data;
-            });
+                    params: {teacher : str}
+                })
+                .then(function (response) {
+                    document.getElementById("livesearch").style.display = "block";
+                    $scope.teachersSearch = response.data;
+                });
         }else{
             document.getElementById("livesearch").style.display = "none";
             $scope.teachersSearch = [];
@@ -80,20 +78,12 @@ app.controller('FormEdit', ['$scope', '$rootScope', '$http', '$location', functi
         $scope.teachers.splice(i, 1);
     };
 
-    $scope.findCourse = function(){
-        $http.get('course/getCourseForm', {
-                params: {id : $scope.id}
-            })
+    $scope.getLocations = function(){
+        $http.post('course/getLocations', {})
             .then(function (response) {
-                $scope.code = response.data.courseInstance.code;
-                $scope.name = response.data.courseInstance.name;
-                $scope.typo = response.data.courseInstance.typology;
-                $scope.descr = response.data.courseInstance.description;
-                $scope.cont = response.data.courseInstance.contents;
-                $scope.location = response.data.locations;
-                $scope.teachers = response.data.teachers;
+                $scope.location = response.data;
             });
     };
-    $scope.findCourse();
+    $scope.getLocations();
 }]);
 

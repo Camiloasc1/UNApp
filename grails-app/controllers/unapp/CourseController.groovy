@@ -183,7 +183,6 @@ class CourseController {
     }
 
     def updateCourse() {
-
         def id = request.JSON.id.toInteger()
         def location = request.JSON.location
         def code = request.JSON.code.toInteger()
@@ -221,6 +220,46 @@ class CourseController {
             ]
         }
         render result as JSON
+    }
+
+    def createCourse(){
+        def location = request.JSON.location
+        def code = request.JSON.code.toInteger()
+        def name = request.JSON.name
+        def typo = request.JSON.typo
+        def descr = request.JSON.descr
+        def cont = request.JSON.cont
+        def teachers = request.JSON.teachers
+
+        def course = new Course()
+
+        course.location = Location.findById(location)
+        course.code = code
+        course.name = name
+        course.typology = typo
+        course.description = descr
+        course.contents = cont
+
+        def teachers_array = teachers.collect {
+            Teacher.findById(it.id)
+        }
+
+        course.teachers = teachers_array
+
+        if (course.save(flush: true))
+            render 1
+        else
+            render 0
+    }
+
+    def getLocations(){
+        def locations = Location.findAll().collect { location ->
+            [
+                    id: location.id,
+                    location: location.name
+            ]
+        }
+        render locations as JSON
     }
 
     @Transactional

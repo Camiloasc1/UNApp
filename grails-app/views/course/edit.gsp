@@ -64,7 +64,7 @@
 									</div>
 								</div>
 								<div id="message-response" class="response-txt"></div>
-								<input type="submit" ng-click="sendFormEdit(course)" class="btn btn-default edit-save-btn" value="Guardar" />
+								<input type="submit" ng-click="sendFormEdit()" class="btn btn-default edit-save-btn" value="Guardar" />
 							</form>
 						</div>
 					</div>
