@@ -135,6 +135,38 @@ class TeacherController {
         render result as JSON
     }
 
+    def createTeacher(){
+        def location = request.JSON.location.toInteger()
+        def name = request.JSON.name
+        def username = request.JSON.username
+        def info = request.JSON.info
+        def links = request.JSON.links
+        def courses = request.JSON.courses
+
+        if( ( location.intValue() > 0 ) && ( name != "" ) && ( username != "" ) ) {
+            def teacher = new Teacher()
+
+            teacher.location = Location.findById(location)
+            teacher.name = name
+            teacher.username = username
+            teacher.information = info
+            //teacher.links = links
+
+            if( courses.size() > 0 ) {
+                def courses_array = courses.collect {
+                    Course.findById(it.id)
+                }
+
+                teacher.courses = courses_array
+            }
+
+            if (teacher.save(flush: true))
+                render 1
+            else
+                render 0
+        }else render 0
+    }
+
     @Transactional
     def save(Teacher teacherInstance) {
         if (teacherInstance == null) {
