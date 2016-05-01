@@ -6,13 +6,14 @@ app.controller('FormEdit', ['$scope', '$rootScope', '$http', '$location', functi
     $scope.code = "";
     $scope.name = "";
     $scope.typo = "";
+    $scope.credits = "";
     $scope.descr = "";
     $scope.cont = "";
     $scope.teachers = [];
     $scope.teachersSearch = [];
     $scope.sendFormEdit = function(){
         document.getElementById("message-response").innerHTML = "... ...";
-        if( $scope.location.id != null && $scope.name != "" && $scope.typo != "" && $scope.teachers.length > 0  ) {
+        if( $scope.location.id != null && $scope.name != "" && $scope.typo != "" && $scope.teachers.length > 0 && $scope.credits != ""  ) {
             $http.post("course/updateCourse",
                 {
                     id: $scope.id,
@@ -20,6 +21,7 @@ app.controller('FormEdit', ['$scope', '$rootScope', '$http', '$location', functi
                     code: $scope.code,
                     name: $scope.name,
                     typo: $scope.typo,
+                    credits: $scope.credits,
                     descr: $scope.descr,
                     cont: $scope.cont,
                     teachers: $scope.teachers
@@ -92,6 +94,7 @@ app.controller('FormEdit', ['$scope', '$rootScope', '$http', '$location', functi
                 $scope.code = response.data.courseInstance.code;
                 $scope.name = response.data.courseInstance.name;
                 $scope.typo = response.data.courseInstance.typology;
+                $scope.credits = response.data.courseInstance.credits;
                 $scope.descr = response.data.courseInstance.description;
                 $scope.cont = response.data.courseInstance.contents;
                 $scope.location = response.data.locations;

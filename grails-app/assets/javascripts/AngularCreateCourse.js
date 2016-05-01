@@ -1,10 +1,11 @@
-var app = angular.module('CreateTeacher', []);
+var app = angular.module('CreateCourse', []);
 
 app.controller('FormCreate', ['$scope', '$rootScope', '$http', '$location', function ($scope, $rootScope, $http, $location) {
     $scope.location = [];
     $scope.code = "";
     $scope.name = "";
     $scope.typo = "";
+    $scope.credits = "";
     $scope.descr = "";
     $scope.cont = "";
     $scope.teachers = [];
@@ -12,13 +13,14 @@ app.controller('FormCreate', ['$scope', '$rootScope', '$http', '$location', func
 
     $scope.sendFormCreate = function(){
         document.getElementById("message-response").innerHTML = "... ...";
-        if( $scope.location.id != null && $scope.name != "" && $scope.code != "" && $scope.typo != "" && $scope.teachers.length > 0 ) {
+        if( $scope.location.id != null && $scope.name != "" && $scope.code != "" && $scope.typo != "" && $scope.teachers.length > 0 && $scope.credits != "" ) {
             $http.post("course/createCourse",
                 {
                     location: $scope.location.id,
                     code: $scope.code,
                     name: $scope.name,
                     typo: $scope.typo,
+                    credits: $scope.credits,
                     descr: $scope.descr,
                     cont: $scope.cont,
                     teachers: $scope.teachers

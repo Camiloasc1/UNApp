@@ -37,6 +37,10 @@
 										<option value="L">Libre Elección</option>
 									</select>
 
+									<label for="credits">Créditos</label>
+									<input type="text" id="credits" ng-model ="credits" class="form-control edit-txtinput" value="" />
+
+
 								</div>
 
 								<div class="col-md-8 col-lg-7">

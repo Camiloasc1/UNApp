@@ -29,6 +29,9 @@
 										<option ng-repeat="loc in location" value="{{loc.id}}" ng-selected="loc.selected == 1">{{loc.location}}</option>
 									</select>
 
+									<label for="credits">Créditos</label>
+									<input type="text" id="credits" ng-model ="credits" class="form-control edit-txtinput" value="" />
+
 								</div>
 
 								<div class="col-md-8 col-lg-7">

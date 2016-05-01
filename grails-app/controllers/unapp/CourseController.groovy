@@ -188,6 +188,7 @@ class CourseController {
         def code = request.JSON.code.toInteger()
         def name = request.JSON.name
         def typo = request.JSON.typo
+        def credits = request.JSON.credits.toInteger()
         def descr = request.JSON.descr
         def cont = request.JSON.cont
         def teachers = request.JSON.teachers
@@ -199,6 +200,7 @@ class CourseController {
             course.code = code
             course.name = name
             course.typology = typo
+            course.credits = credits
             course.description = descr
             course.contents = cont
 
@@ -229,17 +231,19 @@ class CourseController {
         def code = request.JSON.code.toInteger()
         def name = request.JSON.name
         def typo = request.JSON.typo
+        def credits = request.JSON.credits.toInteger()
         def descr = request.JSON.descr
         def cont = request.JSON.cont
         def teachers = request.JSON.teachers
 
-        if( ( location.intValue() > 0 ) && ( name != "" ) && ( code.intValue() > 0 ) && ( typo != "" ) && ( teachers.size() > 0 )  ) {
+        if( ( location.intValue() > 0 ) && ( name != "" ) && ( code.intValue() > 0 ) && ( typo != "" ) && ( teachers.size() > 0 ) && ( credits.intValue() > 0 )  ) {
             def course = new Course()
 
             course.location = Location.findById(location)
             course.code = code
             course.name = name
             course.typology = typo
+            course.credits = credits
             course.description = descr
             course.contents = cont
 
