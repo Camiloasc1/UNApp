@@ -184,7 +184,7 @@ class CourseController {
 
     def updateCourse() {
         def id = request.JSON.id.toInteger()
-        def location = request.JSON.location
+        def location = request.JSON.location.toInteger()
         def code = request.JSON.code.toInteger()
         def name = request.JSON.name
         def typo = request.JSON.typo
@@ -192,24 +192,26 @@ class CourseController {
         def cont = request.JSON.cont
         def teachers = request.JSON.teachers
 
-        def course = Course.findById(id)
+        if( ( id != null && id > 0 )&& ( location != null && location > 0 ) && ( name != null && name != "" ) && ( code != null && code > 0 ) && ( typo != null && typo != "" ) && ( teachers != null && teachers.length > 0 )  ) {
+            def course = Course.findById(id)
 
-        course.location = Location.findById(location)
-        course.code = code
-        course.name = name
-        course.typology = typo
-        course.description = descr
-        course.contents = cont
+            course.location = Location.findById(location)
+            course.code = code
+            course.name = name
+            course.typology = typo
+            course.description = descr
+            course.contents = cont
 
-        def teachers_array = teachers.collect {
-            Teacher.findById(it.id)
-        }
+            def teachers_array = teachers.collect {
+                Teacher.findById(it.id)
+            }
 
-        course.teachers = teachers_array
-        if (course.save(flush: true))
-            render 1
-        else
-            render 0
+            course.teachers = teachers_array
+            if (course.save(flush: true))
+                render 1
+            else
+                render 0
+        }else render 0
     }
 
     def teacherSearch(String teacher) {

@@ -3,39 +3,72 @@
 <html>
 	<head>
 		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'teacher.label', default: 'Teacher')}" />
-		<title><g:message code="default.edit.label" args="[entityName]" /></title>
 	</head>
 	<body>
-		<a href="#edit-teacher" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-			</ul>
-		</div>
-		<div id="edit-teacher" class="content scaffold-edit" role="main">
-			<h1><g:message code="default.edit.label" args="[entityName]" /></h1>
-			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
-			</g:if>
-			<g:hasErrors bean="${teacherInstance}">
-			<ul class="errors" role="alert">
-				<g:eachError bean="${teacherInstance}" var="error">
-				<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
-				</g:eachError>
-			</ul>
-			</g:hasErrors>
-			<g:form url="[resource:teacherInstance, action:'update']" method="PUT" >
-				<g:hiddenField name="version" value="${teacherInstance?.version}" />
-				<fieldset class="form">
-					<g:render template="form"/>
-				</fieldset>
-				<fieldset class="buttons">
-					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
-				</fieldset>
-			</g:form>
+		<div ng-app="EditTeacher" class="container subjectInfo">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="jumbotron">
+						<div class="row" ng-controller="FormEdit">
+							<form novalidate role="form" >
+								<div class="col-md-4 col-lg-5">
+									<img src="${assetPath(src: 'book.png')}" class="img-rounded center-block photo-size"
+										 height="250"
+										 width="250">
+
+
+									<label for="name">Nombre</label>
+									<input type="text"  id="name" ng-model ="name" class="form-control edit-txtinput" value="" />
+
+									<label for="username">Nombre de usuario</label>
+									<input type="text"  id="username" ng-model ="username" class="form-control edit-txtinput" value="" />
+
+									<label for="location">Locación</label>
+									<select ng-model ="location.id" class="form-control edit-txtinput" id="location">
+										<option ng-repeat="loc in location" value="{{loc.id}}" ng-selected="loc.selected == 1">{{loc.location}}</option>
+									</select>
+
+								</div>
+
+								<div class="col-md-8 col-lg-7">
+
+									<h2>Información:</h2>
+									<textarea id="info" ng-model ="info" class="form-control edit-txtarea"></textarea>
+
+									<h2>Links:</h2>
+									<textarea id="links" ng-model ="links" class="form-control edit-txtarea"></textarea>
+
+									<h2>Cursos:</h2>
+									<input class="teachers" id="courses-search" ng-keyup="searchCourse($event)" placeholder="Busca un curso" autocomplete="off"/>
+									<span class="glyphicon glyphicon-search" id="search-icons"></span>
+									<div id="livesearch" class="search-window">
+										<div ng-repeat="course in coursesSearch" ng-click="appendToCourses( course.id, course.name )" class="search-window-opt">{{course.name}}</div>
+									</div>
+
+									<div>
+										<table class="table table-striped">
+											<thead>
+											<tr>
+												<th>Nombre</th>
+												<th>Boton</th>
+											</tr>
+											</thead>
+											<tbody id="courses-table">
+											<tr ng-repeat="course in courses" id="{{course.id}}">
+												<td>{{course.name}}</td>
+												<td><button type="button" class="btn btn-default" ng-click="popFromCourses($event)">Borrar</button></td>
+											</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div id="message-response" class="response-txt"></div>
+								<input type="submit" ng-click="sendFormEdit()" class="btn btn-default edit-save-btn" value="Guardar" />
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>
