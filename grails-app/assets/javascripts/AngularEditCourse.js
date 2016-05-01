@@ -33,7 +33,7 @@ app.controller('FormEdit', ['$scope', '$rootScope', '$http', '$location', functi
                         document.getElementById("message-response").innerHTML = "Se ha presentado un error, intentalo nuevaente";
                 });
         }else{
-            document.getElementById("message-response").innerHTML = "Hace falta alg&uacute;n valor, por favor revisatu informaci&oacute;n";
+            document.getElementById("message-response").innerHTML = "Hace falta alg&uacute;n valor, por favor revisa tu informaci&oacute;n";
         }
     };
 

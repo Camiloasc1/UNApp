@@ -12,23 +12,24 @@ app.controller('FormCreate', ['$scope', '$rootScope', '$http', '$location', func
 
     $scope.sendFormCreate = function(){
         document.getElementById("message-response").innerHTML = "... ...";
-
-        $http.post("course/createCourse",
-            {
-                location: $scope.location.id,
-                code: $scope.code,
-                name: $scope.name,
-                typo: $scope.typo,
-                descr: $scope.descr,
-                cont: $scope.cont,
-                teachers: $scope.teachers
-            })
-            .then(function (response) {
-                if( parseInt(response.data) == 1 ){
-                    document.getElementById("message-response").innerHTML = "Se ha guardado correctamente";
-                }else
-                    document.getElementById("message-response").innerHTML = "Se ha presentado un error, intentalo nuevaente";
-            });
+        if( $scope.location.id != null && $scope.name != "" && $scope.code != "" && $scope.typo != "" && $scope.teachers.length > 0 ) {
+            $http.post("course/createCourse",
+                {
+                    location: $scope.location.id,
+                    code: $scope.code,
+                    name: $scope.name,
+                    typo: $scope.typo,
+                    descr: $scope.descr,
+                    cont: $scope.cont,
+                    teachers: $scope.teachers
+                })
+                .then(function (response) {
+                    if (parseInt(response.data) == 1) {
+                        document.getElementById("message-response").innerHTML = "Se ha guardado correctamente";
+                    } else
+                        document.getElementById("message-response").innerHTML = "Se ha presentado un error, intentalo nuevaente";
+                });
+        }else document.getElementById("message-response").innerHTML = "Hace falta alg&uacute;n valor, por favor revisa tu informaci&oacute;n";
     };
 
     $scope.searchTeacher = function( event ){
