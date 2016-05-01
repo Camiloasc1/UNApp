@@ -102,7 +102,7 @@ class TeacherController {
         def links = request.JSON.links
         def courses = request.JSON.courses
 
-        if( ( id != null && id > 0 )&& ( location != null && location > 0 ) && ( name != null && name != "" ) && ( username != null && username != "" ) ) {
+        if( ( id.intValue() > 0 )&& ( location.intValue() > 0 ) && ( name != "" ) && ( username != "" ) ) {
 
             def teacher = Teacher.findById(id)
 

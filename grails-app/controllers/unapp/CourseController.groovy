@@ -192,7 +192,7 @@ class CourseController {
         def cont = request.JSON.cont
         def teachers = request.JSON.teachers
 
-        if( ( id != null && id > 0 )&& ( location != null && location > 0 ) && ( name != null && name != "" ) && ( code != null && code > 0 ) && ( typo != null && typo != "" ) && ( teachers != null && teachers.length > 0 )  ) {
+        if( ( id.intValue() > 0 )&& ( location.intValue() > 0 ) && ( name != "" ) && ( code.intValue() > 0 ) && ( typo != "" ) && ( teachers.size() > 0 )  ) {
             def course = Course.findById(id)
 
             course.location = Location.findById(location)
@@ -232,7 +232,8 @@ class CourseController {
         def descr = request.JSON.descr
         def cont = request.JSON.cont
         def teachers = request.JSON.teachers
-        if( ( location != null && location > 0 ) && ( name != null && name != "" ) && ( code != null && code > 0 ) && ( typo != null && typo != "" ) && ( teachers != null && teachers.length > 0 )  ) {
+
+        if( ( location.intValue() > 0 ) && ( name != "" ) && ( code.intValue() > 0 ) && ( typo != "" ) && ( teachers.size() > 0 )  ) {
             def course = new Course()
 
             course.location = Location.findById(location)
