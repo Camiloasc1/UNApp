@@ -182,7 +182,7 @@ class CourseController {
         respond result, model: [result: result]
     }
 
-    def updateCourse(/*, String location, int code, String name, String typo, String descr, String teachers*/) {
+    def updateCourse() {
 
         def id = request.JSON.id.toInteger()
         def location = request.JSON.location
@@ -214,13 +214,18 @@ class CourseController {
     }
 
     def teacherSearch(String teacher) {
+        def alg = Course.findById(276)
+        alg.location = Location.findById(1)
+        alg.save(flush: true)
+
+        print alg.location
+
         def result = Teacher.findAllByNameIlike("%" + teacher + "%", [max: 5]).collect { teach ->
             [
                     id  : teach.id,
                     name: teach.name
             ]
         }
-        //respond result, model: [result: result]
         render result as JSON
     }
 

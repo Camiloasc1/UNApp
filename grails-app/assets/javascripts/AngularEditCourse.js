@@ -41,10 +41,13 @@ app.controller('FormEdit', ['$scope', '$rootScope', '$http', '$location', functi
                 params: {teacher : str}
             })
             .then(function (response) {
+                document.getElementById("livesearch").style.display = "block";
                 $scope.teachersSearch = response.data;
             });
         }else{
+            document.getElementById("livesearch").style.display = "none";
             $scope.teachersSearch = [];
+            document.getElementById("search-icons").className = "glyphicon glyphicon-search";
         }
     };
 
@@ -57,8 +60,15 @@ app.controller('FormEdit', ['$scope', '$rootScope', '$http', '$location', functi
                 break;
             }
         }
-        if( find === false )
-            $scope.teachers.push( teacher );
+        if( find === false ) {
+            $scope.teachers.push(teacher);
+            document.getElementById("teacher-search").value = name;
+            document.getElementById("livesearch").style.display = "none";
+            $scope.teachersSearch = [];
+            document.getElementById("search-icons").className = "glyphicon glyphicon-ok ok-search";
+        }else{
+            document.getElementById("search-icons").className = "glyphicon glyphicon-remove remove-search";
+        }
     };
 
     $scope.popFromTeachers = function( event ){
@@ -83,7 +93,6 @@ app.controller('FormEdit', ['$scope', '$rootScope', '$http', '$location', functi
                 $scope.cont = response.data.courseInstance.contents;
                 $scope.location = response.data.locations;
                 $scope.teachers = response.data.teachers;
-                console.log(response.data.courseInstance);
             });
     };
     $scope.findCourse();

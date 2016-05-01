@@ -347,6 +347,43 @@ ul {
     float: left;
 }
 
+.edit-txtarea{
+    height: 160px !important;
+}
+
+.edit-txtinput{
+    margin-top: -29px;
+}
+
+.search-window{
+    display: none;
+    position: absolute;
+    background-color: white;
+    border: 1px solid black;
+    padding: 5px 10px;
+}
+
+.ok-search{
+    color: #4caf50;
+}
+
+.remove-search{
+    color: #cc0000;
+}
+
+.edit-save-btn{
+    height: 50px;
+    width: 160px;
+    margin: 0 auto 0 auto;
+    display: block;
+}
+
+.search-window-opt:hover{
+    cursor: pointer;
+    background-color: #3f51b5;
+    color: #FFFFFF;
+}
+
 @media ( max-width: 540px  ){
     .voting-container{
         margin-top: 10px;
