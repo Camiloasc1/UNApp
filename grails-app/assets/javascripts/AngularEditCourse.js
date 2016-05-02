@@ -13,7 +13,7 @@ app.controller('FormEdit', ['$scope', '$rootScope', '$http', '$location', functi
     $scope.teachersSearch = [];
     $scope.sendFormEdit = function(){
         document.getElementById("message-response").innerHTML = "... ...";
-        if( $scope.location.id != null && $scope.name != "" && $scope.typo != "" && $scope.teachers.length > 0 && $scope.credits != ""  ) {
+        if( $scope.location.id > 0 && $scope.name != "" && $scope.typo != "" && $scope.teachers.length > 0 && $scope.credits != ""  ) {
             $http.post("course/updateCourse",
                 {
                     id: $scope.id,
@@ -98,6 +98,7 @@ app.controller('FormEdit', ['$scope', '$rootScope', '$http', '$location', functi
                 $scope.descr = response.data.courseInstance.description;
                 $scope.cont = response.data.courseInstance.contents;
                 $scope.location = response.data.locations;
+                $scope.location.id = response.data.courseInstance.location.id;
                 $scope.teachers = response.data.teachers;
             });
     };

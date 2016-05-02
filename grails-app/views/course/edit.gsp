@@ -26,7 +26,15 @@
 
 									<label for="location">Locación</label>
 									<select ng-model ="location.id" class="form-control edit-txtinput" id="location">
-										<option ng-repeat="loc in location" value="{{loc.id}}" ng-selected="loc.selected == 1">{{loc.location}}</option>
+										<option ng-repeat="loc in location" value="{{loc.id}}">{{loc.location}}</option>
+									</select>
+
+									<label for="typo">Tipología</label>
+									<select ng-model ="typo" class="form-control edit-txtinput" id="typo">
+										<option value="P">Nivelación</option>
+										<option value="B">Fundamentación</option>
+										<option value="C">Disciplinar</option>
+										<option value="L">Libre Elección</option>
 									</select>
 
 									<label for="credits">Créditos</label>
