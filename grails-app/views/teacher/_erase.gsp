@@ -12,10 +12,14 @@
         </thead>
         <tbody>
         <tr ng-repeat="teacher in teachers" class="clickable-element"
-            ng-click="eraseTeacher(teacher.id)">
+            ng-click="eraseTeacher(teacher)">
             <td>{{teacher.name}}</td>
             <td>{{teacher.email}}</td>
         </tr>
         </tbody>
     </table>
+
+    <div align="center">
+        <h2 ng-model = "confirmed" >{{confirmed}}</h2>
+    </div>
 </div>
