@@ -2,68 +2,85 @@
 <html>
 	<head>
 		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'course.label', default: 'Course')}" />
-		<title><g:message code="default.edit.label" args="[entityName]" /></title>
 	</head>
 	<body>
-		<div class="container">
-			<div class="jumbotron">
-				<div class="row">
-					<form >
-						<input type="hidden" id="id-course" value="${result.courseInstance.id}" />
-						<label>Locación</label>
-						<select id="location">
-							<g:each in="${result.locations}">
-								<option value="${it.name}">${it.name}</option>
-							</g:each>
-						</select>
-						<br />
-						<label>Código</label>
-						<input id="code" value="${result.courseInstance.code}" />
-						<br />
-						<label>Nombre</label>
-						<input id="name" value="${result.courseInstance.name}" />
-						<br />
-						<label>Tipologia</label>
-						<input id="typo" value="${result.courseInstance.typology}" />
-						<br />
-						<label>Descripción</label>
-						<textarea id="descr">${result.courseInstance.description}</textarea>
-						<br />
-						<label>Profesores</label>
-						<input class="teachers" onkeyup="showResult(this.value)" value=""/>
-						<div id="livesearch"></div>
-						<div>
-							<table class="table table-striped">
-								<thead>
-								<tr>
-									<th>Nombre</th>
-									<th>Boton</th>
-								</tr>
-								</thead>
-								<tbody id="teacher-table">
-								<g:each in="${result.courseInstance.teachers}">
-									<tr id="${it.id}" class="teacher-info">
-										<td>${it.name}</td>
-										<td><button type="button" class="btn btn-default" onclick="erase_teacher(event)">Borrar</button></td>
-									</tr>
-								</g:each>
-								</tbody>
-							</table>
+		<div ng-app="EditCourse" class="container subjectInfo">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="jumbotron">
+						<div class="row" ng-controller="FormEdit">
+							<form novalidate role="form" >
+								<div class="col-md-4 col-lg-5">
+									<img src="${assetPath(src: 'book.png')}" class="img-rounded center-block photo-size"
+										 height="250"
+										 width="250">
+
+
+									<label for="name">Nombre</label>
+									<input type="text"  id="name" ng-model ="name" class="form-control edit-txtinput" value="" />
+
+
+									<label for="code">Código</label>
+									<input type="text" id="code" ng-model ="code" class="form-control edit-txtinput" value="" disabled="disabled"/>
+
+
+									<label for="location">Locación</label>
+									<select ng-model ="location.id" class="form-control edit-txtinput" id="location">
+										<option ng-repeat="loc in location" value="{{loc.id}}">{{loc.location}}</option>
+									</select>
+
+									<label for="typo">Tipología</label>
+									<select ng-model ="typo" class="form-control edit-txtinput" id="typo">
+										<option value="P">Nivelación</option>
+										<option value="B">Fundamentación</option>
+										<option value="C">Disciplinar</option>
+										<option value="L">Libre Elección</option>
+									</select>
+
+									<label for="credits">Créditos</label>
+									<input type="text" id="credits" ng-model ="credits" class="form-control edit-txtinput" value="" />
+
+								</div>
+
+								<div class="col-md-8 col-lg-7">
+
+									<h2>Descripción:</h2>
+									<textarea id="descr" ng-model ="descr" class="form-control edit-txtarea"></textarea>
+
+									<h2>Contenidos:</h2>
+									<textarea id="cont" ng-model ="cont" class="form-control edit-txtarea"></textarea>
+
+									<h2>Profesores:</h2>
+									<input class="teachers" id="teacher-search" ng-keyup="searchTeacher($event)" placeholder="Busca un profesor"/>
+									<span class="glyphicon glyphicon-search" id="search-icons"></span>
+									<div id="livesearch" class="search-window">
+										<div ng-repeat="teacher in teachersSearch" ng-click="appendToTeachers( teacher.id, teacher.name )" class="search-window-opt">{{teacher.name}}</div>
+									</div>
+
+									<div>
+										<table class="table table-striped">
+											<thead>
+											<tr>
+												<th>Nombre</th>
+												<th>Boton</th>
+											</tr>
+											</thead>
+											<tbody id="teacher-table">
+											<tr ng-repeat="teacher in teachers" id="{{teacher.id}}">
+												<td>{{teacher.name}}</td>
+												<td><button type="button" class="btn btn-default" ng-click="popFromTeachers($event)">Borrar</button></td>
+											</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div id="message-response" class="response-txt"></div>
+								<input type="submit" ng-click="sendFormEdit()" class="btn btn-default edit-save-btn" value="Guardar" />
+							</form>
 						</div>
-						<button type="button" class="btn btn-default" onclick="save_teacher()">Guardar</button>
-						<div id="message-response"></div>
-					</form>
+					</div>
 				</div>
 			</div>
-		</div>
-		<a href="#edit-course" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-			</ul>
 		</div>
 	</body>
 </html>

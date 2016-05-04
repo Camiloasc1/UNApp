@@ -1,5 +1,6 @@
 package unapp
 
+import grails.converters.JSON
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
@@ -69,6 +70,101 @@ class TeacherController {
 
     def create() {
         respond new Teacher(params)
+    }
+
+    def getTeacherForm( int id ){
+        def teacher = Teacher.findById(id)
+        def result = [
+                teacherInstance: teacher,
+                courses: teacher.courses.collect { course ->
+                    [
+                            id: course.id,
+                            name: course.name
+                    ]
+                },
+                locations     : Location.findAll().collect { location ->
+                    [
+                            id: location.id,
+                            location: location.name,
+                            selected: ( teacher.location.id == location.id  )? 1 : 0
+                    ]
+                }
+        ]
+        respond result, model: [result: result]
+    }
+
+    def updateTeacher() {
+        def id = request.JSON.id.toInteger()
+        def location = request.JSON.location.toInteger()
+        def name = request.JSON.name
+        def username = request.JSON.username
+        def info = request.JSON.info
+        def links = request.JSON.links
+        def courses = request.JSON.courses
+
+        if( ( id.intValue() > 0 )&& ( location.intValue() > 0 ) && ( name != "" ) && ( username != "" ) ) {
+
+            def teacher = Teacher.findById(id)
+
+            teacher.location = Location.findById(location)
+            teacher.name = name
+            teacher.username = username
+            teacher.information = info
+            //teacher.links = links
+
+            def courses_array = courses.collect {
+                Course.findById(it.id)
+            }
+
+            teacher.courses = courses_array
+            if (teacher.save(flush: true))
+                render 1
+            else
+                render 0
+        }else
+            render 0
+    }
+
+    def courseSearch(String course) {
+        def result = Course.findAllByNameIlike("%" + course + "%", [max: 5]).collect { cour ->
+            [
+                    id  : cour.id,
+                    name: cour.name
+            ]
+        }
+        render result as JSON
+    }
+
+    def createTeacher(){
+        def location = request.JSON.location.toInteger()
+        def name = request.JSON.name
+        def username = request.JSON.username
+        def info = request.JSON.info
+        def links = request.JSON.links
+        def courses = request.JSON.courses
+
+        if( ( location.intValue() > 0 ) && ( name != "" ) && ( username != "" ) ) {
+            def teacher = new Teacher()
+
+            teacher.location = Location.findById(location)
+            teacher.name = name
+            teacher.username = username
+            teacher.information = info
+            //teacher.links = links
+
+            if( courses.size() > 0 ) {
+                def courses_array = courses.collect {
+                    Course.findById(it.id)
+                }
+
+                teacher.courses = courses_array
+            }
+
+            if (teacher.save(flush: true))
+                render 1
+            else
+                render 0
+        }else render 0
     }
 
     @Transactional

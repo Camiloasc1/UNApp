@@ -2,37 +2,87 @@
 <html>
 	<head>
 		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'course.label', default: 'Course')}" />
-		<title><g:message code="default.create.label" args="[entityName]" /></title>
 	</head>
 	<body>
-		<a href="#create-course" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-			</ul>
-		</div>
-		<div id="create-course" class="content scaffold-create" role="main">
-			<h1><g:message code="default.create.label" args="[entityName]" /></h1>
-			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
-			</g:if>
-			<g:hasErrors bean="${courseInstance}">
-			<ul class="errors" role="alert">
-				<g:eachError bean="${courseInstance}" var="error">
-				<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
-				</g:eachError>
-			</ul>
-			</g:hasErrors>
-			<g:form url="[resource:courseInstance, action:'save']" >
-				<fieldset class="form">
-					<g:render template="form"/>
-				</fieldset>
-				<fieldset class="buttons">
-					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
-				</fieldset>
-			</g:form>
+		<div ng-app="CreateCourse" class="container subjectInfo">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="jumbotron">
+						<div class="row" ng-controller="FormCreate">
+							<form novalidate role="form" >
+								<div class="col-md-4 col-lg-5">
+									<img src="${assetPath(src: 'book.png')}" class="img-rounded center-block photo-size"
+										 height="250"
+										 width="250">
+
+
+									<label for="name">Nombre</label>
+									<input type="text"  id="name" ng-model ="name" class="form-control edit-txtinput" value="" />
+
+
+									<label for="code">Código</label>
+									<input type="text" id="code" ng-model ="code" class="form-control edit-txtinput" value="" />
+
+
+									<label for="location">Locación</label>
+									<select ng-model ="location.id" class="form-control edit-txtinput" id="location">
+										<option ng-repeat="loc in location" value="{{loc.id}}" ng-selected="loc.selected == 1">{{loc.location}}</option>
+									</select>
+
+									<label for="typo">Tipología</label>
+									<select ng-model ="typo" class="form-control edit-txtinput" id="typo">
+										<option value="P">Nivelación</option>
+										<option value="B">Fundamentación</option>
+										<option value="C">Disciplinar</option>
+										<option value="L">Libre Elección</option>
+									</select>
+
+									<label for="credits">Créditos</label>
+									<input type="text" id="credits" ng-model ="credits" class="form-control edit-txtinput" value="" />
+
+
+								</div>
+
+								<div class="col-md-8 col-lg-7">
+
+									<h2>Descripción:</h2>
+									<textarea id="descr" ng-model ="descr" class="form-control edit-txtarea"></textarea>
+
+									<h2>Contenidos:</h2>
+									<textarea id="cont" ng-model ="cont" class="form-control edit-txtarea"></textarea>
+
+									<h2>Profesores:</h2>
+									<input class="teachers" id="teacher-search" ng-keyup="searchTeacher($event)" placeholder="Busca un profesor" autocomplete="off" />
+									<span class="glyphicon glyphicon-search" id="search-icons"></span>
+									<div id="livesearch" class="search-window">
+										<div ng-repeat="teacher in teachersSearch" ng-click="appendToTeachers( teacher.id, teacher.name )" class="search-window-opt">{{teacher.name}}</div>
+									</div>
+
+									<div>
+										<table class="table table-striped">
+											<thead>
+											<tr>
+												<th>Nombre</th>
+												<th>Boton</th>
+											</tr>
+											</thead>
+											<tbody id="teacher-table">
+											<tr ng-repeat="teacher in teachers" id="{{teacher.id}}">
+												<td>{{teacher.name}}</td>
+												<td><button type="button" class="btn btn-default" ng-click="popFromTeachers($event)">Borrar</button></td>
+											</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div id="message-response" class="response-txt"></div>
+								<input type="submit" ng-click="sendFormCreate()" class="btn btn-default edit-save-btn" value="Guardar" />
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>
+
