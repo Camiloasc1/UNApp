@@ -3,6 +3,7 @@ package unapp
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import grails.converters.JSON
 
 @Transactional(readOnly = true)
 class TeacherController {
@@ -97,6 +98,20 @@ class TeacherController {
             '*' { respond teacherInstance, [status: CREATED] }
         }
     }
+
+    @Transactional
+    def deleteAux(){
+        def id = request.JSON.id
+        def teacher = Teacher.findById(id)
+        try{
+            teacher.delete(failOnError:true, flush:true)
+            render "true"
+        }
+        catch(e) {
+            render "false"
+        }
+    }
+
 
     def edit(Teacher teacherInstance) {
         respond teacherInstance

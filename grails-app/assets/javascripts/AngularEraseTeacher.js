@@ -23,13 +23,24 @@ app.controller('eraseController', ['$scope', '$rootScope', '$http', '$window', f
             });
     };
 
-    $scope.eraseTeacher = function(id){
-        alert("Borrando "+id);
+    $scope.eraseTeacher = function(teacher){
+        var c = confirm("Vas a eliminar a "+teacher.name+" ¿estas seguro? (esta operacion no se puede deshacer)");
+        if(c){
+            $http.post('teacher/deleteAux',  {
+                    id: teacher.id
+                })
+                .then( function (response) {
+                    $scope.teachers = [];
+                    if(response.data == "true")
+                        $scope.confirmed = "El profesor " + teacher.name + " ha sido borrado correctamente";
+                    else
+                        $scope.confirmed = "Error en la operación";
+                } );
+        }
     };
 
     $scope.$watch('query', function () {
         if ($scope.query.length < 3) {
-            $scope.courses = [];
             $scope.teachers = [];
         } else {
             $scope.search();
