@@ -28,11 +28,7 @@
 			<li class="dropdown">
 				<a href="#" data-toggle="dropdown"><span class="fa fa-user"></span> Usuarios <span class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu">
-					<li><a href="#addUser" data-toggle="tab">Agregar</a></li>
-					<li class="divider"></li>
-					<li><a href="#editUser" data-toggle="tab">Modificar</a></li>
-					<li class="divider"></li>
-					<li><a href="#eraseUser" data-toggle="tab">Borrar</a></li>
+					<li><a href="#blockUser" data-toggle="tab">Bloquear</a></li>
 				</ul>
 			</li>
 		</ul>
@@ -42,11 +38,9 @@
 			<div class="tab-pane fade" id="editTeacher">modificar profesor</div>
 			<div class="tab-pane fade" id="eraseTeacher"><g:render template="/teacher/erase"></g:render></div>
 			<div class="tab-pane fade" id="addCourse">agregar materia</div>
-			<div class="tab-pane fade" id="editCourse">modificar materia</div>
+			<div class="tab-pane fade" id="editCourse">editar materia </div>
 			<div class="tab-pane fade" id="eraseCourse">borrar materia</div>
-			<div class="tab-pane fade" id="addUser">agregar usuario</div>
-			<div class="tab-pane fade" id="editUser">modificar usuario</div>
-			<div class="tab-pane fade" id="eraseUser">borrar usuario</div>
+			<div class="tab-pane fade" id="blockUser">bloquear usuario</div>
 		</div>
 	</body>
 </html>

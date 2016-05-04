@@ -50,7 +50,7 @@ class TeacherController {
     }
 
     def erase(){
-        render view: "erase"
+        render template: "erase"
     }
 
     def comments(int id, int max, int offset) {
