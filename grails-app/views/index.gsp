@@ -6,12 +6,12 @@
 
 <body>
 <div ng-app="SearchApp" ng-controller="SearchController" class="container">
-    <div class="row">
+    <div class="row ">
         <div class="col-xs-12">
             <div class="jumbotron">
                 <div class="row">
                     <div class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
-                        <img class="img-responsive center-block" src="${assetPath(src: 'search_logo.png')}"
+                        <img class="img-responsive center-block search-logo" src="${assetPath(src: 'search_logo.png')}"
                              alt="Search Logo">
                     </div>
                 </div>
