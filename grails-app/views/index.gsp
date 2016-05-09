@@ -16,11 +16,11 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div id="showSearch" class="row">
                     <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
                         <form ng-submit="search()">
                             <div class="input-group">
-                                <input type="text" class="form-control input-lg"
+                                <input id="mainSearch" type="text" class="form-control input-lg"
                                        placeholder="Buscar un profesor o materia"
                                        ng-model="query"/>
                                 <span class="input-group-btn">
@@ -49,7 +49,7 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="teacher in teachers" class="clickable-element"
-                        ng-click="showTeacher(teacher.id)">
+                        ng-click="showTeacher(teacher.id)" end-search>
                         <td>{{teacher.name}}</td>
                         <td>{{teacher.email}}</td>
                     </tr>
@@ -75,7 +75,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="course in courses" class="clickable-element" ng-click="showCourse(course.id)">
+                    <tr ng-repeat="course in courses" class="clickable-element" ng-click="showCourse(course.id)" end-search>
                         <td>{{course.code}}</td>
                         <td>{{course.name}}</td>
                         <td>{{course.credits}}</td>

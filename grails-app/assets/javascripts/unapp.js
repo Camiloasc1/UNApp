@@ -152,3 +152,31 @@ function showResult(str) {
         xmlhttp.send();
     }
 }
+
+/* SEARCH BUTTON NAVBAR*/
+
+function clickBarSearch(){
+    if($('#search_nav').css("cursor") == "pointer"){
+        $('#search_nav').css({
+            "cursor" : "text",
+            "width": "290px",
+            "z-index": "1",
+            "border-bottom": "1px solid #BBB"
+        });
+        $('#search_nav').focus();
+    }else{
+        $('#search_nav').css({
+            "cursor" : "pointer",
+            "width": "0",
+            "z-index": "4",
+            "border-bottom": "none"
+        });
+        if($('#search_nav').val() != "") {
+            document.location.href="/UNApp/?search_nav="+$('#search_nav').val();
+
+        }
+
+    }
+
+}
+

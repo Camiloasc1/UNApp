@@ -134,6 +134,7 @@ app.controller('CommentsController', ['$scope', '$rootScope', '$http', '$locatio
     $scope.loadMore();
 }]);
 
+
 app.config(['$locationProvider', function ($locationProvider) {
     $locationProvider.html5Mode({enabled: true, rewriteLinks: false});
 }]);

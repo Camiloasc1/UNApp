@@ -93,9 +93,10 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <form action="" autocomplete="on">
-                        <input id="search_nav" name="search_nav" type="text" placeholder="Busar una materia o profesor"><input id="search_submit_nav" value="" type="submit">
+                    <form action="" autocomplete="off">
+                        <input id="search_nav" name="search_nav" type="text" placeholder="Busar una materia o profesor">
                     </form>
+                    <div id="search_submit_nav"  onclick="clickBarSearch()"></div>
                 </li>
                 <li>
                     <oauth:disconnected provider="google">
