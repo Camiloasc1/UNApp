@@ -93,10 +93,11 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <form action="" autocomplete="off">
+                    <form autocomplete="off" onsubmit="clickBarSearch()" onKeyPress="return enterpressalert()">
                         <input id="search_nav" name="search_nav" type="text" placeholder="Busar una materia o profesor">
+                        <div id="search_submit_nav"  onclick="clickBarSearch()"></div>
                     </form>
-                    <div id="search_submit_nav"  onclick="clickBarSearch()"></div>
+
                 </li>
                 <li>
                     <oauth:disconnected provider="google">

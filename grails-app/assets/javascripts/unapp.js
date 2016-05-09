@@ -154,6 +154,27 @@ function showResult(str) {
 }
 
 /* SEARCH BUTTON NAVBAR*/
+/*
+$(document).ready(function() {
+    $(window).keydown(function(event){
+        if(event.keyCode == 13) {
+            event.preventDefault();
+            clickBarSearch();
+            return false;
+        }
+    });
+});
+*/
+function enterpressalert(){
+    $(window).keydown(function(event){
+        if(event.keyCode == 13) {
+            event.preventDefault();
+            clickBarSearch();
+            return false;
+        }
+    });
+
+}
 
 function clickBarSearch(){
     if($('#search_nav').css("cursor") == "pointer"){
@@ -172,6 +193,7 @@ function clickBarSearch(){
             "border-bottom": "none"
         });
         if($('#search_nav').val() != "") {
+
             document.location.href="/UNApp/?search_nav="+$('#search_nav').val();
 
         }
