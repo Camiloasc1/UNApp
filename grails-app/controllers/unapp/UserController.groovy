@@ -15,8 +15,16 @@ class UserController {
         respond User.list(params), model:[userInstanceCount: User.count()]
     }
 
-    def show(User userInstance) {
-        respond userInstance
+    def show(int id) {
+        def result = User.get(id).collect { user ->
+            [id         : user.id,
+             name       : user.name,
+             googleID   : user.googleID,
+             picture    : user.picture,
+            ]
+        }[0]
+
+        respond result, model: [result: result]
     }
 
     def create() {
