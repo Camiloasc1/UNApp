@@ -429,6 +429,8 @@ ul {
     transition: width .4s cubic-bezier(0.000, 0.795, 0.000, 1.000);
     border-bottom: none;
     cursor: pointer;
+    background-color: #009688;
+    padding-left: 10px;
 
 
 
@@ -461,7 +463,6 @@ ul {
     height: 42px;
     width: 63px;
     display: inline-block;
-    color:red;
     float: right;
     text-indent: -10000px;
     background: url(/UNApp/assets/lupa.png) center center no-repeat;

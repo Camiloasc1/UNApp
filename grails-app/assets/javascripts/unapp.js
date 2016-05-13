@@ -180,7 +180,7 @@ function clickBarSearch(){
     if($('#search_nav').css("cursor") == "pointer"){
         $('#search_nav').css({
             "cursor" : "text",
-            "width": "290px",
+            "width": "270px",
             "z-index": "1",
             "border-bottom": "1px solid #BBB"
         });
