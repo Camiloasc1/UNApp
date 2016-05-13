@@ -87,13 +87,17 @@
                 -->
                 <unapp:isAdmin>
                     <li class="page-scroll">
-                        <a href="${createLink(controller: 'admin', action: 'index')}"><h4><i
-                                class="fa fa-cogs"></i> Administacion</h4></a>
+                        <a href="${createLink(controller: 'admin', action: 'index')}"><h4><i class="fa fa-cogs"></i> Administacion</h4></a>
                     </li>
                 </unapp:isAdmin>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
+                <li class="page-scroll">
+                    <oauth:connected provider="google">
+                        <a href="${request.contextPath}/user/show?id=${session.user.id}"><h4><i class="fa fa-user"></i> Mi cuenta </h4></a>
+                    </oauth:connected>
+                </li>
                 <li>
                     <oauth:disconnected provider="google">
                         <oauth:connect provider="google"

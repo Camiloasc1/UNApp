@@ -17,7 +17,7 @@
 		<div class="col-lg-7">
 			<div class="jumbotron">
 				<div class="row">
-					<h2> Mis comentarios </h2>
+					<h2 style="text-align: center"> Mis comentarios </h2>
 				</div>
 			</div>
 		</div>
