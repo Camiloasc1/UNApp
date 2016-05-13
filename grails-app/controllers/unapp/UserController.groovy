@@ -20,7 +20,10 @@ class UserController {
             [id         : user.id,
              name       : user.name,
              googleID   : user.googleID,
+             email      : user.email,
              picture    : user.picture,
+             positiveVotes     : user.positiveVotes,
+             negativeVotes     :user.negativeVotes,
             ]
         }[0]
 
