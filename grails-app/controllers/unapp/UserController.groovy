@@ -30,6 +30,14 @@ class UserController {
         respond result, model: [result: result]
     }
 
+    def search(String query) {
+        def result = User.findAllByNameIlike("%" + query + "%").collect { c ->
+            [id: c.id, name: c.name, picture: c.picture]
+        }
+
+        respond result, model: [result: result]
+    }
+
     def create() {
         respond new User(params)
     }

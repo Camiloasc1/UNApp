@@ -4,14 +4,18 @@ app.controller('SearchController', ['$scope', '$rootScope', '$http', '$window', 
     $scope.query = "";
     $scope.courses = [];
     $scope.teachers = [];
+    $scope.users= [];
     $scope.loadingCourses = false;
     $scope.loadingTeachers = false;
+    $scope.loadingUsers = false;
     $scope.search = function () {
         $scope.courses = [];
         $scope.teachers = [];
+        $scope.users = [];
 
         $scope.loadingTeachers = true;
         $scope.loadingCourses = true;
+        $scope.loadingUsers = true;
 
         $http.get('teacher/search', {
                 params: {query: $scope.query}
@@ -27,6 +31,13 @@ app.controller('SearchController', ['$scope', '$rootScope', '$http', '$window', 
                 $scope.courses = response.data;
                 $scope.loadingCourses = false;
             });
+        $http.get('user/search', {
+                params: {query: $scope.query}
+            })
+            .then(function (response) {
+                $scope.users = response.data;
+                $scope.loadingUsers = false;
+            });
     };
     $scope.showTeacher = function (id) {
         $window.location.href = 'teacher/show?id=' + id;
@@ -34,11 +45,15 @@ app.controller('SearchController', ['$scope', '$rootScope', '$http', '$window', 
     $scope.showCourse = function (id) {
         $window.location.href = 'course/show?id=' + id;
     };
+    $scope.showUser = function (id) {
+        $window.location.href = 'user/show?id=' + id;
+    };
 
     $scope.$watch('query', function () {
         if ($scope.query.length < 3) {
             $scope.courses = [];
             $scope.teachers = [];
+            $scope.users = [];
         } else {
             $scope.search();
         }

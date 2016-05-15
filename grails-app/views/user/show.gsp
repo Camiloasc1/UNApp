@@ -4,7 +4,7 @@
 </head>
 
 <body>
-<div class="container ">
+<div ng-app="SearchApp" ng-controller="SearchController" class="container ">
 	<div class="row">
 		<div class="col-lg-5">
 			<div class="jumbotron">
@@ -26,6 +26,39 @@
 				<div class="row">
 					<h2 style="text-align: center"> Mis comentarios </h2>
 				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-5">
+			<div class="jumbotron">
+				<h4>Buscar usuarios:</h4>
+				<form ng-submit="search()">
+					<div class="input-group">
+						<input type="text" class="form-control input-lg"
+							   placeholder="Ingresa el nombre ..."
+							   ng-model="query"/>
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-info btn-lg" ng-click="search()">
+								<i class="glyphicon glyphicon-search"></i>
+							</button>
+						</span>
+					</div>
+				</form>
+				<table class="table table-striped table-hover">
+					<thead>
+					<tr>
+						<th>Nombre</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr ng-repeat="user in users" class="clickable-element"
+						ng-click="showUser(user.id)">
+						<td>{{user.name}}</td>
+						<td><img src="{{user.picture}}"  height="40" width="40" ></td>
+					</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
