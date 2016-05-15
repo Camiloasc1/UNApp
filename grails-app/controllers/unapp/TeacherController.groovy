@@ -53,7 +53,7 @@ class TeacherController {
     def comments(int id, int max, int offset) {
         def result = Comment.findAllByTeacher(Teacher.get(id), [sort: "date", order: "desc", max: max, offset: offset]).collect { comment ->
             [id           : comment.id,
-             author       : comment.author.name,
+             author       : [id:comment.author?.id, name:  comment.author?.name],
              picture      : comment.author.picture,
              body         : comment.body,
              date         : comment.date.format("yyyy-MM-dd 'a las' HH:mm"),

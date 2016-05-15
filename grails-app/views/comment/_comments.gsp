@@ -11,7 +11,7 @@
                 <div class="col-xs-11">
                     <div class="panel panel-default">
                         <div class="panel-heading info-comment">
-                            <strong class="username-comment" style="float: left">{{comment.author}}</strong>
+                            <strong class="username-comment" style="float: left"><a href="${request.contextPath}/user/show?id={{comment.author.id}}">{{comment.author.name}}</a></strong>
                             <span class="text-muted date-comment">{{comment.date}}</span>
                             <div ng-if="context=='Course' && comment.teacher.id"
                                  class="link-profesor" >

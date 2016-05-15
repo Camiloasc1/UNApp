@@ -24,7 +24,7 @@ class CommentController {
         ).save(flush: true)
 
         def result = [id           : comment.id,
-                      author       : comment.author.name,
+                      author       : [id:comment.author?.id, name:  comment.author?.name],
                       picture      : comment.author.picture,
                       body         : comment.body,
                       date         : comment.date,
@@ -69,7 +69,7 @@ class CommentController {
         }
 
         def result = [id           : comment.id,
-                      author       : comment.author.name,
+                      author       : [id:comment.author?.id, name:  comment.author?.name],
                       picture      : comment.author.picture,
                       body         : comment.body,
                       date         : comment.date.format("yyyy-MM-dd 'a las' HH:mm"),
@@ -115,7 +115,7 @@ class CommentController {
         }
 
         def result = [id           : comment.id,
-                      author       : comment.author.name,
+                      author       : [id:comment.author?.id, name:  comment.author?.name],
                       picture      : comment.author.picture,
                       body         : comment.body,
                       date         : comment.date.format("yyyy-MM-dd 'a las' HH:mm"),

@@ -18,7 +18,6 @@ class User {
         negativeVotes nullable: false, min: 0
         isAdmin nullable: false
         picture nullable: false
-
         votes nullable: true
     }
 
