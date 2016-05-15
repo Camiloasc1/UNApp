@@ -3,6 +3,7 @@ var app = angular.module('CommentsApp', []);
 app.controller('StarRatingController', ['$scope', '$rootScope', '$http', '$location', function ($scope, $rootScope, $http, $location) {
     $scope.id = parseInt($location.search().id);
     $scope.context = ( $location.path().toLowerCase().indexOf('course') != -1 ) ? 'Course' : ( $location.path().toLowerCase().indexOf('teacher') != -1 ) ? 'Teacher' : '';
+
     $scope.starRating = function (vote) {
         $http.get($scope.context + '/starRate', {
                 params: {id: $scope.id, vote: vote}
