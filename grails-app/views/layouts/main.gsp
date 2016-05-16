@@ -167,6 +167,8 @@
 <asset:javascript src="AngularEditTeacher.js"/>
 <!-- AngularCreateTeacher -->
 <asset:javascript src="AngularCreateTeacher.js"/>
+
+<asset:javascript src="AngularEraseTeacher.js"/>
 </body>
 </html>
 

@@ -75,18 +75,30 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-md-4">
             <div class="jumbotron">
                 <h2 class="text-right">Comentarios:</h2>
             </div>
             <unapp:isAdmin>
                 <div class="jumbotron">
                     <h2 class="text-center"><i class="fa fa-cogs"></i> Administrar</h2>
+                    <div class="row text-center">
+                        <div class="col-xs-12 col-sm-6 col-md-12">
+                            <button class="btn btn-deafult btn-raised" type="button" onclick="window.location.assign('${request.contextPath}/teacher/edit?id=${result.id}')">
+                                <i class="fa fa-pencil-square-o"></i> Editar
+                            </button>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-12">
+                            <button class="btn btn-deafult btn-raised" type="button" onclick="window.location.assign('${request.contextPath}/teacher/edit?id=${result.id}')">
+                                <i class="fa fa-eraser"></i> Borrar
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </unapp:isAdmin>
         </div>
 
-        <div class="col-lg-8">
+        <div class="col-md-8">
             <g:render template="/comment/comments"/>
         </div>
     </div>
