@@ -73,6 +73,62 @@
         <div class="col-lg-4">
             <div class="jumbotron">
                 <h2 class="text-right">Comentarios:</h2>
+                <form>
+                    <div class="input-group form-group">
+                        <input type="text" id="searchComments" class="form-control input-lg"
+                               placeholder="Buscar en comentarios" />
+                        <span class="input-group-btn">
+                            <button id="ButtonSearchComments" type="button" class="btn btn-info btn-lg">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </span>
+
+                    </div>
+                    <div class="text-center">
+                        <span id="advanceSearch" onclick="AdvanceSearch()">
+                            Busqueda Avanzada
+                            <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+                        </span>
+                    </div>
+                    <br>
+                    <div id="advanceOption" >
+                        <div>
+                            <div class="text-left">
+                                <label> Por votos: </label>
+                            </div>
+                            <div class="container">
+                                <i class="material-icons positive-vote" onclick="selectVote(this)">thumb_up</i>
+                                <i class="material-icons negative-vote" onclick="selectVote(this)">thumb_down</i>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="sel1">Por materia(s):</label>
+                            <select class="form-control" id="sel1">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <div class="text-left">
+                                <label for="sel2"> Por fecha: </label>
+                            </div>
+                            <select class="form-control" id="sel2">
+                                <option>Ayer</option>
+                                <option>Hace una semana</option>
+                                <option>Hace un mes</option>
+                                <option>Hace un año</option>
+                            </select>
+
+                        </div>
+
+                    </div>
+
+               </form>
+
+
             </div>
             <unapp:isAdmin>
                 <div class="jumbotron">

@@ -722,3 +722,47 @@ section.success a.active {
     }
 }
 
+
+/* Styles search in comments */
+
+
+
+#searchComments::-webkit-input-placeholder { font-size: 15px; } /* WebKit */
+#searchComments:-moz-placeholder { font-size: 15px; } /* Firefox 18- */
+#searchComments::-moz-placeholder { font-size: 15px; } /* Firefox 19+ */
+#searchComments:-ms-input-placeholder { font-size: 15px; } /* IE 10+ */
+#ButtonSearchComments {
+    padding: 0px;
+    padding-top: 15px;
+    margin: 0px;
+}
+
+#advanceSearch:hover{
+    text-decoration: underline;
+    color: #009688;
+    cursor: pointer;
+}
+#advanceOption>.positive-vote:hover{
+    cursor: pointer;
+
+}
+#advanceOption>.negative-vote:hover{
+    cursor: pointer;
+}
+#advanceOption>.select-positive-vote:hover{
+    cursor: pointer;
+    color: black;
+
+}
+
+
+#advanceOption>.select-negative-vote:hover{
+    cursor: pointer;
+    color: black;
+}
+.select-positive-vote{
+    color: green;
+}
+.select-negative-vote{
+    color: red;
+}
