@@ -84,6 +84,9 @@
         <div class="col-lg-4">
             <div class="jumbotron">
                 <h2 class="text-right">Comentarios:</h2>
+                <oauth:connected provider="google">
+                    <g:render template="/comment/advanceSearch"/>
+                </oauth:connected>
             </div>
             <unapp:isAdmin>
                 <div class="jumbotron">

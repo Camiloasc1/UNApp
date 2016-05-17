@@ -85,3 +85,24 @@ function selectVote(el){
         }
     }
 }
+
+function AdvanceSearch(el){
+    if($(el).hasClass("advanceSearchClicked")) {
+        $(el).removeClass("advanceSearchClicked");
+        $(el).children(".glyphicon").removeClass("glyphicon-menu-up");
+        $(el).children(".glyphicon").addClass("glyphicon-menu-down");
+        $("#advanceOption").hide();
+    }else{
+        $(el).addClass("advanceSearchClicked");
+        $(el).children(".glyphicon").removeClass("glyphicon-menu-down");
+        $(el).children(".glyphicon").addClass("glyphicon-menu-up");
+        $("#advanceOption").show();
+        $('#select-date').focus();
+    }
+}
+
+$(document).ready(function() {
+    $('#sel-materias').multiselect();
+    $('#select-date').multiselect();
+});
+

@@ -742,21 +742,25 @@ section.success a.active {
     color: #009688;
     cursor: pointer;
 }
+
+.advanceSearchClicked{
+    font-weight: bold;
+    color: #009688;
+}
+
+
 #advanceOption>.positive-vote:hover{
     cursor: pointer;
-
 }
-#advanceOption>.negative-vote:hover{
+#advanceOption>.container>.negative-vote:hover{
     cursor: pointer;
 }
-#advanceOption>.select-positive-vote:hover{
+#advanceOption>.container>.select-positive-vote:hover{
     cursor: pointer;
     color: black;
 
 }
-
-
-#advanceOption>.select-negative-vote:hover{
+#advanceOption>.container>.select-negative-vote:hover{
     cursor: pointer;
     color: black;
 }
@@ -766,3 +770,111 @@ section.success a.active {
 .select-negative-vote{
     color: red;
 }
+
+span.hide-native-select{
+    position:relative;
+}
+span.hide-native-select select{
+    border:0!important;
+    clip:rect(0 0 0 0)!important;
+    height:1px!important;
+    margin:-1px -1px -1px -3px!important;
+    overflow:hidden!important;
+    padding:0!important;
+    position:absolute!important;
+    width:1px!important;
+    left:50%;
+    top:30px;
+}
+.multiselect-container{
+    position:absolute;
+    list-style-type:none;
+    margin:0;
+    padding:0;
+}
+.multiselect-container .input-group{
+    margin:5px;
+}
+.multiselect-container>li{
+    padding:0;
+}
+.multiselect-container>li>a.multiselect-all label{
+    font-weight:700;
+}
+.multiselect-container>li.multiselect-group label{
+    margin:0;
+    padding:3px 20px 3px 20px;
+    height:100%;
+    font-weight:700;
+}
+.multiselect-container>li.multiselect-group-clickable label{
+    cursor:pointer;
+}
+.multiselect-container>li>a{
+    padding:0;
+}
+.multiselect-container>li>a>label{
+    margin:0;
+    height:100%;
+    cursor:pointer;
+    font-weight:400;
+    padding:3px 20px 3px 40px;
+}
+.multiselect-container>li>a>label.radio, .multiselect-container>li>a>label.checkbox{
+    margin:0;
+}.multiselect-container>li>a>label>input[type=checkbox]{
+     margin-bottom:5px;
+ }
+.btn-group>.btn-group:nth-child(2)>.multiselect.btn{
+    border-top-left-radius:4px;
+    border-bottom-left-radius:4px;
+}
+.form-inline .multiselect-container label.checkbox, .form-inline .multiselect-container label.radio{
+    padding:3px 20px 3px 40px;
+}
+.form-inline .multiselect-container li a label.checkbox input[type=checkbox], .form-inline .multiselect-container li a label.radio input[type=radio]{
+    margin-left:-20px;
+    margin-right:0;
+}
+#sel-materias + .btn-group > .multiselect {
+    text-transform: initial;
+    width: 100%;
+}
+#sel-materias + .btn-group{
+    width: 100%;
+}
+#sel-materias + .btn-group > ul {
+    width: 100%;
+    text-align: center;
+}
+#sel-materias + .btn-group > ul > li > a > .checkbox{
+    color: black;
+    font-size: 15px;
+}
+#sel-materias + .btn-group > ul > .active > a > .checkbox {
+    color: #fff;
+}
+
+
+#select-date + .btn-group > .multiselect {
+    text-transform: initial;
+    width: 100%;
+}
+#select-date + .btn-group{
+    width: 100%;
+}
+#select-date + .btn-group > ul {
+    width: 100%;
+    text-align: center;
+}
+#select-date + .btn-group > ul > li > a > .radio{
+    color: black;
+    font-size: 15px;
+}
+#select-date + .btn-group > ul > .active > a > .radio {
+    color: #fff;
+}
+.no-top{
+    margin-top: 0px;
+}
+
