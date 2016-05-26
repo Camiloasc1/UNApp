@@ -17,7 +17,7 @@
     </div>
     <br>
     <div id="advanceOption" style="display: none;">
-        <div>
+        <div id="by-votes">
             <div class="text-left">
                 <label> Por votos: </label>
             </div>
@@ -54,15 +54,21 @@
             <div class="text-left">
                 <label> Por fecha: </label>
             </div>
-            <select id="select-date">
+            <select id="select-date" onchange="createDate()">
                 <option value="1">Cualquier fecha</option>
                 <option value="2">Ayer</option>
                 <option value="3">Hace una semana</option>
                 <option value="4">Hace un mes</option>
                 <option value="5">Hace un año</option>
-                <option value="5">Personalizado</option>
+                <option value="6">Personalizado</option>
             </select>
 
+
+        </div>
+        <div id="fecha-desde">
+
+        </div>
+        <div id="fecha-hasta">
 
         </div>
 

@@ -725,8 +725,6 @@ section.success a.active {
 
 /* Styles search in comments */
 
-
-
 #searchComments::-webkit-input-placeholder { font-size: 15px; } /* WebKit */
 #searchComments:-moz-placeholder { font-size: 15px; } /* Firefox 18- */
 #searchComments::-moz-placeholder { font-size: 15px; } /* Firefox 19+ */
@@ -742,28 +740,19 @@ section.success a.active {
     color: #009688;
     cursor: pointer;
 }
+#advanceSearch{
+    color: #009688;
+}
 
 .advanceSearchClicked{
     font-weight: bold;
     color: #009688;
 }
 
+#by-votes>.container>.positive-vote, #by-votes>.container>.negative-vote{
+    cursor: pointer;
+}
 
-#advanceOption>.positive-vote:hover{
-    cursor: pointer;
-}
-#advanceOption>.container>.negative-vote:hover{
-    cursor: pointer;
-}
-#advanceOption>.container>.select-positive-vote:hover{
-    cursor: pointer;
-    color: black;
-
-}
-#advanceOption>.container>.select-negative-vote:hover{
-    cursor: pointer;
-    color: black;
-}
 .select-positive-vote{
     color: green;
 }
@@ -877,4 +866,21 @@ span.hide-native-select select{
 .no-top{
     margin-top: 0px;
 }
+
+#datepicker-desde, #datepicker-hasta{
+    width: 105px;
+    text-align: center;
+    font-size: 16px;
+    float: right;
+    font-weight: 400;
+}
+#ui-datepicker-div{
+    font-size: 13px;
+}
+
+#fecha-desde > p, #fecha-hasta > p{
+    font-size: 17px;
+    text-align: right;
+}
+
 
