@@ -23,7 +23,7 @@ class AdminFilters {
             }
         }
 
-        usr(controller: 'user', action: '*') {
+        usr(controller: 'user', action:  '*', actionExclude:'show|search') {
             before = {
                 def user = session["user"]
                 if(user == null || !user.isAdmin ){
