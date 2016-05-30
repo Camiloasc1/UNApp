@@ -12,7 +12,8 @@
     <link rel="shortcut icon" href="${assetPath(src: 'favicon.ico')}" type="image/x-icon">
     <link rel="apple-touch-icon" href="${assetPath(src: 'apple-touch-icon.png')}">
     <link rel="apple-touch-icon" sizes="114x114" href="${assetPath(src: 'apple-touch-icon-retina.png')}">
-
+    <!-- calendar in advanced search -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <!-- Font Awesome -->
@@ -148,8 +149,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 <!-- Bootstrap -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<!-- calendar in advanced search -->
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script
 <!-- Material Design for Bootstrap -->
 <script src="${request.contextPath}/js/material.min.js"></script>
+
+
 <script src="${request.contextPath}/js/ripples.min.js"></script>
 <script>
     $.material.init();
