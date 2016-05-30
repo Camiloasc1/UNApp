@@ -27,6 +27,30 @@ app.controller('StarRatingController', ['$scope', '$rootScope', '$http', '$locat
     $scope.starMedian();
 }]);
 
+app.controller('CommentsFilter', ['$scope', '$rootScope', '$http', '$location', function ($scope, $rootScope, $http, $location) {
+    $scope.id = parseInt($location.search().id);
+    $scope.context = ( $location.path().toLowerCase().indexOf('course') != -1 ) ? 'Course' : ( $location.path().toLowerCase().indexOf('teacher') != -1 ) ? 'Teacher' : '';
+    $scope.loading = false;
+    $scope.searchFilter = ["", null, [], 0];
+    $scope.date = 0;
+    $scope.advancedSearch = function () {
+        $scope.loading = true;
+        $scope.searchFilter[2] = [];
+        if( $scope.context == "Course" )
+            var sel = document.getElementById("sel-materias");
+        for (var i = 0; i < sel.options.length; i++)
+            if(sel.options[i].selected)
+                $scope.searchFilter[2].push(sel.options[i].value);
+
+        $scope.searchFilter[3] = document.getElementById("select-date").selectedIndex;;
+        $http.post($scope.context+"/commentsFiltered",
+            {id: $scope.id, max: $scope.max, offset: $scope.offset, filters: $scope.searchFilter}
+            ).then(function (response) {
+                $rootScope.$broadcast('newFiltered', response.data);
+                $scope.loading = false;
+            });
+    };
+}]);
 
 app.controller('CommentFormController', ['$scope', '$rootScope', '$http', '$location', function ($scope, $rootScope, $http, $location) {
     $scope.id = parseInt($location.search().id);
@@ -129,6 +153,11 @@ app.controller('CommentsController', ['$scope', '$rootScope', '$http', '$locatio
         $scope.comments = [postedComment].concat($scope.comments);
         $scope.offset++;
         $scope.reload();
+    });
+
+    $scope.$on('newFiltered', function (event, filteredComments) {
+        console.log(filteredComments);
+        $scope.comments = filteredComments;
     });
 
     $scope.loadMore();

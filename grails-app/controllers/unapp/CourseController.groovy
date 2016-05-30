@@ -8,7 +8,7 @@ import grails.converters.JSON
 @Transactional(readOnly = true)
 class CourseController {
 
-    static allowedMethods = [index: "GET", search: "GET", show: "GET", comments: "GET", save: "POST", update: "PUT", delete: "DELETE", updateCourse: "POST"]
+    static allowedMethods = [index: "GET", search: "GET", show: "GET", comments: "GET", commentsFiltered: "POST", save: "POST", update: "PUT", delete: "DELETE", updateCourse: "POST"]
 
     def index() {
         def result = Location.list().collect { l ->
@@ -64,6 +64,70 @@ class CourseController {
              course       : [id: comment.course?.id, name: comment.course?.name],
              teacher      : [id: comment.teacher?.id, name: comment.teacher?.name]
             ]
+        }
+
+        respond result, model: [result: result]
+    }
+
+    def commentsFiltered(){
+        def id = request.JSON.id
+        def max = request.JSON.max
+        def offset = request.JSON.offset
+        def filters = request.JSON.filters
+
+        def criteria = Comment.createCriteria()
+        def res = criteria.list{
+            eq( "course", Course.get(id) )
+            if( filters[0] != "" )
+                like( "body", "%"+filters[0]+"%" )
+            if( filters[3] != 0 ){
+                if( filters[3] == 2 ){
+                    Date yes = new Date(System.currentTimeMillis() - (24 * 60 * 60 * 1000L));
+                    between("date", new Date(), yes)
+                }else if( filters[3] == 3 ){
+                    Date yes = new Date(System.currentTimeMillis() - (7 * 24 * 60 * 60 * 1000L));
+                    between("date", new Date(), yes)
+                }else if( filters[3] == 4 ){
+                    Date yes = new Date(System.currentTimeMillis() - (4 * 7 * 24 * 60 * 60 * 1000L));
+                    between("date", new Date(), yes)
+                }else if( filters[3] == 5 ){
+                    Date yes = new Date(System.currentTimeMillis() - (12 * 4 * 7 * 24 * 60 * 60 * 1000L));
+                    between("date", new Date(), yes)
+                }
+            }
+            order("date", "desc")
+        }.collect { comment ->
+                [id           : comment.id,
+                 author       : comment.author.name,
+                 picture      : comment.author.picture,
+                 body         : comment.body,
+                 date         : comment.date.format("yyyy-MM-dd 'a las' HH:mm"),
+                 voted        : Vote.findByAuthorAndComment(session.user, comment)?.value ?: 0,
+                 positiveVotes: comment.countPositiveVotes(),
+                 negativeVotes: comment.countNegativeVotes(),
+                 course       : [id: comment.course?.id, name: comment.course?.name],
+                 teacher      : [id: comment.teacher?.id, name: comment.teacher?.name]
+                ]
+        }
+
+        if( filters[1] == true )
+            res = res.sort {  a,b -> b.positiveVotes <=> a.positiveVotes }
+        else if( filters[1] == false )
+            res = res.sort {  a,b -> b.negativeVotes <=> a.negativeVotes }
+
+        def result = []
+        if( filters[2] != [] ) {
+            res.each { comment ->
+                if( comment.teacher.id != null  ){
+                    filters[2].each { idt ->
+                        if( idt.toInteger() == comment.teacher.id ) {
+                            result.push(comment)
+                        }
+                    }
+                }
+            }
+        }else{
+            result = res
         }
 
         respond result, model: [result: result]

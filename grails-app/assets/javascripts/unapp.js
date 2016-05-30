@@ -63,8 +63,8 @@ function onAdvanceSearch(){
 }
 */
 function selectVote(el){
-
     if($(el).hasClass("positive-vote")){
+        document.getElementById("t_up").click();
         if($(el).next().hasClass("select-negative-vote")){
             $(el).next().removeClass("select-negative-vote");
         }
@@ -73,10 +73,11 @@ function selectVote(el){
         }else{
             $(el).addClass("select-positive-vote");
         }
+
     }else if($(el).hasClass("negative-vote")){
+        document.getElementById("t_dwn").click();
         if($(el).prev().hasClass("select-positive-vote")){
             $(el).prev().removeClass("select-positive-vote");
-
         }
         if($(el).hasClass("select-negative-vote")){
             $(el).removeClass("select-negative-vote");

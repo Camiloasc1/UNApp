@@ -1,9 +1,9 @@
-<div id="search-advance">
+<div id="search-advance" ng-controller="CommentsFilter">
     <div class="input-group form-group">
-        <input type="text" id="searchComments" class="form-control input-lg"
+        <input type="text" id="searchComments" class="form-control input-lg" ng-model="searchFilter[0]"
                placeholder="Buscar en comentarios" />
         <span class="input-group-btn">
-            <button id="ButtonSearchComments" type="button" class="btn btn-info btn-lg">
+            <button id="ButtonSearchComments" type="button" ng-click="advancedSearch()" class="btn btn-info btn-lg">
                 <i class="glyphicon glyphicon-search"></i>
             </button>
         </span>
@@ -22,8 +22,14 @@
                 <label> Por votos: </label>
             </div>
             <div class="container">
-                <i class="material-icons positive-vote" onclick="selectVote(this)">thumb_up</i>
-                <i class="material-icons negative-vote" onclick="selectVote(this)">thumb_down</i>
+                <input type="checkbox" id="t_up" name="t_up" style="display:none" ng-model="searchFilter[1]">
+                <i class="material-icons positive-vote" onclick="selectVote(this)">
+                    thumb_up
+                </i>
+                <input type="checkbox" id="t_dwn" name="t_dwn" style="display:none" ng-model="searchFilter[1]">
+                <i class="material-icons negative-vote" onclick="selectVote(this)">
+                    thumb_down
+                </i>
             </div>
         </div>
         <br>
@@ -32,7 +38,7 @@
                 <div class="text-left">
                     <label> Por profesor(es): </label>
                 </div>
-                <select id="sel-materias" multiple="multiple">
+                <select id="sel-materias" name="sel-materias" multiple>
                     <g:each in="${result.teachers}" status="i" var="teacher">
                         <option value="${teacher.id}">${teacher.name}</option>
                     </g:each>
@@ -54,17 +60,21 @@
             <div class="text-left">
                 <label> Por fecha: </label>
             </div>
-            <select id="select-date">
+            <select name="select-date" id="select-date">
                 <option value="1">Cualquier fecha</option>
                 <option value="2">Ayer</option>
                 <option value="3">Hace una semana</option>
                 <option value="4">Hace un mes</option>
                 <option value="5">Hace un año</option>
-                <option value="5">Personalizado</option>
+                <option value="6">Personalizado</option>
             </select>
 
 
         </div>
-
+        <div class="text-center" ng-show="loading">
+            <br/>
+            <i class="fa fa-spinner fa-pulse fa-5x"></i>
+            <span class="sr-only">Cargando...</span>
+        </div>
     </div>
 </div>
