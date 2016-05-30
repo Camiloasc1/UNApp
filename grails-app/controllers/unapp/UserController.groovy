@@ -42,6 +42,24 @@ class UserController {
         respond new User(params)
     }
 
+    def comments(int id, int max, int offset) {
+        def result = Comment.findAllByAuthor(User.get(id), [sort: "date", order: "desc", max: max, offset: offset]).collect { comment ->
+            [id           : comment.id,
+             author       : [id:comment.author?.id, name:  comment.author?.name],
+             picture      : comment.author.picture,
+             body         : comment.body,
+             date         : comment.date.format("yyyy-MM-dd 'a las' HH:mm"),
+             voted        : Vote.findByAuthorAndComment(session.user, comment)?.value ?: 0,
+             positiveVotes: comment.countPositiveVotes(),
+             negativeVotes: comment.countNegativeVotes(),
+             course       : [id: comment.course?.id, name: comment.course?.name],
+             teacher      : [id: comment.teacher?.id, name: comment.teacher?.name]
+            ]
+        }
+
+        respond result, model: [result: result]
+    }
+
     @Transactional
     def save(User userInstance) {
         if (userInstance == null) {

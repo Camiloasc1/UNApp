@@ -60,6 +60,48 @@ app.controller('SearchController', ['$scope', '$rootScope', '$http', '$window', 
     });
 }]);
 
+app.controller('MyCommentsController', ['$scope', '$rootScope', '$http', '$location', function ($scope, $rootScope, $http, $location) {
+    $scope.id = parseInt($location.search().id);
+    $scope.context = ( $location.path().toLowerCase().indexOf('user') != -1 ) ? 'User' : '';
+    $scope.max = 5;
+    $scope.offset = 0;
+    $scope.comments = [];
+    $scope.loading = false;
+
+    $scope.loadMore = function () {
+        $scope.loading = true;
+        $http.get($scope.context + '/comments', {
+                params: {id: $scope.id, max: $scope.max, offset: $scope.offset}
+            })
+            .then(function (response) {
+                $scope.comments = $scope.comments.concat(response.data);
+                $scope.offset = $scope.comments.length;
+                $scope.loading = false;
+            });
+    };
+
+    $scope.reload = function () {
+        $scope.loading = true;
+        $http.get($scope.context + '/comments', {
+                params: {id: $scope.id, max: $scope.offset, offset: 0}
+            })
+            .then(function (response) {
+                $scope.comments = response.data;
+                $scope.offset = $scope.comments.length;
+                $scope.loading = false;
+            });
+    };
+
+    $scope.$on('newComment', function (event, postedComment) {
+        $scope.comments = [postedComment].concat($scope.comments);
+        $scope.offset++;
+        $scope.reload();
+    });
+
+    $scope.loadMore();
+}]);
+
+
 app.config(['$locationProvider', function ($locationProvider) {
     $locationProvider.html5Mode({enabled: true, rewriteLinks: false});
 }]);
