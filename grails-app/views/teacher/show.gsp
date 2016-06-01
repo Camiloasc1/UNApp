@@ -21,13 +21,7 @@
                         <h4 class="text-center">${result.location}</h4>
 
                         <div class="row text-center">
-                            <ul class="star-rating">
-                                <li class="star" id="1">&#9734;</li>
-                                <li class="star" id="2">&#9734;</li>
-                                <li class="star" id="3">&#9734;</li>
-                                <li class="star" id="4">&#9734;</li>
-                                <li class="star" id="5">&#9734;</li>
-                            </ul>
+                            <g:render template="starRating"/>
                         </div>
 
                         <div class="col-xs-12 display-rating" style="text-align: center">Tu voto fue de:</div>
@@ -81,18 +75,33 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-md-4">
             <div class="jumbotron">
                 <h2 class="text-right">Comentarios:</h2>
+                <oauth:connected provider="google">
+                    <g:render template="/comment/advanceSearch"/>
+                </oauth:connected>
             </div>
             <unapp:isAdmin>
                 <div class="jumbotron">
                     <h2 class="text-center"><i class="fa fa-cogs"></i> Administrar</h2>
+                    <div class="row text-center">
+                        <div class="col-xs-12 col-sm-6 col-md-12">
+                            <button class="btn btn-deafult btn-raised" type="button" onclick="window.location.assign('${request.contextPath}/teacher/edit?id=${result.id}')">
+                                <i class="fa fa-pencil-square-o"></i> Editar
+                            </button>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-12">
+                            <button class="btn btn-deafult btn-raised" type="button" onclick="window.location.assign('${request.contextPath}/teacher/edit?id=${result.id}')">
+                                <i class="fa fa-eraser"></i> Borrar
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </unapp:isAdmin>
         </div>
 
-        <div class="col-lg-8">
+        <div class="col-md-8">
             <g:render template="/comment/comments"/>
         </div>
     </div>

@@ -4,6 +4,7 @@ import grails.converters.JSON
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import grails.converters.JSON
 
 @Transactional(readOnly = true)
 class TeacherController {
@@ -50,6 +51,10 @@ class TeacherController {
         respond result, model: [result: result]
     }
 
+    def erase(){
+        render template: "erase"
+    }
+
     def comments(int id, int max, int offset) {
         def result = Comment.findAllByTeacher(Teacher.get(id), [sort: "date", order: "desc", max: max, offset: offset]).collect { comment ->
             [id           : comment.id,
@@ -65,6 +70,123 @@ class TeacherController {
             ]
         }
 
+        respond result, model: [result: result]
+    }
+
+    def commentsFiltered(){
+        def id = request.JSON.id
+        def max = request.JSON.max
+        def offset = request.JSON.offset
+        def filters = request.JSON.filters
+
+        def criteria = Comment.createCriteria()
+        def res = criteria.list{
+            eq( "teacher", Teacher.get(id) )
+            if( filters[0] != "" )
+                like( "body", "%"+filters[0]+"%" )
+            if( filters[3] != 0 ){
+                if( filters[3] == 2 ){
+                    Date yes = new Date(System.currentTimeMillis() - (24 * 60 * 60 * 1000L));
+                    between("date", new Date(), yes)
+                }else if( filters[3] == 3 ){
+                    Date yes = new Date(System.currentTimeMillis() - (7 * 24 * 60 * 60 * 1000L));
+                    between("date", new Date(), yes)
+                }else if( filters[3] == 4 ){
+                    Date yes = new Date(System.currentTimeMillis() - (4 * 7 * 24 * 60 * 60 * 1000L));
+                    between("date", new Date(), yes)
+                }else if( filters[3] == 5 ){
+                    Date yes = new Date(System.currentTimeMillis() - (12 * 4 * 7 * 24 * 60 * 60 * 1000L));
+                    between("date", new Date(), yes)
+                }
+            }
+            order("date", "desc")
+        }.collect { comment ->
+            [id           : comment.id,
+             author       : comment.author.name,
+             picture      : comment.author.picture,
+             body         : comment.body,
+             date         : comment.date.format("yyyy-MM-dd 'a las' HH:mm"),
+             voted        : Vote.findByAuthorAndComment(session.user, comment)?.value ?: 0,
+             positiveVotes: comment.countPositiveVotes(),
+             negativeVotes: comment.countNegativeVotes(),
+             course       : [id: comment.course?.id, name: comment.course?.name],
+             teacher      : [id: comment.teacher?.id, name: comment.teacher?.name]
+            ]
+        }
+
+        if( filters[1] == true )
+            res = res.sort {  a,b -> b.positiveVotes <=> a.positiveVotes }
+        else if( filters[1] == false )
+            res = res.sort {  a,b -> b.negativeVotes <=> a.negativeVotes }
+
+        def result = []
+        if( filters[2] != [] ) {
+            res.each { comment ->
+                if( comment.course.id != null  ){
+                    filters[2].each { idt ->
+                        if( idt.toInteger() == comment.course.id ) {
+                            result.push(comment)
+                        }
+                    }
+                }
+            }
+        }else{
+            result = res
+        }
+
+        respond result, model: [result: result]
+    }
+
+    def starMedian(int id) {
+        def user = session.user
+        def star = 0
+        if (user) {
+            star = TeacherEvaluation.findByTeacherAndAuthor(Teacher.findById(id), user)
+            if (star)
+                star = star.overall
+            else
+                star = 0
+        }
+
+        def votes = TeacherEvaluation.findAllByTeacher(Teacher.findById(id))
+        def median = -1
+        if (votes.size() != 0)
+            median = Math.floor((votes.sum { it.overall }) / votes.size())
+
+
+        def result = [
+                median: median,
+                stars : star
+        ]
+        respond result, model: [result: result]
+    }
+
+    def starRate(int id, int vote) {
+        def user = session.user
+        if (!user) {
+            return
+        }
+
+        def exists = TeacherEvaluation.findByTeacherAndAuthor(Teacher.findById(id), user)
+        if (exists == null) {
+            def rate = new TeacherEvaluation(
+                    author: user,
+                    overall: vote,
+                    teacher: Teacher.findById(id)
+            ).save(flush: true)
+        } else {
+            exists.overall = vote
+            exists.save(flush: true)
+        }
+
+        def votes = TeacherEvaluation.findAllByTeacher(Teacher.findById(id))
+        def median = 0
+        if( votes.size() != 0 )
+            median = Math.floor((votes.sum { it.overall }) / votes.size())
+
+        def result = [
+                median: median
+        ]
         respond result, model: [result: result]
     }
 
@@ -189,6 +311,20 @@ class TeacherController {
             '*' { respond teacherInstance, [status: CREATED] }
         }
     }
+
+    @Transactional
+    def deleteAux(){
+        def id = request.JSON.id
+        def teacher = Teacher.findById(id)
+        try{
+            teacher.delete(failOnError:true, flush:true)
+            render "true"
+        }
+        catch(e) {
+            render "false"
+        }
+    }
+
 
     def edit(Teacher teacherInstance) {
         respond teacherInstance
