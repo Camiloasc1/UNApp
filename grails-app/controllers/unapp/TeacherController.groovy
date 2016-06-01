@@ -4,6 +4,7 @@ import grails.converters.JSON
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import grails.converters.JSON
 
 @Transactional(readOnly = true)
 class TeacherController {
@@ -48,6 +49,10 @@ class TeacherController {
         }[0]
 
         respond result, model: [result: result]
+    }
+
+    def erase(){
+        render template: "erase"
     }
 
     def comments(int id, int max, int offset) {
@@ -129,6 +134,59 @@ class TeacherController {
             result = res
         }
 
+        respond result, model: [result: result]
+    }
+
+    def starMedian(int id) {
+        def user = session.user
+        def star = 0
+        if (user) {
+            star = TeacherEvaluation.findByTeacherAndAuthor(Teacher.findById(id), user)
+            if (star)
+                star = star.overall
+            else
+                star = 0
+        }
+
+        def votes = TeacherEvaluation.findAllByTeacher(Teacher.findById(id))
+        def median = -1
+        if (votes.size() != 0)
+            median = Math.floor((votes.sum { it.overall }) / votes.size())
+
+
+        def result = [
+                median: median,
+                stars : star
+        ]
+        respond result, model: [result: result]
+    }
+
+    def starRate(int id, int vote) {
+        def user = session.user
+        if (!user) {
+            return
+        }
+
+        def exists = TeacherEvaluation.findByTeacherAndAuthor(Teacher.findById(id), user)
+        if (exists == null) {
+            def rate = new TeacherEvaluation(
+                    author: user,
+                    overall: vote,
+                    teacher: Teacher.findById(id)
+            ).save(flush: true)
+        } else {
+            exists.overall = vote
+            exists.save(flush: true)
+        }
+
+        def votes = TeacherEvaluation.findAllByTeacher(Teacher.findById(id))
+        def median = 0
+        if( votes.size() != 0 )
+            median = Math.floor((votes.sum { it.overall }) / votes.size())
+
+        def result = [
+                median: median
+        ]
         respond result, model: [result: result]
     }
 
@@ -253,6 +311,20 @@ class TeacherController {
             '*' { respond teacherInstance, [status: CREATED] }
         }
     }
+
+    @Transactional
+    def deleteAux(){
+        def id = request.JSON.id
+        def teacher = Teacher.findById(id)
+        try{
+            teacher.delete(failOnError:true, flush:true)
+            render "true"
+        }
+        catch(e) {
+            render "false"
+        }
+    }
+
 
     def edit(Teacher teacherInstance) {
         respond teacherInstance

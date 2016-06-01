@@ -24,7 +24,6 @@
     <!-- Material Design Fonts -->
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
-
     <!-- UNApp -->
     <asset:stylesheet src="unapp.css"/>
     <!-- HTML5 base -->
@@ -153,8 +152,6 @@
 <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script
 <!-- Material Design for Bootstrap -->
 <script src="${request.contextPath}/js/material.min.js"></script>
-
-
 <script src="${request.contextPath}/js/ripples.min.js"></script>
 <script>
     $.material.init();
@@ -173,6 +170,8 @@
 <asset:javascript src="AngularEditTeacher.js"/>
 <!-- AngularCreateTeacher -->
 <asset:javascript src="AngularCreateTeacher.js"/>
+
+<asset:javascript src="AngularEraseTeacher.js"/>
 <!-- Multiselect with checkbox -->
 <asset:javascript src="bootstrap-multiselect.js"/>
 </body>
