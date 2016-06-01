@@ -36,8 +36,7 @@ app.controller('CommentsFilter', ['$scope', '$rootScope', '$http', '$location', 
     $scope.advancedSearch = function () {
         $scope.loading = true;
         $scope.searchFilter[2] = [];
-        if( $scope.context == "Course" )
-            var sel = document.getElementById("sel-materias");
+        var sel = document.getElementById("sel-materias");
         for (var i = 0; i < sel.options.length; i++)
             if(sel.options[i].selected)
                 $scope.searchFilter[2].push(sel.options[i].value);

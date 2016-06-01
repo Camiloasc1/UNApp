@@ -48,7 +48,7 @@
                 <div class="text-left">
                     <label> Por materia(s): </label>
                 </div>
-                <select id="sel-materias" multiple="multiple">
+                <select id="sel-materias" name="sel-materias" multiple>
                     <g:each in="${result.courses}" status="i" var="course">
                         <option value="${course.id}">${course.name}</option>
                     </g:each>
