@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":1,"key":{"_id":1},"name":"_id_","ns":"unapp.teacher"},{"v":1,"key":{"name":1},"name":"name_1","ns":"unapp.teacher"},{"v":1,"key":{"username":1},"name":"username_1","ns":"unapp.teacher"}]}
