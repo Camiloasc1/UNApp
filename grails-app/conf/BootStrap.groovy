@@ -251,7 +251,7 @@ class BootStrap {
     def loadTeachers() {
         println("Loading Teachers...")
         def nullTeacher = Teacher.findByName("[Información Pendiente]")
-        Course.list().each { course ->
+        Course.list()[].each { course ->
             println course
             def http = new HTTPBuilder(course.location.url + (course.location.name == "Medellin" ? ":9401" : "") + "/buscador/JSON-RPC")
             http.request(POST, ContentType.JSON) {
