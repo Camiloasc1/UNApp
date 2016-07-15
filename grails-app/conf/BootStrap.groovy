@@ -7,7 +7,7 @@ import grails.converters.JSON
 class BootStrap {
     def init = { servletContext ->
         def count;
-        def update = true
+        def update = false
         // Fill the data base if is empty
         if (Location.list().size() == 0) {
             loadLocations()
