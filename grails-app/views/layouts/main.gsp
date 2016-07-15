@@ -153,7 +153,7 @@
 <!-- Bootstrap -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <!-- calendar in advanced search -->
-<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <!-- Material Design for Bootstrap -->
 <script src="${request.contextPath}/js/material.min.js"></script>
 <script src="${request.contextPath}/js/ripples.min.js"></script>
