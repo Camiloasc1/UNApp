@@ -7,6 +7,7 @@ import grails.converters.JSON
 class BootStrap {
     def init = { servletContext ->
         def count;
+        def update = true
         // Fill the data base if is empty
         if (Location.list().size() == 0) {
             loadLocations()
@@ -29,7 +30,7 @@ class BootStrap {
                     location: Location.findByName("Bogota")
             ).save(flush: true)
         }
-        if (Course.list().size() == 1) {
+        if (Course.list().size() == 1 || update) {
             loadCourses()
         }
         count = Course.list().size();
@@ -42,7 +43,7 @@ class BootStrap {
                     location: Location.findByName("Bogota")
             ).save(flush: true)
         }
-        if (Teacher.list().size() == 1) {
+        if (Teacher.list().size() == 1 || update) {
             loadTeachers()
         }
         count = Teacher.list().size();
@@ -232,14 +233,16 @@ class BootStrap {
     def loadCourseContents() {
         print "Loading Contents"
         Course.list().each { course ->
-            println course
-            //def http = new HTTPBuilder(course.location.url + '/academia/catalogo-programas/info-asignatura.sdo?asignatura=' + course.code)
-            def http = new HTTPBuilder(course.location.url + '/buscador/service/asignaturaInfo.pub?cod_asignatura=' + course.code)
-            def html = http.get([:])
-            html."**".findAll { it.@class.toString().contains("module") }.each {
-                course.description = it.P[4].toString().replaceAll(/[ \t\n]+/, " ")
-                course.contents = it.P[6].toString().replaceAll(/[ \t\n]+/, " ")
-                course.save(flush: true)
+            if (course.description == null || course.description.isEmpty() || course.contents == null || course.contents.isEmpty()) {
+                println course
+                //def http = new HTTPBuilder(course.location.url + '/academia/catalogo-programas/info-asignatura.sdo?asignatura=' + course.code)
+                def http = new HTTPBuilder(course.location.url + '/buscador/service/asignaturaInfo.pub?cod_asignatura=' + course.code)
+                def html = http.get([:])
+                html."**".findAll { it.@class.toString().contains("module") }.each {
+                    course.description = it.P[4].toString().replaceAll(/[ \t\n]+/, " ").trim()
+                    course.contents = it.P[6].toString().replaceAll(/[ \t\n]+/, " ").trim()
+                    course.save(flush: true)
+                }
             }
         }
         print "Contents Loaded"
