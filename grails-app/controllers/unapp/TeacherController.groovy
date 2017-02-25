@@ -24,7 +24,9 @@ class TeacherController {
     }
 
     def search(String query) {
-        def result = Teacher.findAllByNameIlike("%" + query + "%").collect { c ->
+        def teachers = search_by_keywords(query)
+
+        def result = teachers.collect { c ->
             [id: c.id, name: c.name, email: c.getEmail()]
         }
 
@@ -380,5 +382,17 @@ class TeacherController {
             }
             '*' { render status: NOT_FOUND }
         }
+    }
+
+    def search_by_keywords(String keyWordsAsString) {
+        def keyWords = keyWordsAsString.split(" ")
+        def teachers = [].toSet()
+        keyWords.each { keyWord ->
+            if (teachers.isEmpty())
+                teachers.addAll(Teacher.findAllByNameIlike("%" + keyWord + "%"))
+            else
+                teachers = teachers.intersect(Teacher.findAllByNameIlike("%" + keyWord + "%"))
+        }
+        teachers.toSet()
     }
 }

@@ -149,4 +149,143 @@ class TeacherControllerSpec extends Specification {
         response.redirectedUrl == '/teacher/index'
         flash.message != null
     }
+
+
+    void "Test that the search functionality in teachers is correct"(){
+        when: "create diferent teachers with diferent names"
+        def felipe_restrepo_calle = new Teacher()
+        felipe_restrepo_calle.setName("FELIPE RESTREPO CALLE")
+        felipe_restrepo_calle.setUsername(felipe_restrepo_calle.getName())
+        felipe_restrepo_calle.save()
+
+        def felipe_sua = new Teacher()
+        felipe_sua.setName("FELIPE SUA")
+        felipe_sua.setUsername(felipe_sua.getName())
+        felipe_sua.save()
+
+        def calle_juan = new Teacher()
+        calle_juan.setName("CALLE JUAN")
+        calle_juan.setUsername(calle_juan.getName())
+        calle_juan.save()
+
+        def rondon_mauricio = new Teacher()
+        rondon_mauricio.setName("RONDON MAURICIO")
+        rondon_mauricio.setUsername(rondon_mauricio.getName())
+        rondon_mauricio.save()
+
+        def restrepo_avellaneda_felipe = new Teacher()
+        restrepo_avellaneda_felipe.setName("RESTREPO AVELLANEDA FELIPE")
+        restrepo_avellaneda_felipe.setUsername(restrepo_avellaneda_felipe.getName())
+        restrepo_avellaneda_felipe.save()
+
+        then: "teachers are persisted"
+        Teacher.count() == 5
+
+        when: "search for felipe"
+        def search_result = controller.search_by_keywords("felipe")
+
+        then: "all felipes are found when search for felipe"
+        search_result.contains(felipe_restrepo_calle)
+        search_result.contains(felipe_sua)
+        !search_result.contains(calle_juan)
+        !search_result.contains(rondon_mauricio)
+        search_result.contains(restrepo_avellaneda_felipe)
+
+        when: "when search for FELIPE RESTREPO"
+        search_result = controller.search_by_keywords("FELIPE RESTREPO")
+
+        then: "returns those who have both names no matter the order"
+        search_result.contains(felipe_restrepo_calle)
+        !search_result.contains(felipe_sua)
+        !search_result.contains(calle_juan)
+        !search_result.contains(rondon_mauricio)
+        search_result.contains(restrepo_avellaneda_felipe)
+
+        when: "when search for calle FELIPE RESTREPO"
+        search_result = controller.search_by_keywords("calle FELIPE RESTREPO")
+
+        then: "return the correct set"
+        search_result.contains(felipe_restrepo_calle)
+        !search_result.contains(felipe_sua)
+        !search_result.contains(calle_juan)
+        !search_result.contains(rondon_mauricio)
+        !search_result.contains(restrepo_avellaneda_felipe)
+
+        when: "when search for CALLE"
+        search_result = controller.search_by_keywords("calle")
+
+        then: "return the correct set"
+        search_result.contains(felipe_restrepo_calle)
+        !search_result.contains(felipe_sua)
+        search_result.contains(calle_juan)
+        !search_result.contains(rondon_mauricio)
+        !search_result.contains(restrepo_avellaneda_felipe)
+
+        when: "when search for rondon"
+        search_result = controller.search_by_keywords("rondon")
+
+        then: "return the correct set"
+        !search_result.contains(felipe_restrepo_calle)
+        !search_result.contains(felipe_sua)
+        !search_result.contains(calle_juan)
+        search_result.contains(rondon_mauricio)
+        !search_result.contains(restrepo_avellaneda_felipe)
+
+
+        when: "when search for sua felipe"
+        search_result = controller.search_by_keywords("sua felipe")
+
+        then: "return the correct set"
+        !search_result.contains(felipe_restrepo_calle)
+        search_result.contains(felipe_sua)
+        !search_result.contains(calle_juan)
+        !search_result.contains(rondon_mauricio)
+        !search_result.contains(restrepo_avellaneda_felipe)
+
+        when: "when search for avellaneda"
+        search_result = controller.search_by_keywords("avellaneda")
+
+        then: "return the correct set"
+        !search_result.contains(felipe_restrepo_calle)
+        !search_result.contains(felipe_sua)
+        !search_result.contains(calle_juan)
+        !search_result.contains(rondon_mauricio)
+        search_result.contains(restrepo_avellaneda_felipe)
+
+
+        when: "when search for sanchez"
+        search_result = controller.search_by_keywords("sanchez")
+
+        then: "return the correct set"
+        !search_result.contains(felipe_restrepo_calle)
+        !search_result.contains(felipe_sua)
+        !search_result.contains(calle_juan)
+        !search_result.contains(rondon_mauricio)
+        !search_result.contains(restrepo_avellaneda_felipe)
+
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
