@@ -385,14 +385,13 @@ class TeacherController {
     }
 
     def search_by_keywords(String keyWordsAsString) {
-        def keyWords = keyWordsAsString.split(" ")
-        def teachers = [].toSet()
-        keyWords.each { keyWord ->
-            if (teachers.isEmpty())
-                teachers.addAll(Teacher.findAllByNameIlike("%" + keyWord + "%"))
-            else
-                teachers = teachers.intersect(Teacher.findAllByNameIlike("%" + keyWord + "%"))
+        def keyWords = keyWordsAsString.toLowerCase().split(" ")
+        def teachers = Teacher.findAllByNameIlike("%" + keyWords.first() + "%")
+        teachers.findAll { teacher ->
+            def nameToLower = teacher.name.toLowerCase()
+            keyWords.every { keyword ->
+                nameToLower.contains(keyword)
+            }
         }
-        teachers.toSet()
     }
 }
